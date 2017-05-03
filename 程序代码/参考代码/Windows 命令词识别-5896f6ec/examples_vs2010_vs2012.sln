@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "asr_demo", "examples\asr_demo\asr_demo.vcxproj", "{E85DD0CF-9C8A-468A-B945-0A6525F9BF33}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "asr_record_demo", "examples\asr_record_demo\asr_record_demo.vcxproj", "{D51CA0BA-7F48-4B50-A481-3FF81CC49D06}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = examples_vs2010_vs2012.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E85DD0CF-9C8A-468A-B945-0A6525F9BF33}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E85DD0CF-9C8A-468A-B945-0A6525F9BF33}.Debug|Win32.Build.0 = Debug|Win32
+		{E85DD0CF-9C8A-468A-B945-0A6525F9BF33}.Debug|x64.ActiveCfg = Debug|x64
+		{E85DD0CF-9C8A-468A-B945-0A6525F9BF33}.Debug|x64.Build.0 = Debug|x64
+		{E85DD0CF-9C8A-468A-B945-0A6525F9BF33}.Release|Win32.ActiveCfg = Release|Win32
+		{E85DD0CF-9C8A-468A-B945-0A6525F9BF33}.Release|Win32.Build.0 = Release|Win32
+		{E85DD0CF-9C8A-468A-B945-0A6525F9BF33}.Release|x64.ActiveCfg = Release|x64
+		{E85DD0CF-9C8A-468A-B945-0A6525F9BF33}.Release|x64.Build.0 = Release|x64
+		{D51CA0BA-7F48-4B50-A481-3FF81CC49D06}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D51CA0BA-7F48-4B50-A481-3FF81CC49D06}.Debug|Win32.Build.0 = Debug|Win32
+		{D51CA0BA-7F48-4B50-A481-3FF81CC49D06}.Debug|x64.ActiveCfg = Debug|Win32
+		{D51CA0BA-7F48-4B50-A481-3FF81CC49D06}.Release|Win32.ActiveCfg = Release|Win32
+		{D51CA0BA-7F48-4B50-A481-3FF81CC49D06}.Release|Win32.Build.0 = Release|Win32
+		{D51CA0BA-7F48-4B50-A481-3FF81CC49D06}.Release|x64.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
