@@ -78,7 +78,7 @@ public:
 	double Get_DataZCR(unsigned long Number);                                //依据序号找到对应的短时过零率
 	int Get_WindowLength(void);                                              //获取帧长（窗的大小）
 	unsigned long Get_voiceNumber(void);                                     //获取语音段落个数
-	VoiceParagraph Get_dataVoicePoint(unsigned long Number);                 //获取某个语音点
+	VoiceParagraph Get_dataVoicePoint(unsigned long Number);                 //获取某个语音段落
 	void ShowData(void);                                                     //覆盖父类的展示数据函数
 	void SaveNewWav(void);                                                   //保存去掉空白处的语音文件
 	bool Endpoint_Detection(void);                                           //端点检测函数

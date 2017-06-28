@@ -8,7 +8,6 @@ int main()
 		cout << "ERROR : File open failed !" << endl;
 		exit(-1);
 	}
-	Wav_File_Work temp(fp);
-	temp.ShowData();
+	Wav_File_Work wavFile(fp);
 	return 0;
 }

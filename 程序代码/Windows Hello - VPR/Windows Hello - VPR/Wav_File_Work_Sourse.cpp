@@ -203,7 +203,7 @@ unsigned long Wav_File_Work::Get_voiceNumber(void)                           //»
 {
 	return voiceNumber;
 }
-VoiceParagraph Wav_File_Work::Get_dataVoicePoint(unsigned long Number)       //»ñÈ¡Ä³¸öÓïÒôµã
+VoiceParagraph Wav_File_Work::Get_dataVoicePoint(unsigned long Number)       //»ñÈ¡Ä³¸öÓïÒô¶ÎÂä
 {
 	if (Number >= voiceNumber || Number < 0) {                               //Èç¹ûËùÐèÒªµÄÊý³¬¹ýÁËÊý¾Ý¸öÊý
 		MessageBoxA(NULL, "ERROR : Over list !", "ERROR", MB_ICONHAND);
@@ -216,21 +216,21 @@ VoiceParagraph Wav_File_Work::Get_dataVoicePoint(unsigned long Number)       //»
 
 void Wav_File_Work::ShowData(void)                                           //¸²¸Ç¸¸ÀàµÄÕ¹Ê¾Êý¾Ýº¯Êý
 {
-	/*int max = 0, min = 0;
+	int max = 0, min = 0;
 	cout << "TIP : Double data " << endl;
 	for (unsigned long i = 0; i < Wav_File::Get_dataNumber(); ++i) {
-	cout << dataDouble[i] << "\t";
-	if (dataDouble[i] > dataDouble[max]) {
-	max = i;
-	}
-	if (dataDouble[i] < dataDouble[min]) {
-	min = i;
-	}
+		//cout << dataDouble[i] << "\t";
+		if (dataDouble[i] > dataDouble[max]) {
+			max = i;
+		}
+		if (dataDouble[i] < dataDouble[min]) {
+			min = i;
+		}
 	}
 	cout << endl;
 	cout << "Max " << dataDouble[max] << endl;
 	cout << "Min " << dataDouble[min] << endl;
-	*/
+	
 	cout << "TIP : Parameter " << endl;
 	cout << "Max energy " << Get_maxEnergy() << endl;
 	cout << "Min energy " << Get_minEnergy() << endl;

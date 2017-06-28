@@ -1,21 +1,15 @@
-﻿生成启动时间为 2017/6/25 9:21:50。
+﻿生成启动时间为 2017/6/27 21:20:43。
      1>项目“F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Windows Hello - VPR\Windows Hello - VPR.vcxproj”在节点 2 上(build 个目标)。
-     1>PrepareForBuild:
-         正在创建目录“F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\”。
-       InitializeBuildStatus:
+     1>InitializeBuildStatus:
          正在创建“Debug\Windows Hello - VPR.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp Wav_File_Sourse.cpp Wav_File_Work_Sourse.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp Wav_File_Work_Sourse.cpp
          Wav_File_Work_Sourse.cpp
-         Wav_File_Sourse.cpp
-     1>f:\project engineering\windows hello - vpr\程序代码\windows hello - vpr\windows hello - vpr\wav_file_sourse.cpp(184): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
-         Source.cpp
-     1>f:\project engineering\windows hello - vpr\程序代码\windows hello - vpr\windows hello - vpr\source.cpp(7): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
          正在生成代码...
+         正在跳过...(未检测到相关更改)
+         Source.cpp
        ManifestResourceCompile:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\Windows Hello - VPR.exe.embed.manifest.res" "Debug\Windows Hello - VPR_manifest.rc" 
+         所有输出均为最新。
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Windows Hello - VPR.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.lib" /MACHINE:X86 "Debug\Windows Hello - VPR.exe.embed.manifest.res"
          Debug\Source.obj
@@ -23,12 +17,9 @@
          Debug\Wav_File_Work_Sourse.obj
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Windows Hello - VPR.exe.embed.manifest" /manifest "Debug\Windows Hello - VPR.exe.intermediate.manifest"
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\Windows Hello - VPR.exe.embed.manifest.res" "Debug\Windows Hello - VPR_manifest.rc" 
+         所有输出均为最新。
        LinkEmbedManifest:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Windows Hello - VPR.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.lib" /MACHINE:X86 "Debug\Windows Hello - VPR.exe.embed.manifest.res"
-         Debug\Source.obj
-         Debug\Wav_File_Sourse.obj
-         Debug\Wav_File_Work_Sourse.obj
+         所有输出均为最新。
          Windows Hello - VPR.vcxproj -> F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.exe
        FinalizeBuildStatus:
          正在删除文件“Debug\Windows Hello - VPR.unsuccessfulbuild”。
@@ -37,4 +28,4 @@
 
 生成成功。
 
-已用时间 00:00:04.05
+已用时间 00:00:02.89
