@@ -75,7 +75,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main_Source.cpp" />
-    <ClCompile Include="WavFile_Source.cpp" />
+    <ClCompile Include="WavFile_Struct.cpp" />
     <ClCompile Include="WavFile_Initial.cpp" />
   </ItemGroup>
   <ItemGroup>

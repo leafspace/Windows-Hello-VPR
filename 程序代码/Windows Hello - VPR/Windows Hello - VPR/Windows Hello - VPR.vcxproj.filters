@@ -15,13 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WavFile_Source.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="WavFile_Initial.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Main_Source.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WavFile_Struct.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

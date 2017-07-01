@@ -3,9 +3,10 @@
 const int WavFile_Initial::N = 256;                                          //³õÊ¼»¯Ã¿¸ö´°µÄ´°³¤
 const int WavFile_Initial::FrameShift = 10;                                  //³õÊ¼»¯´°º¯ÊıµÄÖ¡ÒÆ
 const double WavFile_Initial::PI = 3.14159;                                  //³õÊ¼»¯Ô²ÖÜÂÊ
+const double WavFile_Initial::preCoefficient = -0.98;                        //Ô¤¼ÓÖØÏµÊı
+
 const unsigned long WavFile_Initial::minSilence = 6;                         //×î¶Ì¾²Òô³¤¶È
 const unsigned long WavFile_Initial::minVoiceLength = 15;                    //×î¶ÌÓïÒô³¤¶È
-
 
 bool WavFile_Initial::Conversion_Double(void)                                //ÓÃÀ´½«ĞÂ×Ö½ÚÊı¾İ×ª»»ÎªDoubleÊı¾İ
 {
@@ -51,7 +52,7 @@ bool WavFile_Initial::Frame_Energy(void)                                     //Ó
 	maxEnergy = 0;                                                           //×î´ó¶ÌÊ±Ö¡ÄÜÁ¿ÖÃ0
 	minEnergy = 1000000;                                                     //×îĞ¡¶ÌÊ±Ö¡ÄÜÁ¿ÖÃ1000000
 	double sum = 0;
-	for (unsigned long i = 0; i < WavFile::Get_dataNumber() - N; i += WavFile_Initial::FrameShift){        //ÕâÊÇËùÓĞ¶ÌÊ±Ö¡ÄÜÁ¿Êı¾İµÄ¸öÊı
+	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift){ //ÕâÊÇËùÓĞ¶ÌÊ±Ö¡ÄÜÁ¿Êı¾İµÄ¸öÊı
 		for (unsigned long j = i; j < i + N; ++j) {                          //±éÀú´°ÖĞµÄÃ¿Ò»¸öÊı¾İ
 			sum += pow(dataDouble[j] * Hamming_window(i + N - 1 - j), 2);    //ÇóÃ¿Ò»¸öÊı¾İµÄÄÜÁ¿
 		}
@@ -74,7 +75,7 @@ bool WavFile_Initial::Frame_ZCR(void)                                        //Ó
 	maxZCR = 0;                                                              //×î´ó¶ÌÊ±¹ıÁãÂÊÖÃ0
 	minZCR = 1000000;                                                        //×îĞ¡¶ÌÊ±¹ıÁãÂÊÖÃ1000000
 	double sum = 0;
-	for (unsigned long i = 0; i < WavFile::Get_dataNumber() - N; i += WavFile_Initial::FrameShift) {       //ÕâÊÇËùÓĞ¶ÌÊ±Ö¡¹ıÁãÂÊÊı¾İµÄ¸öÊı
+	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift) {//ÕâÊÇËùÓĞ¶ÌÊ±Ö¡¹ıÁãÂÊÊı¾İµÄ¸öÊı
 		for (unsigned long j = i; j < i + N; ++j) {                          //±éÀú´°ÖĞµÄÃ¿Ò»¸öÊı¾İ
 			sum += abs(Sign_Function(dataDouble[j]) - Sign_Function(dataDouble[j - 1]))//¹ıÁãÂÊÖĞµÄ¾ø¶ÔÖµ²¿·Ö
 				*Hamming_window(i + N - 1 - j);
@@ -102,7 +103,7 @@ bool WavFile_Initial::Frame_EnergyZcr(void)                                  //Ó
 	double sumEnergy = 0;
 	double sumZcr = 0;
 	double hanming = 0;
-	for (unsigned long i = 0; i < WavFile::Get_dataNumber() - N; i += WavFile_Initial::FrameShift) {       //ÕâÊÇËùÓĞ¶ÌÊ±Ö¡ÄÜÁ¿Êı¾İµÄ¸öÊı
+	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift) {//ÕâÊÇËùÓĞ¶ÌÊ±Ö¡ÄÜÁ¿Êı¾İµÄ¸öÊı
 		for (unsigned long j = i; j < i + N; ++j) {                          //±éÀú´°ÖĞµÄÃ¿Ò»¸öÊı¾İ
 			hanming = Hamming_window(i + N - 1 - j);
 			sumEnergy += pow(dataDouble[j] * hanming, 2);                    //ÇóÃ¿Ò»¸öÊı¾İµÄÄÜÁ¿
@@ -131,6 +132,21 @@ bool WavFile_Initial::Frame_EnergyZcr(void)                                  //Ó
 	}
 
 	return true;
+}
+
+double* WavFile_Initial::Get_WavFileData(void)                               //»ñÈ¡ºÏ³ÉÍê±ÏµÄÓïÒôÊı¾İ
+{
+	return this->dataDouble;
+}
+
+vector<double> WavFile_Initial::Get_DataEnergy(void)                         //»ñÈ¡¶ÌÊ±Ö¡ÄÜÁ¿µÄÊı¾İ
+{
+	return this->dataEnergy;
+}
+
+vector<double> WavFile_Initial::Get_DataZCR(void)                            //»ñÈ¡¶ÌÊ±¹ıÁãÂÊµÄÊı¾İ
+{
+	return this->dataZCR;
 }
 
 double WavFile_Initial::Get_maxEnergy(void)                                  //»ñÈ¡×î´ó¶ÌÊ±Ö¡ÄÜÁ¿
@@ -162,7 +178,7 @@ double WavFile_Initial::Get_dataEZNumber(void)                               //»
 
 double WavFile_Initial::Get_DataDouble(unsigned long Number)                 //»ñÈ¡×ª»»ºóµÄDoubleÊı¾İ
 {
-	if (Number >= (WavFile::Get_dataNumber()) || Number < 0) {               //Èç¹ûËùĞèÒªµÄÊı³¬¹ıÁËÊı¾İ¸öÊı
+	if (Number >= (this->Get_dataNumber()) || Number < 0) {                  //Èç¹ûËùĞèÒªµÄÊı³¬¹ıÁËÊı¾İ¸öÊı
 		MessageBoxA(NULL, "ERROR : Over list !", "ERROR", MB_ICONHAND);
 		throw invalid_argument("ERROR : Over list !");
 		return -1;
@@ -201,7 +217,7 @@ int WavFile_Initial::Get_WindowLength(void)                                  //»
 
 unsigned long WavFile_Initial::Get_voiceNumber(void)                         //»ñÈ¡ÓïÒô¶ÎÂä¸öÊı
 {
-	return voiceNumber;
+	return this->voiceNumber;
 }
 VoiceParagraph WavFile_Initial::Get_dataVoicePoint(unsigned long Number)     //»ñÈ¡Ä³¸öÓïÒô¶ÎÂä
 {
@@ -218,7 +234,7 @@ void WavFile_Initial::ShowData(void)                                         //¸
 {
 	int max = 0, min = 0;
 	cout << "TIP : Double data " << endl;
-	for (unsigned long i = 0; i < WavFile::Get_dataNumber(); ++i) {
+	for (unsigned long i = 0; i < this->Get_dataNumber(); ++i) {
 		//cout << dataDouble[i] << "\t";
 		if (dataDouble[i] > dataDouble[max]) {
 			max = i;
@@ -266,6 +282,17 @@ void WavFile_Initial::SaveNewWav(void)                                       //±
 	WavFile::SaveNewWav(voiceNumber, voiceParagraph);                        //µ÷ÓÃ¸¸ÀàµÄÉú³Éº¯Êı
 }
 
+void WavFile_Initial::Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDouble)  //¶ÔÒ»¸ö¶ÎÂäÄÚµÄÊı¾İ½øĞĞÔ¤¼ÓÖØ´¦Àí 
+{
+	for (unsigned long i = 0; i < voiceParagraph.voiceLength; ++i) {
+		unsigned long dataIndex = voiceParagraph.begin + i;
+		if(dataIndex == 0 || dataIndex == this->Get_dataNumber()) {
+			continue;
+		}
+		dataDouble[dataIndex] = dataDouble[dataIndex] - WavFile_Initial::preCoefficient * dataDouble[dataIndex - 1];
+	}
+}
+
 bool WavFile_Initial::Endpoint_Detection(void)                               //¶Ëµã¼ì²âº¯Êı
 {
 	//this->Frame_Energy();                                                    //¼ÆËã¶ÌÊ±Ö¡ÄÜÁ¿
@@ -289,7 +316,7 @@ bool WavFile_Initial::Endpoint_Detection(void)                               //¶
 	unsigned long silence = 0;                                               //¾²Òô¶ÎÂäµÄ³¤¶È
 	voiceNumber = 0;
 
-	for (unsigned long i = 0, frame = 0; i < WavFile::Get_dataNumber() - N; ++i) { //±éÀúÃ¿Ò»Ö¡
+	for (unsigned long i = 0, frame = 0; i < this->Get_dataNumber() - N; ++i) { //±éÀúÃ¿Ò»Ö¡
 		frame = (i - N) / WavFile_Initial::FrameShift + 1;
 		if (i <= 256){
 			frame = 0;

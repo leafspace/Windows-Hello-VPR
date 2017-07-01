@@ -43,6 +43,8 @@ public:
 	static const int N;                                                      //表示每个窗的帧长
 	static const int FrameShift;                                             //窗函数的帧移
 	static const double PI;                                                  //数学圆周率PI
+	static const double preCoefficient;                                      //预加重系数
+
 	WavFile_Initial(void) {}
 	WavFile_Initial(FILE *f) :WavFile(f) {
 		try
@@ -67,6 +69,10 @@ public:
 	~WavFile_Initial() {
 		free(dataDouble);
 	}
+
+	double* Get_WavFileData(void);                                           //获取合成完毕的语音数据
+	vector<double> Get_DataEnergy(void);                                     //获取短时帧能量的数据
+	vector<double> Get_DataZCR(void);                                        //获取短时过零率的数据
 	double Get_maxEnergy(void);                                              //获取最大短时帧能量
 	double Get_minEnergy(void);                                              //获取最小短时帧能量
 	double Get_maxZCR(void);                                                 //获取最大短时过零率
@@ -81,5 +87,6 @@ public:
 	VoiceParagraph Get_dataVoicePoint(unsigned long Number);                 //获取某个语音段落
 	void ShowData(void);                                                     //覆盖父类的展示数据函数
 	void SaveNewWav(void);                                                   //保存去掉空白处的语音文件
+	void Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDouble);    //对一个段落内的数据进行预加重处理 （注：预加重处理可以安防在分帧前，也可安放在分帧后）
 	bool Endpoint_Detection(void);                                           //端点检测函数
 };
