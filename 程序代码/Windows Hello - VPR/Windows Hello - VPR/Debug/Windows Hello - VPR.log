@@ -1,20 +1,17 @@
-﻿生成启动时间为 2017/6/27 21:20:43。
+﻿生成启动时间为 2017/7/1 18:41:34。
      1>项目“F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Windows Hello - VPR\Windows Hello - VPR.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\Windows Hello - VPR.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp Wav_File_Work_Sourse.cpp
-         Wav_File_Work_Sourse.cpp
-         正在生成代码...
-         正在跳过...(未检测到相关更改)
-         Source.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Main_Source.cpp
+         Main_Source.cpp
        ManifestResourceCompile:
          所有输出均为最新。
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Windows Hello - VPR.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows Hello - VPR\程序代码\Windows Hello - VPR\Debug\Windows Hello - VPR.lib" /MACHINE:X86 "Debug\Windows Hello - VPR.exe.embed.manifest.res"
-         Debug\Source.obj
-         Debug\Wav_File_Sourse.obj
-         Debug\Wav_File_Work_Sourse.obj
+         Debug\Main_Source.obj
+         Debug\WavFile_Source.obj
+         Debug\WavFile_Initial.obj
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Windows Hello - VPR.exe.embed.manifest" /manifest "Debug\Windows Hello - VPR.exe.intermediate.manifest"
          所有输出均为最新。
@@ -28,4 +25,4 @@
 
 生成成功。
 
-已用时间 00:00:02.89
+已用时间 00:00:01.66

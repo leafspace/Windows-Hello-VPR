@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
+    <ClCompile Include="WavFile_Source.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Wav_File_Sourse.cpp">
+    <ClCompile Include="WavFile_Initial.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Wav_File_Work_Sourse.cpp">
+    <ClCompile Include="Main_Source.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Wav_File_Handle.h">
+    <ClInclude Include="WavFile_Struct.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Wav_File_Header.h">
+    <ClInclude Include="WavFile_Initial.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
