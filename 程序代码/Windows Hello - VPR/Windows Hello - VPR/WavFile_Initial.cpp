@@ -219,6 +219,12 @@ unsigned long WavFile_Initial::Get_voiceNumber(void)                         //�
 {
 	return this->voiceNumber;
 }
+
+unsigned long WavFile_Initial::Get_frameNumber(double dataSize)              //计算长度内的帧数
+{
+	return (unsigned long)((dataSize - WavFile_Initial::N) / WavFile_Initial::FrameShift);       //计算这段数据内有多少帧
+}
+
 VoiceParagraph WavFile_Initial::Get_dataVoicePoint(unsigned long Number)     //获取某个语音段落
 {
 	if (Number >= voiceNumber || Number < 0) {                               //如果所需要的数超过了数据个数
@@ -289,8 +295,38 @@ void WavFile_Initial::Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDo
 		if(dataIndex == 0 || dataIndex == this->Get_dataNumber()) {
 			continue;
 		}
-		dataDouble[dataIndex] = dataDouble[dataIndex] - WavFile_Initial::preCoefficient * dataDouble[dataIndex - 1];
+		dataDouble[dataIndex] = dataDouble[dataIndex] - WavFile_Initial::preCoefficient * dataDouble[dataIndex - 1]; //加一阶数字滤波器
 	}
+}
+
+bool WavFile_Initial::Frame_Data(double *data, double dataSize, unsigned long index, double* dataSpace, int dataSpaceSize)     //对部分数据进行分帧加窗操作
+{
+	if (dataSpaceSize < WavFile_Initial::N) {                                //预分配的空间不足一帧时
+		return false;
+	}
+
+	unsigned long frameNumber = this->Get_frameNumber(dataSize);
+	if (index < 1 || index > frameNumber) {                                  //帧位不属于数据段允许范围内
+		return false;
+	}
+
+	unsigned long begin = (index - 1) * WavFile_Initial::FrameShift;
+	unsigned long end   = begin + WavFile_Initial::N - 1;
+	unsigned long voiceLength = WavFile_Initial::N;
+
+	if (index == frameNumber && end != dataSize) {                           //如果长度不为整帧
+		if (end < dataSize) {                                                //全部数据多余
+		} else if (end > dataSize) {                                         //全部数据缺少
+			end = (unsigned long)(dataSize - 1);
+			voiceLength = (unsigned long)(dataSize - begin);
+		}
+	}
+	VoiceParagraph voiceParagraph(begin, end, voiceLength);
+
+	for (unsigned long i = voiceParagraph.begin; i <= voiceParagraph.end; ++i) {
+		dataSpace[i - voiceParagraph.begin] = data[i] * this->Hamming_window(i - voiceParagraph.begin);    //加窗功能
+	}
+	return true;
 }
 
 bool WavFile_Initial::Endpoint_Detection(void)                               //端点检测函数
