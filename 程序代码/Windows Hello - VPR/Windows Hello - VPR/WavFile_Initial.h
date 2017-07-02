@@ -1,65 +1,62 @@
-#pragma once
+ï»¿#pragma once
 #include "WavFile_Struct.h"
 #include <cmath>
 
-#define MUTEPARAGRAPH 0                                                      //¾²Òô¶Î
-#define INTERIMPARAGRAPH 1                                                   //¹ı¶É¶Î
-#define VOICEPARAGRAPH 2                                                     //ÓïÒô¶Î
-#define OVERPARAGRAPH 3                                                      //ÓïÒô½áÊø
+#define MUTEPARAGRAPH 0                                                      //é™éŸ³æ®µ
+#define INTERIMPARAGRAPH 1                                                   //è¿‡æ¸¡æ®µ
+#define VOICEPARAGRAPH 2                                                     //è¯­éŸ³æ®µ
+#define OVERPARAGRAPH 3                                                      //è¯­éŸ³ç»“æŸ
 
 class WavFile_Initial :protected WavFile
 {
 private:
-	double energyHigh;                                                       //¶ÌÊ±Ö¡ÄÜÁ¿¸ßÃÅÏŞ
-	double energyLow;                                                        //¶ÌÊ±Ö¡ÄÜÁ¿µÍÃÅÏŞ
-	double zcrHigh;                                                          //¶ÌÊ±¹ıÁãÂÊ¸ßÃÅÏŞ
-	double zcrLow;                                                           //¶ÌÊ±¹ıÁãÂÊµÍÃÅÏŞ
+	double energyHigh;                                                       //çŸ­æ—¶å¸§èƒ½é‡é«˜é—¨é™
+	double energyLow;                                                        //çŸ­æ—¶å¸§èƒ½é‡ä½é—¨é™
+	double zcrHigh;                                                          //çŸ­æ—¶è¿‡é›¶ç‡é«˜é—¨é™
+	double zcrLow;                                                           //çŸ­æ—¶è¿‡é›¶ç‡ä½é—¨é™
 
-	static const unsigned long minSilence;                                   //×î¶Ì¾²Òô³¤¶È
-	static const unsigned long minVoiceLength;                               //×î¶ÌÓïÒô³¤¶È
+	static const unsigned long minSilence;                                   //æœ€çŸ­é™éŸ³é•¿åº¦
+	static const unsigned long minVoiceLength;                               //æœ€çŸ­è¯­éŸ³é•¿åº¦
 
-	double *dataDouble;                                                      //ĞÂ×ª»»µÄDoubleĞÍÊı¾İ£¬¿ØÖÆ·¶Î§ÔÚ[-1,1]
-	vector<double> dataEnergy;                                               //±£´æ¶ÌÊ±Ö¡ÄÜÁ¿£¬¸öÊıÎªdataNunber-N
-	vector<double> dataZCR;                                                  //±£´æ¶ÌÊ±¹ıÁãÂÊ
+	double *dataDouble;                                                      //æ–°è½¬æ¢çš„Doubleå‹æ•°æ®ï¼Œæ§åˆ¶èŒƒå›´åœ¨[-1,1]
+	vector<double> dataEnergy;                                               //ä¿å­˜çŸ­æ—¶å¸§èƒ½é‡ï¼Œä¸ªæ•°ä¸ºdataNunber-N
+	vector<double> dataZCR;                                                  //ä¿å­˜çŸ­æ—¶è¿‡é›¶ç‡
 
-	double maxEnergy;                                                        //ÓÃÓÚ±£´æ×î´óµÄ¶ÌÊ±Ö¡ÄÜÁ¿
-	double minEnergy;                                                        //ÓÃÓÚ±£´æ×îĞ¡µÄ¶ÌÊ±Ö¡ÄÜÁ¿
-	double maxZCR;                                                           //ÓÃÓÚ±£´æ×î´óµÄ¶ÌÊ±¹ıÁãÂÊ
-	double minZCR;                                                           //ÓÃÓÚ±£´æ×îĞ¡µÄ¶ÌÊ±¹ıÁãÂÊ
+	double maxEnergy;                                                        //ç”¨äºä¿å­˜æœ€å¤§çš„çŸ­æ—¶å¸§èƒ½é‡
+	double minEnergy;                                                        //ç”¨äºä¿å­˜æœ€å°çš„çŸ­æ—¶å¸§èƒ½é‡
+	double maxZCR;                                                           //ç”¨äºä¿å­˜æœ€å¤§çš„çŸ­æ—¶è¿‡é›¶ç‡
+	double minZCR;                                                           //ç”¨äºä¿å­˜æœ€å°çš„çŸ­æ—¶è¿‡é›¶ç‡
 
-	unsigned long voiceNumber;                                               //ÓïÒô¶ÎÂä¸öÊı
-	vector<VoiceParagraph> voiceParagraph;                                   //±£´æÕâ¸öÓïÒôÎÄ¼şÖĞËùÓĞÒª´¦ÀíµÄÓïÒô¶ÎÂä
+	unsigned long voiceNumber;                                               //è¯­éŸ³æ®µè½ä¸ªæ•°
+	vector<VoiceParagraph> voiceParagraph;                                   //ä¿å­˜è¿™ä¸ªè¯­éŸ³æ–‡ä»¶ä¸­æ‰€æœ‰è¦å¤„ç†çš„è¯­éŸ³æ®µè½
 
-	double *dataDFT;                                                         //ÓÃÓÚ±£´æÕıÏòÀëÉ¢¸µÁ¢Ò¶±ä»»ºóÊı¾İ
-	double *dataIDFT;                                                        //ÓÃÓÚ±£´æÄæÏòÀëÉ¢¸µÁ¢Ò¶±ä»»ºóÊı¾İ
-
-	bool Conversion_Double(void);                                            //ÓÃÀ´½«ĞÂ×Ö½ÚÊı¾İ×ª»»ÎªDoubleÊı¾İ
-	double Hamming_window(double data);                                      //ººÃ÷´°º¯Êı
-	short Sign_Function(double data);                                        //Çó¶ÌÊ±¹ıÁãÂÊµÄ¸¨Öú·ûºÅº¯Êı
-	bool Frame_Energy(void);                                                 //ÓÃÓÚÇó¶ÌÊ±Ö¡ÄÜÁ¿
-	bool Frame_ZCR(void);                                                    //ÓÃÓÚÇó¶ÌÊ±¹ıÁãÂÊ
-	bool Frame_EnergyZcr(void);                                              //ÓÃÓÚÍ¬Ê±ÇóÈ¡¶ÌÊ±Ö¡ÄÜÁ¿Óë¶ÌÊ±¹ıÁãÂÊ
+	bool Conversion_Double(void);                                            //ç”¨æ¥å°†æ–°å­—èŠ‚æ•°æ®è½¬æ¢ä¸ºDoubleæ•°æ®
+	double Hamming_window(double data);                                      //æ±‰æ˜çª—å‡½æ•°
+	short Sign_Function(double data);                                        //æ±‚çŸ­æ—¶è¿‡é›¶ç‡çš„è¾…åŠ©ç¬¦å·å‡½æ•°
+	bool Frame_Energy(void);                                                 //ç”¨äºæ±‚çŸ­æ—¶å¸§èƒ½é‡
+	bool Frame_ZCR(void);                                                    //ç”¨äºæ±‚çŸ­æ—¶è¿‡é›¶ç‡
+	bool Frame_EnergyZcr(void);                                              //ç”¨äºåŒæ—¶æ±‚å–çŸ­æ—¶å¸§èƒ½é‡ä¸çŸ­æ—¶è¿‡é›¶ç‡
 public:
-	static const int N;                                                      //±íÊ¾Ã¿¸ö´°µÄÖ¡³¤
-	static const int FrameShift;                                             //´°º¯ÊıµÄÖ¡ÒÆ
-	static const double PI;                                                  //ÊıÑ§Ô²ÖÜÂÊPI
-	static const double preCoefficient;                                      //Ô¤¼ÓÖØÏµÊı
+	static const int N;                                                      //è¡¨ç¤ºæ¯ä¸ªçª—çš„å¸§é•¿
+	static const int FrameShift;                                             //çª—å‡½æ•°çš„å¸§ç§»
+	static const double PI;                                                  //æ•°å­¦åœ†å‘¨ç‡PI
+	static const double preCoefficient;                                      //é¢„åŠ é‡ç³»æ•°
 
 	WavFile_Initial(void) {}
 	WavFile_Initial(FILE *f) :WavFile(f) {
 		try
 		{
-			if (WavFile::Read_File() == false) {                             //µ÷ÓÃ¸¸º¯Êı¶ÁÈ¡ÎÄ¼ş
+			if (WavFile::Read_File() == false) {                             //è°ƒç”¨çˆ¶å‡½æ•°è¯»å–æ–‡ä»¶
 				throw;
 			}
-			dataDouble = (double*)malloc(sizeof(double)*WavFile::Get_dataNumber());    //ÎªDoubleĞÍÊı¾İÉêÇëÄÚ´æ¿Õ¼ä
-			if (dataDouble == NULL) {                                        //·ÖÅä¿Õ¼äÎ´³É¹¦
+			dataDouble = (double*)malloc(sizeof(double)*WavFile::Get_dataNumber());    //ä¸ºDoubleå‹æ•°æ®ç”³è¯·å†…å­˜ç©ºé—´
+			if (dataDouble == NULL) {                                        //åˆ†é…ç©ºé—´æœªæˆåŠŸ
 				throw invalid_argument("ERROR : Memory failure !");
 			}
-			if (Conversion_Double() == false) {                              //½«ĞÂ×Ö½ÚÊı¾İ×ª»»ÎªDoubleÊı¾İ
+			if (Conversion_Double() == false) {                              //å°†æ–°å­—èŠ‚æ•°æ®è½¬æ¢ä¸ºDoubleæ•°æ®
 				throw invalid_argument("ERROR : Data change failure !");
 			}
-			this->Endpoint_Detection();                                      //¿ªÊ¼¶Ëµã¼ì²â
+			this->Endpoint_Detection();                                      //å¼€å§‹ç«¯ç‚¹æ£€æµ‹
 		}
 		catch (invalid_argument &e) {
 			MessageBoxA(NULL, e.what(), "ERROR", MB_ICONHAND);
@@ -70,23 +67,23 @@ public:
 		free(dataDouble);
 	}
 
-	double* Get_WavFileData(void);                                           //»ñÈ¡ºÏ³ÉÍê±ÏµÄÓïÒôÊı¾İ
-	vector<double> Get_DataEnergy(void);                                     //»ñÈ¡¶ÌÊ±Ö¡ÄÜÁ¿µÄÊı¾İ
-	vector<double> Get_DataZCR(void);                                        //»ñÈ¡¶ÌÊ±¹ıÁãÂÊµÄÊı¾İ
-	double Get_maxEnergy(void);                                              //»ñÈ¡×î´ó¶ÌÊ±Ö¡ÄÜÁ¿
-	double Get_minEnergy(void);                                              //»ñÈ¡×îĞ¡¶ÌÊ±Ö¡ÄÜÁ¿
-	double Get_maxZCR(void);                                                 //»ñÈ¡×î´ó¶ÌÊ±¹ıÁãÂÊ
-	double Get_minZCR(void);                                                 //»ñÈ¡×îĞ¡¶ÌÊ±¹ıÁãÂÊ
-	double Get_dataNumber(void);                                             //»ñÈ¡DoubleÊı¾İµÄ¸öÊı
-	double Get_dataEZNumber(void);                                           //»ñÈ¡ÄÜÁ¿¹ıÁãÂÊµÄ¸öÊı
-	double Get_DataDouble(unsigned long Number);                             //»ñÈ¡×ª»»ºóµÄDoubleÊı¾İ
-	double Get_DataEnergy(unsigned long Number);                             //ÒÀ¾İĞòºÅÕÒµ½¶ÔÓ¦µÄ¶ÌÊ±Ö¡ÄÜÁ¿
-	double Get_DataZCR(unsigned long Number);                                //ÒÀ¾İĞòºÅÕÒµ½¶ÔÓ¦µÄ¶ÌÊ±¹ıÁãÂÊ
-	int Get_WindowLength(void);                                              //»ñÈ¡Ö¡³¤£¨´°µÄ´óĞ¡£©
-	unsigned long Get_voiceNumber(void);                                     //»ñÈ¡ÓïÒô¶ÎÂä¸öÊı
-	VoiceParagraph Get_dataVoicePoint(unsigned long Number);                 //»ñÈ¡Ä³¸öÓïÒô¶ÎÂä
-	void ShowData(void);                                                     //¸²¸Ç¸¸ÀàµÄÕ¹Ê¾Êı¾İº¯Êı
-	void SaveNewWav(void);                                                   //±£´æÈ¥µô¿Õ°×´¦µÄÓïÒôÎÄ¼ş
-	void Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDouble);    //¶ÔÒ»¸ö¶ÎÂäÄÚµÄÊı¾İ½øĞĞÔ¤¼ÓÖØ´¦Àí £¨×¢£ºÔ¤¼ÓÖØ´¦Àí¿ÉÒÔ°²·ÀÔÚ·ÖÖ¡Ç°£¬Ò²¿É°²·ÅÔÚ·ÖÖ¡ºó£©
-	bool Endpoint_Detection(void);                                           //¶Ëµã¼ì²âº¯Êı
+	double* Get_WavFileData(void);                                           //è·å–åˆæˆå®Œæ¯•çš„è¯­éŸ³æ•°æ®
+	vector<double> Get_DataEnergy(void);                                     //è·å–çŸ­æ—¶å¸§èƒ½é‡çš„æ•°æ®
+	vector<double> Get_DataZCR(void);                                        //è·å–çŸ­æ—¶è¿‡é›¶ç‡çš„æ•°æ®
+	double Get_maxEnergy(void);                                              //è·å–æœ€å¤§çŸ­æ—¶å¸§èƒ½é‡
+	double Get_minEnergy(void);                                              //è·å–æœ€å°çŸ­æ—¶å¸§èƒ½é‡
+	double Get_maxZCR(void);                                                 //è·å–æœ€å¤§çŸ­æ—¶è¿‡é›¶ç‡
+	double Get_minZCR(void);                                                 //è·å–æœ€å°çŸ­æ—¶è¿‡é›¶ç‡
+	double Get_dataNumber(void);                                             //è·å–Doubleæ•°æ®çš„ä¸ªæ•°
+	double Get_dataEZNumber(void);                                           //è·å–èƒ½é‡è¿‡é›¶ç‡çš„ä¸ªæ•°
+	double Get_DataDouble(unsigned long Number);                             //è·å–è½¬æ¢åçš„Doubleæ•°æ®
+	double Get_DataEnergy(unsigned long Number);                             //ä¾æ®åºå·æ‰¾åˆ°å¯¹åº”çš„çŸ­æ—¶å¸§èƒ½é‡
+	double Get_DataZCR(unsigned long Number);                                //ä¾æ®åºå·æ‰¾åˆ°å¯¹åº”çš„çŸ­æ—¶è¿‡é›¶ç‡
+	int Get_WindowLength(void);                                              //è·å–å¸§é•¿ï¼ˆçª—çš„å¤§å°ï¼‰
+	unsigned long Get_voiceNumber(void);                                     //è·å–è¯­éŸ³æ®µè½ä¸ªæ•°
+	VoiceParagraph Get_dataVoicePoint(unsigned long Number);                 //è·å–æŸä¸ªè¯­éŸ³æ®µè½
+	void ShowData(void);                                                     //è¦†ç›–çˆ¶ç±»çš„å±•ç¤ºæ•°æ®å‡½æ•°
+	void SaveNewWav(void);                                                   //ä¿å­˜å»æ‰ç©ºç™½å¤„çš„è¯­éŸ³æ–‡ä»¶
+	void Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDouble);    //å¯¹ä¸€ä¸ªæ®µè½å†…çš„æ•°æ®è¿›è¡Œé¢„åŠ é‡å¤„ç† ï¼ˆæ³¨ï¼šé¢„åŠ é‡å¤„ç†å¯ä»¥å®‰é˜²åœ¨åˆ†å¸§å‰ï¼Œä¹Ÿå¯å®‰æ”¾åœ¨åˆ†å¸§åï¼‰
+	bool Endpoint_Detection(void);                                           //ç«¯ç‚¹æ£€æµ‹å‡½æ•°
 };

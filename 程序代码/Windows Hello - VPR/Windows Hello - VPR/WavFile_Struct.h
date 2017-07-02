@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <iostream>
 #include <windows.h>
@@ -6,10 +6,10 @@ using namespace std;
 
 struct VoiceParagraph
 {
-	unsigned long begin;                                                     //ÓïÒô¶ÎÂä¿ªÊ¼µã
-	unsigned long end;                                                       //ÓïÒô¶ÎÂä½áÊøµã
-	unsigned long voiceLength;                                               //ÓïÒô¶ÎÂä³¤¶È
-	VoiceParagraph(unsigned long be, unsigned long en, unsigned long vo) {   //¹¹Ôì³õÊ¼»¯
+	unsigned long begin;                                                     //è¯­éŸ³æ®µè½å¼€å§‹ç‚¹
+	unsigned long end;                                                       //è¯­éŸ³æ®µè½ç»“æŸç‚¹
+	unsigned long voiceLength;                                               //è¯­éŸ³æ®µè½é•¿åº¦
+	VoiceParagraph(unsigned long be, unsigned long en, unsigned long vo) {   //æ„é€ åˆå§‹åŒ–
 		begin = be;
 		end = en;
 		voiceLength = vo;
@@ -19,38 +19,38 @@ struct VoiceParagraph
 class WavFile
 {
 private:
-	FILE *fp;                                                                //ÎÄ¼şÖ¸Õë
-	char *fileName;                                                          //ÎÄ¼şÃû»òµØÖ·
+	FILE *fp;                                                                //æ–‡ä»¶æŒ‡é’ˆ
+	char *fileName;                                                          //æ–‡ä»¶åæˆ–åœ°å€
 
-	char id_RIFF[5];                                                         //RIFF¿é±êÖ¾
-	unsigned long fileSize;                                                  //ÎÄ¼şµÄ×Ü×Ö½ÚÊı
-	char id_WAVE[5];                                                         //WAV±êÖ¾
+	char id_RIFF[5];                                                         //RIFFå—æ ‡å¿—
+	unsigned long fileSize;                                                  //æ–‡ä»¶çš„æ€»å­—èŠ‚æ•°
+	char id_WAVE[5];                                                         //WAVæ ‡å¿—
 
-	char id_FMT[5];                                                          //¸ñÊ½¿é±êÖ¾
-	unsigned long formatLength;                                              //¸ñÊ½¿é³¤¶È£¬16ÎªÕı³££¬18ËµÃ÷ÓĞ¸½¼ÓĞÅÏ¢
-	short formatTag;                                                         //¸ñÊ½Àà±ğ£¬Öµ=1 ±íÊ¾±àÂë·½Ê½ÎªPCMuÂÉ±àÂë
-	short channelsNumber;                                                    //ÉùµÀÊı
-	unsigned long sampleRate;                                                //Ã¿ÃëµÄÑù±¾Êı
-	unsigned long secondBytes;                                               //Ã¿ÃëÊı¾İµÄ×Ö½ÚÊı
-	short chunkAlign;                                                        //²ÉÑù×Ö½ÚÊı
-	short sampleBits;                                                        //²ÉÑùÎ»Êı
-	short appendInformation;                                                 //¸½¼ÓĞÅÏ¢£¬Í¨¹ıformatLengthÀ´ÅĞ¶Ï
+	char id_FMT[5];                                                          //æ ¼å¼å—æ ‡å¿—
+	unsigned long formatLength;                                              //æ ¼å¼å—é•¿åº¦ï¼Œ16ä¸ºæ­£å¸¸ï¼Œ18è¯´æ˜æœ‰é™„åŠ ä¿¡æ¯
+	short formatTag;                                                         //æ ¼å¼ç±»åˆ«ï¼Œå€¼=1 è¡¨ç¤ºç¼–ç æ–¹å¼ä¸ºPCMuå¾‹ç¼–ç 
+	short channelsNumber;                                                    //å£°é“æ•°
+	unsigned long sampleRate;                                                //æ¯ç§’çš„æ ·æœ¬æ•°
+	unsigned long secondBytes;                                               //æ¯ç§’æ•°æ®çš„å­—èŠ‚æ•°
+	short chunkAlign;                                                        //é‡‡æ ·å­—èŠ‚æ•°
+	short sampleBits;                                                        //é‡‡æ ·ä½æ•°
+	short appendInformation;                                                 //é™„åŠ ä¿¡æ¯ï¼Œé€šè¿‡formatLengthæ¥åˆ¤æ–­
 
-	char id_FACT[5];                                                         //¸½¼Ó¿é±êÖ¾
-	unsigned long appendLength;                                              //¸½¼Ó¿é³¤¶È
-	unsigned long appendNone;                                                //Î´Öª
+	char id_FACT[5];                                                         //é™„åŠ å—æ ‡å¿—
+	unsigned long appendLength;                                              //é™„åŠ å—é•¿åº¦
+	unsigned long appendNone;                                                //æœªçŸ¥
 
-	char id_DATA[5];                                                         //¸½¼Ó¿é±êÖ¾
-	unsigned long dataSize;                                                  //Êı¾İ²¿·Ö×Ö½ÚÊı
-	char *data;                                                              //Êı¾İ²¿·Ö
+	char id_DATA[5];                                                         //é™„åŠ å—æ ‡å¿—
+	unsigned long dataSize;                                                  //æ•°æ®éƒ¨åˆ†å­—èŠ‚æ•°
+	char *data;                                                              //æ•°æ®éƒ¨åˆ†
 
-	long *dataTuple;                                                         //Ã¿¸öÑù±¾µÄÊı¾İ
-	unsigned long dataNumber;                                                //Ñù±¾µÄÊı¾İ¸öÊı
-	long dataMax;                                                            //Ñù±¾Êı¾İµÄ×î´óÖµ
-	long dataMin;                                                            //Ñù±¾Êı¾İµÄ×îĞ¡Öµ
+	long *dataTuple;                                                         //æ¯ä¸ªæ ·æœ¬çš„æ•°æ®
+	unsigned long dataNumber;                                                //æ ·æœ¬çš„æ•°æ®ä¸ªæ•°
+	long dataMax;                                                            //æ ·æœ¬æ•°æ®çš„æœ€å¤§å€¼
+	long dataMin;                                                            //æ ·æœ¬æ•°æ®çš„æœ€å°å€¼
 
-	bool Conversion_Tuple(void);                                             //½«Ö±½Ó¶ÁÈ¡µÄÊı¾İ×ª»»ÎªÑù±¾Êı¾İ
-	long MakeWord(long NumberA, long NumberB);                               //ºÏ²¢×Ö½Ú
+	bool Conversion_Tuple(void);                                             //å°†ç›´æ¥è¯»å–çš„æ•°æ®è½¬æ¢ä¸ºæ ·æœ¬æ•°æ®
+	long MakeWord(long NumberA, long NumberB);                               //åˆå¹¶å­—èŠ‚
 public:
 	WavFile(void) {
 		dataMax = 0;
@@ -63,11 +63,11 @@ public:
 	void Give_FP(FILE *f) {
 		fp = f;
 	}
-	bool Read_File(void);                                                    //¶ÁÈ¡ÎÄ¼ş
-	unsigned long Get_SampleRate(void);                                      //»ñÈ¡²ÉÑùÆµÂÊ
-	short Get_ChunkAlign(void);                                              //»ñÈ¡Ñù±¾×Ö½ÚÊı
-	long Get_Data(unsigned long Number);                                     //»ñÈ¡Ä³¸öÎ»ÖÃÉÏµÄÊı¾İ
-	unsigned long Get_dataNumber(void);                                      //»ñÈ¡Ñù±¾Êı¾İ¸öÊı
-	void ShowData(void);                                                     //Êä³öÊı¾İ
-	void SaveNewWav(unsigned long voiceNumber, vector<VoiceParagraph> voiceParagraph);           //±£´æÈ¥µô¿Õ°×´¦µÄÓïÒôÎÄ¼ş£¬²ÎÊı1Îª¶ÎÂäµÄ¸öÊı£¬²ÎÊı2Îª¸÷¸öÓïÒô¶ÎÂäµÄ¿ªÊ¼µãÓë½áÊøµãĞÅÏ¢
+	bool Read_File(void);                                                    //è¯»å–æ–‡ä»¶
+	unsigned long Get_SampleRate(void);                                      //è·å–é‡‡æ ·é¢‘ç‡
+	short Get_ChunkAlign(void);                                              //è·å–æ ·æœ¬å­—èŠ‚æ•°
+	long Get_Data(unsigned long Number);                                     //è·å–æŸä¸ªä½ç½®ä¸Šçš„æ•°æ®
+	unsigned long Get_dataNumber(void);                                      //è·å–æ ·æœ¬æ•°æ®ä¸ªæ•°
+	void ShowData(void);                                                     //è¾“å‡ºæ•°æ®
+	void SaveNewWav(unsigned long voiceNumber, vector<VoiceParagraph> voiceParagraph);           //ä¿å­˜å»æ‰ç©ºç™½å¤„çš„è¯­éŸ³æ–‡ä»¶ï¼Œå‚æ•°1ä¸ºæ®µè½çš„ä¸ªæ•°ï¼Œå‚æ•°2ä¸ºå„ä¸ªè¯­éŸ³æ®µè½çš„å¼€å§‹ç‚¹ä¸ç»“æŸç‚¹ä¿¡æ¯
 };

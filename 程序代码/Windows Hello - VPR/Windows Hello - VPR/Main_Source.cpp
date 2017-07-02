@@ -1,10 +1,10 @@
-#include "WavFile_Initial.h"
+ï»¿#include "WavFile_Initial.h"
 
 int main()
 {
 
 	FILE *fp;
-	if ((fp = fopen("Î¢ÈíÄ¬ÈÏ.wav", "rb")) == NULL) {
+	if ((fp = fopen("å¾®è½¯é»˜è®¤.wav", "rb")) == NULL) {
 		cout << "ERROR : File open failed !" << endl;
 		exit(-1);
 	}
@@ -12,5 +12,7 @@ int main()
 	for (unsigned long i = 0; i < wavFile.Get_voiceNumber(); ++i) {
 		wavFile.Pre_emphasis(wavFile.Get_dataVoicePoint(i), wavFile.Get_WavFileData());
 	}
+
+
 	return 0;
 }

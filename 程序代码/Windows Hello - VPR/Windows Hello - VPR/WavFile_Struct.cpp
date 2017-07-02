@@ -1,25 +1,25 @@
-#include "WavFile_Struct.h"
+ï»¿#include "WavFile_Struct.h"
 
 bool WavFile::Conversion_Tuple(void)
 {
 	try
 	{
 		cout << "TIP : Change to real format data ..." << endl;
-		dataNumber = dataSize / chunkAlign;                                  //Çó³öÊı¾İ¸öÊı
-		dataTuple = (long*)malloc(sizeof(long)*dataNumber);                  //ÎªĞÂ×Ö½ÚÊı¾İ¿Õ¼ä¸³Öµ
-		long tempNum = 0;                                                    //ÓÃÀ´±£´æÃ¿¸öĞÂ×Ö½ÚÊı¾İ
-		for (unsigned long i = 0; i < dataNumber; ++i) {                     //×Ü¹²ÓĞdataNumber¸öÊı¾İ
+		dataNumber = dataSize / chunkAlign;                                  //æ±‚å‡ºæ•°æ®ä¸ªæ•°
+		dataTuple = (long*)malloc(sizeof(long)*dataNumber);                  //ä¸ºæ–°å­—èŠ‚æ•°æ®ç©ºé—´èµ‹å€¼
+		long tempNum = 0;                                                    //ç”¨æ¥ä¿å­˜æ¯ä¸ªæ–°å­—èŠ‚æ•°æ®
+		for (unsigned long i = 0; i < dataNumber; ++i) {                     //æ€»å…±æœ‰dataNumberä¸ªæ•°æ®
 			int Flag = 0;
-			for (short j = 0; j < chunkAlign; ++j) {                         //Ã¿¸öÊı¾İÓĞÁ½¸ö×Ö½Ú
-				tempNum = MakeWord((long)data[i*chunkAlign + j], tempNum);   //Ã¿´Î½«tempNum×öÎª¸ß×Ö½ÚÊı¾İ£¬ĞÂ×Ö½ÚÎªµÍ×Ö½ÚÊı¾İÖÆ×÷ĞÂÊı¾İ				
+			for (short j = 0; j < chunkAlign; ++j) {                         //æ¯ä¸ªæ•°æ®æœ‰ä¸¤ä¸ªå­—èŠ‚
+				tempNum = MakeWord((long)data[i*chunkAlign + j], tempNum);   //æ¯æ¬¡å°†tempNumåšä¸ºé«˜å­—èŠ‚æ•°æ®ï¼Œæ–°å­—èŠ‚ä¸ºä½å­—èŠ‚æ•°æ®åˆ¶ä½œæ–°æ•°æ®				
 			}
-			dataTuple[i] = tempNum;                                          //±£´æÏÂĞÂ×Ö½ÚÊı¾İ
-			tempNum = 0;                                                     //³õÊ¼»¯»º³åÇø²Ù×÷
+			dataTuple[i] = tempNum;                                          //ä¿å­˜ä¸‹æ–°å­—èŠ‚æ•°æ®
+			tempNum = 0;                                                     //åˆå§‹åŒ–ç¼“å†²åŒºæ“ä½œ
 
-			if (dataMax < dataTuple[i]) {                                    //Çó³ö×î´óÖµ
+			if (dataMax < dataTuple[i]) {                                    //æ±‚å‡ºæœ€å¤§å€¼
 				dataMax = dataTuple[i];
 			}
-			if (dataMin > dataTuple[i]) {                                    //Çó³ö×îĞ¡Öµ
+			if (dataMin > dataTuple[i]) {                                    //æ±‚å‡ºæœ€å°å€¼
 				dataMin = dataTuple[i];
 			}
 		}
@@ -32,23 +32,23 @@ bool WavFile::Conversion_Tuple(void)
 	return true;
 }
 
-long WavFile::MakeWord(long NumberA, long NumberB)                           //ºÏ²¢×Ö½Ú£¬NumberA±íÊ¾¸ß×Ö½ÚÎ»£¬NumberB±íÊ¾µÍ×Ö½ÚÎ»
+long WavFile::MakeWord(long NumberA, long NumberB)                           //åˆå¹¶å­—èŠ‚ï¼ŒNumberAè¡¨ç¤ºé«˜å­—èŠ‚ä½ï¼ŒNumberBè¡¨ç¤ºä½å­—èŠ‚ä½
 {
-	int Flag = 0;                                                            //±êÖ¾£¬ÓÃÀ´±íÊ¾×îºóµÄÊıµÄÕı¸º£¬1Îª¸º£¬0ÎªÕı
+	int Flag = 0;                                                            //æ ‡å¿—ï¼Œç”¨æ¥è¡¨ç¤ºæœ€åçš„æ•°çš„æ­£è´Ÿï¼Œ1ä¸ºè´Ÿï¼Œ0ä¸ºæ­£
 	if (NumberA >= 0) {
 		if (NumberB >= 0) {
-			return NumberA * 256 + NumberB;                                  //¸ßµÍ×Ö½Ú¶¼ÊÇÕıÊı£¬ÔòÖ±½ÓÒÆÎ»ºÏ²¢
+			return NumberA * 256 + NumberB;                                  //é«˜ä½å­—èŠ‚éƒ½æ˜¯æ­£æ•°ï¼Œåˆ™ç›´æ¥ç§»ä½åˆå¹¶
 		}
 		else {
-			return NumberA * 256 + abs(NumberB) + 128;                       //¸ß×Ö½ÚÎªÕıÊı£¬µÍ×Ö½ÚÎª¸ºÊı
+			return NumberA * 256 + abs(NumberB) + 128;                       //é«˜å­—èŠ‚ä¸ºæ­£æ•°ï¼Œä½å­—èŠ‚ä¸ºè´Ÿæ•°
 		}
 	}
 	else {
 		Flag = 1;
-		if (NumberB > 0) {                                                   //¸ß×Ö½ÚÎª¸ºÊı£¬µÍ×Ö½ÚÎªÕıÊı
+		if (NumberB > 0) {                                                   //é«˜å­—èŠ‚ä¸ºè´Ÿæ•°ï¼Œä½å­—èŠ‚ä¸ºæ­£æ•°
 			return -1 * (abs(NumberA) * 256 + NumberB);
 		}
-		else {                                                               //¸ßµÍ×Ö½Ú¶¼ÊÇ¸ºÊı
+		else {                                                               //é«˜ä½å­—èŠ‚éƒ½æ˜¯è´Ÿæ•°
 			return -1 * (abs(NumberA) * 256 + abs(NumberB) + 128);
 		}
 	}
@@ -59,35 +59,35 @@ bool WavFile::Read_File(void)
 	try
 	{
 		cout << "TIP : Reading file ..." << endl;
-		fread(id_RIFF, sizeof(char), 4, fp);                                 //¶ÁÈ¡'RIFF'
-		id_RIFF[4] = 0;                                                      //Ä©Î²ÌíÁã
+		fread(id_RIFF, sizeof(char), 4, fp);                                 //è¯»å–'RIFF'
+		id_RIFF[4] = 0;                                                      //æœ«å°¾æ·»é›¶
 		if (strcmp(id_RIFF, "RIFF")) {
 			throw invalid_argument("ERROR : File not RIFF file !");
 		}
-		fread(&fileSize, sizeof(unsigned long), 1, fp);                      //¶ÁÈ¡ÎÄ¼şµÄ´óĞ¡
-		fread(id_WAVE, sizeof(char), 4, fp);                                 //¶ÁÈ¡'WAVE'
+		fread(&fileSize, sizeof(unsigned long), 1, fp);                      //è¯»å–æ–‡ä»¶çš„å¤§å°
+		fread(id_WAVE, sizeof(char), 4, fp);                                 //è¯»å–'WAVE'
 		id_WAVE[4] = 0;
 		if (strcmp(id_WAVE, "WAVE")) {
 			throw invalid_argument("ERROR : File not WAVE file !");
 		}
-		fread(id_FMT, sizeof(char), 4, fp);                                  //¶ÁÈ¡'FMT'
+		fread(id_FMT, sizeof(char), 4, fp);                                  //è¯»å–'FMT'
 		id_FMT[3] = 32;
 		id_FMT[4] = 0;
 		fread(&formatLength, sizeof(unsigned long), 1, fp);                  //
-		fread(&formatTag, sizeof(short), 1, fp);                             //¶ÁÈ¡ÎÄ¼ş±êÇ©
-		fread(&channelsNumber, sizeof(short), 1, fp);                        //¶ÁÈ¡Í¨µÀÊıÄ¿
-		fread(&sampleRate, sizeof(unsigned long), 1, fp);                    //¶ÁÈ¡²ÉÑùÆµÂÊ
-		fread(&secondBytes, sizeof(unsigned long), 1, fp);                   //¶ÁÈ¡Ã¿ÃëÊı¾İÁ¿
-		fread(&chunkAlign, sizeof(short), 1, fp);                            //¶ÁÈ¡¿é¶ÔÆä
-		fread(&sampleBits, sizeof(short), 1, fp);                            //¶ÁÈ¡Ñù±¾´óĞ¡
+		fread(&formatTag, sizeof(short), 1, fp);                             //è¯»å–æ–‡ä»¶æ ‡ç­¾
+		fread(&channelsNumber, sizeof(short), 1, fp);                        //è¯»å–é€šé“æ•°ç›®
+		fread(&sampleRate, sizeof(unsigned long), 1, fp);                    //è¯»å–é‡‡æ ·é¢‘ç‡
+		fread(&secondBytes, sizeof(unsigned long), 1, fp);                   //è¯»å–æ¯ç§’æ•°æ®é‡
+		fread(&chunkAlign, sizeof(short), 1, fp);                            //è¯»å–å—å¯¹å…¶
+		fread(&sampleBits, sizeof(short), 1, fp);                            //è¯»å–æ ·æœ¬å¤§å°
 		if (formatLength > 16) {
-			fread(&appendInformation, sizeof(short), 1, fp);                 //¶ÁÈ¡¸½¼ÓĞÅÏ¢
+			fread(&appendInformation, sizeof(short), 1, fp);                 //è¯»å–é™„åŠ ä¿¡æ¯
 		}
-		fread(id_DATA, sizeof(char), 4, fp);                                 //¶ÁÈ¡'DATA'
+		fread(id_DATA, sizeof(char), 4, fp);                                 //è¯»å–'DATA'
 		id_DATA[4] = 0;
-		fread(&dataSize, sizeof(unsigned long), 1, fp);                      //¶ÁÈ¡Êı¾İ´óĞ¡
-		data = (char*)malloc(sizeof(char)*dataSize);                         //ÉêÇëÊı¾İµÄ´æ´¢¿Õ¼ä
-		fread(data, sizeof(char), dataSize, fp);                             //¶ÁÈ¡Êı¾İ
+		fread(&dataSize, sizeof(unsigned long), 1, fp);                      //è¯»å–æ•°æ®å¤§å°
+		data = (char*)malloc(sizeof(char)*dataSize);                         //ç”³è¯·æ•°æ®çš„å­˜å‚¨ç©ºé—´
+		fread(data, sizeof(char), dataSize, fp);                             //è¯»å–æ•°æ®
 		fclose(fp);
 	}
 	catch (invalid_argument &e)
@@ -95,7 +95,7 @@ bool WavFile::Read_File(void)
 		MessageBoxA(NULL, e.what(), "ERROR", MB_ICONHAND);
 		return false;
 	}
-	if (Conversion_Tuple() == true) {                                        //×ª»»¸ñÊ½³É¹¦
+	if (Conversion_Tuple() == true) {                                        //è½¬æ¢æ ¼å¼æˆåŠŸ
 		MessageBoxA(NULL, "TIP : File read ok !", "TIP", MB_ICONASTERISK);
 	}
 	else {
@@ -106,19 +106,19 @@ bool WavFile::Read_File(void)
 	return true;
 }
 
-unsigned long WavFile::Get_SampleRate(void)                                  //»ñÈ¡²ÉÑùÆµÂÊ
+unsigned long WavFile::Get_SampleRate(void)                                  //è·å–é‡‡æ ·é¢‘ç‡
 {
 	return sampleRate;
 }
 
-short WavFile::Get_ChunkAlign(void)                                          //»ñÈ¡Ñù±¾×Ö½ÚÊı
+short WavFile::Get_ChunkAlign(void)                                          //è·å–æ ·æœ¬å­—èŠ‚æ•°
 {
 	return chunkAlign;
 }
 
-long WavFile::Get_Data(unsigned long Number)                                 //»ñÈ¡Ä³¸öÎ»ÖÃÉÏµÄÊı¾İ
+long WavFile::Get_Data(unsigned long Number)                                 //è·å–æŸä¸ªä½ç½®ä¸Šçš„æ•°æ®
 {
-	if (Number >= dataNumber) {                                              //Èç¹ûËùĞèÒªµÄÊı³¬¹ıÁËÊı¾İ¸öÊı
+	if (Number >= dataNumber) {                                              //å¦‚æœæ‰€éœ€è¦çš„æ•°è¶…è¿‡äº†æ•°æ®ä¸ªæ•°
 		MessageBoxA(NULL, "ERROR : Over list !", "ERROR", MB_ICONHAND);
 		return -1;
 	}
@@ -127,7 +127,7 @@ long WavFile::Get_Data(unsigned long Number)                                 //»
 	}
 }
 
-unsigned long WavFile::Get_dataNumber(void)                                  //»ñÈ¡Ñù±¾Êı¾İ¸öÊı
+unsigned long WavFile::Get_dataNumber(void)                                  //è·å–æ ·æœ¬æ•°æ®ä¸ªæ•°
 {
 	return dataNumber;
 }
@@ -166,7 +166,7 @@ void WavFile::ShowData(void)
 	cout << "MIN :" << dataMin << endl;
 }
 
-void WavFile::SaveNewWav(unsigned long voiceNumber, vector<VoiceParagraph> voiceParagraph)       //±£´æÈ¥µô¿Õ°×´¦µÄÓïÒôÎÄ¼ş£¬²ÎÊı1Îª¶ÎÂäµÄ¸öÊı£¬²ÎÊı2Îª¸÷¸öÓïÒô¶ÎÂäµÄ¿ªÊ¼µãÓë½áÊøµãĞÅÏ¢
+void WavFile::SaveNewWav(unsigned long voiceNumber, vector<VoiceParagraph> voiceParagraph)       //ä¿å­˜å»æ‰ç©ºç™½å¤„çš„è¯­éŸ³æ–‡ä»¶ï¼Œå‚æ•°1ä¸ºæ®µè½çš„ä¸ªæ•°ï¼Œå‚æ•°2ä¸ºå„ä¸ªè¯­éŸ³æ®µè½çš„å¼€å§‹ç‚¹ä¸ç»“æŸç‚¹ä¿¡æ¯
 {
 	unsigned long endPointLength = 0;
 	for (unsigned long i = 0; i < voiceNumber; ++i){
@@ -176,7 +176,7 @@ void WavFile::SaveNewWav(unsigned long voiceNumber, vector<VoiceParagraph> voice
 	unsigned long removerLength = dataNumber - endPointLength;
 	unsigned long removerSize = removerLength*chunkAlign;
 
-	//¸ü¸ÄÊı¾İ²Ù×÷½Ï¶à£¬ÔİÊ±ÎŞ·¨Íê³É
+	//æ›´æ”¹æ•°æ®æ“ä½œè¾ƒå¤šï¼Œæš‚æ—¶æ— æ³•å®Œæˆ
 	//Wav_File* newWav = (Wav_File*)malloc(sizeof(Wav_File));
 	//newWav = this;
 
@@ -190,24 +190,24 @@ void WavFile::SaveNewWav(unsigned long voiceNumber, vector<VoiceParagraph> voice
 	{
 		unsigned long tempLength;
 		cout << "TIP : Writing file ..." << endl;
-		fwrite(id_RIFF, sizeof(char), 4, fp);                                //Ğ´Èë'RIFF'
+		fwrite(id_RIFF, sizeof(char), 4, fp);                                //å†™å…¥'RIFF'
 		tempLength = fileSize - removerSize;
-		fwrite(&tempLength, sizeof(unsigned long), 1, fp);                   //Ğ´ÈëÎÄ¼şµÄ´óĞ¡
-		fwrite(id_WAVE, sizeof(char), 4, fp);                                //Ğ´Èë'WAVE'
-		fwrite(id_FMT, sizeof(char), 4, fp);                                 //Ğ´Èë'FMT'
-		fwrite(&formatLength, sizeof(unsigned long), 1, fp);                 //Ğ´Èë¸ñÊ½¿é³¤¶È
-		fwrite(&formatTag, sizeof(short), 1, fp);                            //Ğ´ÈëÎÄ¼ş±êÇ©
-		fwrite(&channelsNumber, sizeof(short), 1, fp);                       //Ğ´ÈëÍ¨µÀÊıÄ¿
-		fwrite(&sampleRate, sizeof(unsigned long), 1, fp);                   //Ğ´Èë²ÉÑùÆµÂÊ
-		fwrite(&secondBytes, sizeof(unsigned long), 1, fp);                  //Ğ´ÈëÃ¿ÃëÊı¾İÁ¿
-		fwrite(&chunkAlign, sizeof(short), 1, fp);                           //Ğ´Èë¿é¶ÔÆä
-		fwrite(&sampleBits, sizeof(short), 1, fp);                           //Ğ´ÈëÑù±¾´óĞ¡
+		fwrite(&tempLength, sizeof(unsigned long), 1, fp);                   //å†™å…¥æ–‡ä»¶çš„å¤§å°
+		fwrite(id_WAVE, sizeof(char), 4, fp);                                //å†™å…¥'WAVE'
+		fwrite(id_FMT, sizeof(char), 4, fp);                                 //å†™å…¥'FMT'
+		fwrite(&formatLength, sizeof(unsigned long), 1, fp);                 //å†™å…¥æ ¼å¼å—é•¿åº¦
+		fwrite(&formatTag, sizeof(short), 1, fp);                            //å†™å…¥æ–‡ä»¶æ ‡ç­¾
+		fwrite(&channelsNumber, sizeof(short), 1, fp);                       //å†™å…¥é€šé“æ•°ç›®
+		fwrite(&sampleRate, sizeof(unsigned long), 1, fp);                   //å†™å…¥é‡‡æ ·é¢‘ç‡
+		fwrite(&secondBytes, sizeof(unsigned long), 1, fp);                  //å†™å…¥æ¯ç§’æ•°æ®é‡
+		fwrite(&chunkAlign, sizeof(short), 1, fp);                           //å†™å…¥å—å¯¹å…¶
+		fwrite(&sampleBits, sizeof(short), 1, fp);                           //å†™å…¥æ ·æœ¬å¤§å°
 		if (formatLength > 16) {
-			fwrite(&appendInformation, sizeof(short), 1, fp);                //Ğ´Èë¸½¼ÓĞÅÏ¢
+			fwrite(&appendInformation, sizeof(short), 1, fp);                //å†™å…¥é™„åŠ ä¿¡æ¯
 		}
-		fwrite(id_DATA, sizeof(char), 4, fp);                                //Ğ´Èë'DATA'
+		fwrite(id_DATA, sizeof(char), 4, fp);                                //å†™å…¥'DATA'
 		tempLength = dataSize - removerSize;
-		fwrite(&tempLength, sizeof(unsigned long), 1, fp);                   //Ğ´ÈëÊı¾İ´óĞ¡
+		fwrite(&tempLength, sizeof(unsigned long), 1, fp);                   //å†™å…¥æ•°æ®å¤§å°
 
 		unsigned long n = 0;
 		for (unsigned long i = 0; i < voiceNumber; ++i){

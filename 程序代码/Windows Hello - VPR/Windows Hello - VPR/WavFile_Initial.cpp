@@ -1,21 +1,21 @@
-#include "WavFile_Initial.h"
+ï»¿#include "WavFile_Initial.h"
 
-const int WavFile_Initial::N = 256;                                          //³õÊ¼»¯Ã¿¸ö´°µÄ´°³¤
-const int WavFile_Initial::FrameShift = 10;                                  //³õÊ¼»¯´°º¯ÊıµÄÖ¡ÒÆ
-const double WavFile_Initial::PI = 3.14159;                                  //³õÊ¼»¯Ô²ÖÜÂÊ
-const double WavFile_Initial::preCoefficient = -0.98;                        //Ô¤¼ÓÖØÏµÊı
+const int WavFile_Initial::N = 256;                                          //åˆå§‹åŒ–æ¯ä¸ªçª—çš„çª—é•¿
+const int WavFile_Initial::FrameShift = 10;                                  //åˆå§‹åŒ–çª—å‡½æ•°çš„å¸§ç§»
+const double WavFile_Initial::PI = 3.14159;                                  //åˆå§‹åŒ–åœ†å‘¨ç‡
+const double WavFile_Initial::preCoefficient = -0.98;                        //é¢„åŠ é‡ç³»æ•°
 
-const unsigned long WavFile_Initial::minSilence = 6;                         //×î¶Ì¾²Òô³¤¶È
-const unsigned long WavFile_Initial::minVoiceLength = 15;                    //×î¶ÌÓïÒô³¤¶È
+const unsigned long WavFile_Initial::minSilence = 6;                         //æœ€çŸ­é™éŸ³é•¿åº¦
+const unsigned long WavFile_Initial::minVoiceLength = 15;                    //æœ€çŸ­è¯­éŸ³é•¿åº¦
 
-bool WavFile_Initial::Conversion_Double(void)                                //ÓÃÀ´½«ĞÂ×Ö½ÚÊı¾İ×ª»»ÎªDoubleÊı¾İ
+bool WavFile_Initial::Conversion_Double(void)                                //ç”¨æ¥å°†æ–°å­—èŠ‚æ•°æ®è½¬æ¢ä¸ºDoubleæ•°æ®
 {
 	try
 	{
 		cout << "TIP : Change to double data ..." << endl;
-		const double Flag = pow((double)2, WavFile::Get_ChunkAlign() * 8);   //±íÊ¾µÄÊÇÔ­Êı¾İ×î´óÖµµÄÒ»°ë
-		for (unsigned long i = 0; i < WavFile::Get_dataNumber(); ++i) {      //±éÀúÃ¿¸öÊı¾İ
-			dataDouble[i] = (double)WavFile::Get_Data(i) / Flag;             //¿ØÖÆÃ¿¸öÊı¾İÔÚ[-1,1]Ö®¼ä
+		const double Flag = pow((double)2, WavFile::Get_ChunkAlign() * 8);   //è¡¨ç¤ºçš„æ˜¯åŸæ•°æ®æœ€å¤§å€¼çš„ä¸€åŠ
+		for (unsigned long i = 0; i < WavFile::Get_dataNumber(); ++i) {      //éå†æ¯ä¸ªæ•°æ®
+			dataDouble[i] = (double)WavFile::Get_Data(i) / Flag;             //æ§åˆ¶æ¯ä¸ªæ•°æ®åœ¨[-1,1]ä¹‹é—´
 		}
 	}
 	catch (invalid_argument &e){
@@ -26,17 +26,17 @@ bool WavFile_Initial::Conversion_Double(void)                                //Ó
 	return true;
 }
 
-double WavFile_Initial::Hamming_window(double data)                          //ººÃ÷´°º¯Êı
+double WavFile_Initial::Hamming_window(double data)                          //æ±‰æ˜çª—å‡½æ•°
 {
-	if (data >= 0 && data <= (N - 1)) {                                      //0<= n <= N-1µÄÇé¿ö
-		return 0.54 - 0.46*cos(2 * PI*data / (N - 1));                       //·µ»ØÊıÖµ
+	if (data >= 0 && data <= (N - 1)) {                                      //0<= n <= N-1çš„æƒ…å†µ
+		return 0.54 - 0.46*cos(2 * PI*data / (N - 1));                       //è¿”å›æ•°å€¼
 	}
 	else {
 		return 0;
 	}
 }
 
-short WavFile_Initial::Sign_Function(double data)                            //Çó¶ÌÊ±¹ıÁãÂÊµÄ¸¨Öú·ûºÅº¯Êı
+short WavFile_Initial::Sign_Function(double data)                            //æ±‚çŸ­æ—¶è¿‡é›¶ç‡çš„è¾…åŠ©ç¬¦å·å‡½æ•°
 {
 	if (data >= 0) {
 		return 1;
@@ -46,45 +46,45 @@ short WavFile_Initial::Sign_Function(double data)                            //Ç
 	}
 }
 
-bool WavFile_Initial::Frame_Energy(void)                                     //ÓÃÓÚÇó¶ÌÊ±Ö¡ÄÜÁ¿
+bool WavFile_Initial::Frame_Energy(void)                                     //ç”¨äºæ±‚çŸ­æ—¶å¸§èƒ½é‡
 {
 	cout << "TIP : Calculate Energy ..." << endl;
-	maxEnergy = 0;                                                           //×î´ó¶ÌÊ±Ö¡ÄÜÁ¿ÖÃ0
-	minEnergy = 1000000;                                                     //×îĞ¡¶ÌÊ±Ö¡ÄÜÁ¿ÖÃ1000000
+	maxEnergy = 0;                                                           //æœ€å¤§çŸ­æ—¶å¸§èƒ½é‡ç½®0
+	minEnergy = 1000000;                                                     //æœ€å°çŸ­æ—¶å¸§èƒ½é‡ç½®1000000
 	double sum = 0;
-	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift){ //ÕâÊÇËùÓĞ¶ÌÊ±Ö¡ÄÜÁ¿Êı¾İµÄ¸öÊı
-		for (unsigned long j = i; j < i + N; ++j) {                          //±éÀú´°ÖĞµÄÃ¿Ò»¸öÊı¾İ
-			sum += pow(dataDouble[j] * Hamming_window(i + N - 1 - j), 2);    //ÇóÃ¿Ò»¸öÊı¾İµÄÄÜÁ¿
+	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift){ //è¿™æ˜¯æ‰€æœ‰çŸ­æ—¶å¸§èƒ½é‡æ•°æ®çš„ä¸ªæ•°
+		for (unsigned long j = i; j < i + N; ++j) {                          //éå†çª—ä¸­çš„æ¯ä¸€ä¸ªæ•°æ®
+			sum += pow(dataDouble[j] * Hamming_window(i + N - 1 - j), 2);    //æ±‚æ¯ä¸€ä¸ªæ•°æ®çš„èƒ½é‡
 		}
-		if (sum > maxEnergy) {                                               //ÇóÈ¡×î´ó¶ÌÊ±Ö¡ÄÜÁ¿
+		if (sum > maxEnergy) {                                               //æ±‚å–æœ€å¤§çŸ­æ—¶å¸§èƒ½é‡
 			maxEnergy = sum;
 		}
-		if (sum < minEnergy) {                                               //ÇóÈ¡×î´ó¶ÌÊ±Ö¡ÄÜÁ¿
+		if (sum < minEnergy) {                                               //æ±‚å–æœ€å¤§çŸ­æ—¶å¸§èƒ½é‡
 			minEnergy = sum;
 		}
-		dataEnergy.push_back(sum);                                           //½«´ËÖ¡µÄ¶ÌÊ±Ö¡ÄÜÁ¿±£´æ
+		dataEnergy.push_back(sum);                                           //å°†æ­¤å¸§çš„çŸ­æ—¶å¸§èƒ½é‡ä¿å­˜
 		sum = 0;
 	}
 
 	return true;
 }
 
-bool WavFile_Initial::Frame_ZCR(void)                                        //ÓÃÓÚÇó¶ÌÊ±¹ıÁãÂÊ
+bool WavFile_Initial::Frame_ZCR(void)                                        //ç”¨äºæ±‚çŸ­æ—¶è¿‡é›¶ç‡
 {
 	cout << "TIP : Calculate ZCR ..." << endl;
-	maxZCR = 0;                                                              //×î´ó¶ÌÊ±¹ıÁãÂÊÖÃ0
-	minZCR = 1000000;                                                        //×îĞ¡¶ÌÊ±¹ıÁãÂÊÖÃ1000000
+	maxZCR = 0;                                                              //æœ€å¤§çŸ­æ—¶è¿‡é›¶ç‡ç½®0
+	minZCR = 1000000;                                                        //æœ€å°çŸ­æ—¶è¿‡é›¶ç‡ç½®1000000
 	double sum = 0;
-	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift) {//ÕâÊÇËùÓĞ¶ÌÊ±Ö¡¹ıÁãÂÊÊı¾İµÄ¸öÊı
-		for (unsigned long j = i; j < i + N; ++j) {                          //±éÀú´°ÖĞµÄÃ¿Ò»¸öÊı¾İ
-			sum += abs(Sign_Function(dataDouble[j]) - Sign_Function(dataDouble[j - 1]))//¹ıÁãÂÊÖĞµÄ¾ø¶ÔÖµ²¿·Ö
+	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift) {//è¿™æ˜¯æ‰€æœ‰çŸ­æ—¶å¸§è¿‡é›¶ç‡æ•°æ®çš„ä¸ªæ•°
+		for (unsigned long j = i; j < i + N; ++j) {                          //éå†çª—ä¸­çš„æ¯ä¸€ä¸ªæ•°æ®
+			sum += abs(Sign_Function(dataDouble[j]) - Sign_Function(dataDouble[j - 1]))//è¿‡é›¶ç‡ä¸­çš„ç»å¯¹å€¼éƒ¨åˆ†
 				*Hamming_window(i + N - 1 - j);
 		}
 		sum /= 2;
-		if (sum > maxZCR) {                                                  //ÇóÈ¡×î´ó¶ÌÊ±¹ıÁãÂÊ
+		if (sum > maxZCR) {                                                  //æ±‚å–æœ€å¤§çŸ­æ—¶è¿‡é›¶ç‡
 			maxZCR = sum;
 		}
-		if (sum < minZCR) {                                                  //ÇóÈ¡×î´ó¶ÌÊ±¹ıÁãÂÊ
+		if (sum < minZCR) {                                                  //æ±‚å–æœ€å¤§çŸ­æ—¶è¿‡é›¶ç‡
 			minZCR = sum;
 		}
 		dataZCR.push_back(sum);
@@ -93,38 +93,38 @@ bool WavFile_Initial::Frame_ZCR(void)                                        //Ó
 	return true;
 }
 
-bool WavFile_Initial::Frame_EnergyZcr(void)                                  //ÓÃÓÚÍ¬Ê±ÇóÈ¡¶ÌÊ±Ö¡ÄÜÁ¿Óë¶ÌÊ±¹ıÁãÂÊ
+bool WavFile_Initial::Frame_EnergyZcr(void)                                  //ç”¨äºåŒæ—¶æ±‚å–çŸ­æ—¶å¸§èƒ½é‡ä¸çŸ­æ—¶è¿‡é›¶ç‡
 {
 	cout << "TIP : Calculate Engry and ZCR ..." << endl;
-	maxEnergy = 0;                                                           //×î´ó¶ÌÊ±Ö¡ÄÜÁ¿ÖÃ0
-	minEnergy = 1000000;                                                     //×îĞ¡¶ÌÊ±Ö¡ÄÜÁ¿ÖÃ1000000
-	maxZCR = 0;                                                              //×î´ó¶ÌÊ±¹ıÁãÂÊÖÃ0
-	minZCR = 1000000;                                                        //×îĞ¡¶ÌÊ±¹ıÁãÂÊÖÃ1000000
+	maxEnergy = 0;                                                           //æœ€å¤§çŸ­æ—¶å¸§èƒ½é‡ç½®0
+	minEnergy = 1000000;                                                     //æœ€å°çŸ­æ—¶å¸§èƒ½é‡ç½®1000000
+	maxZCR = 0;                                                              //æœ€å¤§çŸ­æ—¶è¿‡é›¶ç‡ç½®0
+	minZCR = 1000000;                                                        //æœ€å°çŸ­æ—¶è¿‡é›¶ç‡ç½®1000000
 	double sumEnergy = 0;
 	double sumZcr = 0;
 	double hanming = 0;
-	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift) {//ÕâÊÇËùÓĞ¶ÌÊ±Ö¡ÄÜÁ¿Êı¾İµÄ¸öÊı
-		for (unsigned long j = i; j < i + N; ++j) {                          //±éÀú´°ÖĞµÄÃ¿Ò»¸öÊı¾İ
+	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift) {//è¿™æ˜¯æ‰€æœ‰çŸ­æ—¶å¸§èƒ½é‡æ•°æ®çš„ä¸ªæ•°
+		for (unsigned long j = i; j < i + N; ++j) {                          //éå†çª—ä¸­çš„æ¯ä¸€ä¸ªæ•°æ®
 			hanming = Hamming_window(i + N - 1 - j);
-			sumEnergy += pow(dataDouble[j] * hanming, 2);                    //ÇóÃ¿Ò»¸öÊı¾İµÄÄÜÁ¿
-			sumZcr += abs(Sign_Function(dataDouble[j]) - Sign_Function(dataDouble[j - 1]))       //¹ıÁãÂÊÖĞµÄ¾ø¶ÔÖµ²¿·Ö
+			sumEnergy += pow(dataDouble[j] * hanming, 2);                    //æ±‚æ¯ä¸€ä¸ªæ•°æ®çš„èƒ½é‡
+			sumZcr += abs(Sign_Function(dataDouble[j]) - Sign_Function(dataDouble[j - 1]))       //è¿‡é›¶ç‡ä¸­çš„ç»å¯¹å€¼éƒ¨åˆ†
 				*hanming;
 		}
 		sumZcr /= 2;
 
-		if (sumEnergy > maxEnergy) {                                         //ÇóÈ¡×î´ó¶ÌÊ±Ö¡ÄÜÁ¿
+		if (sumEnergy > maxEnergy) {                                         //æ±‚å–æœ€å¤§çŸ­æ—¶å¸§èƒ½é‡
 			maxEnergy = sumEnergy;
 		}
-		if (sumEnergy < minEnergy) {                                         //ÇóÈ¡×î´ó¶ÌÊ±Ö¡ÄÜÁ¿
+		if (sumEnergy < minEnergy) {                                         //æ±‚å–æœ€å¤§çŸ­æ—¶å¸§èƒ½é‡
 			minEnergy = sumEnergy;
 		}
-		if (sumZcr > maxZCR) {                                               //ÇóÈ¡×î´ó¶ÌÊ±¹ıÁãÂÊ
+		if (sumZcr > maxZCR) {                                               //æ±‚å–æœ€å¤§çŸ­æ—¶è¿‡é›¶ç‡
 			maxZCR = sumZcr;
 		}
-		if (sumZcr < minZCR) {                                               //ÇóÈ¡×î´ó¶ÌÊ±¹ıÁãÂÊ
+		if (sumZcr < minZCR) {                                               //æ±‚å–æœ€å¤§çŸ­æ—¶è¿‡é›¶ç‡
 			minZCR = sumZcr;
 		}
-		dataEnergy.push_back(sumEnergy);                                     //½«´ËÖ¡µÄ¶ÌÊ±Ö¡ÄÜÁ¿±£´æ
+		dataEnergy.push_back(sumEnergy);                                     //å°†æ­¤å¸§çš„çŸ­æ—¶å¸§èƒ½é‡ä¿å­˜
 		dataZCR.push_back(sumZcr);
 		sumEnergy = 0;
 		sumZcr = 0;
@@ -134,51 +134,51 @@ bool WavFile_Initial::Frame_EnergyZcr(void)                                  //Ó
 	return true;
 }
 
-double* WavFile_Initial::Get_WavFileData(void)                               //»ñÈ¡ºÏ³ÉÍê±ÏµÄÓïÒôÊı¾İ
+double* WavFile_Initial::Get_WavFileData(void)                               //è·å–åˆæˆå®Œæ¯•çš„è¯­éŸ³æ•°æ®
 {
 	return this->dataDouble;
 }
 
-vector<double> WavFile_Initial::Get_DataEnergy(void)                         //»ñÈ¡¶ÌÊ±Ö¡ÄÜÁ¿µÄÊı¾İ
+vector<double> WavFile_Initial::Get_DataEnergy(void)                         //è·å–çŸ­æ—¶å¸§èƒ½é‡çš„æ•°æ®
 {
 	return this->dataEnergy;
 }
 
-vector<double> WavFile_Initial::Get_DataZCR(void)                            //»ñÈ¡¶ÌÊ±¹ıÁãÂÊµÄÊı¾İ
+vector<double> WavFile_Initial::Get_DataZCR(void)                            //è·å–çŸ­æ—¶è¿‡é›¶ç‡çš„æ•°æ®
 {
 	return this->dataZCR;
 }
 
-double WavFile_Initial::Get_maxEnergy(void)                                  //»ñÈ¡×î´ó¶ÌÊ±Ö¡ÄÜÁ¿
+double WavFile_Initial::Get_maxEnergy(void)                                  //è·å–æœ€å¤§çŸ­æ—¶å¸§èƒ½é‡
 {
 	return maxEnergy;
 }
-double WavFile_Initial::Get_minEnergy(void)                                  //»ñÈ¡×îĞ¡¶ÌÊ±Ö¡ÄÜÁ¿
+double WavFile_Initial::Get_minEnergy(void)                                  //è·å–æœ€å°çŸ­æ—¶å¸§èƒ½é‡
 {
 	return minEnergy;
 }
-double WavFile_Initial::Get_maxZCR(void)                                     //»ñÈ¡×î´ó¶ÌÊ±¹ıÁãÂÊ
+double WavFile_Initial::Get_maxZCR(void)                                     //è·å–æœ€å¤§çŸ­æ—¶è¿‡é›¶ç‡
 {
 	return maxZCR;
 }
-double WavFile_Initial::Get_minZCR(void)                                     //»ñÈ¡×îĞ¡¶ÌÊ±¹ıÁãÂÊ
+double WavFile_Initial::Get_minZCR(void)                                     //è·å–æœ€å°çŸ­æ—¶è¿‡é›¶ç‡
 {
 	return minZCR;
 }
 
-double WavFile_Initial::Get_dataNumber(void)                                 //»ñÈ¡DoubleÊı¾İµÄ¸öÊı
+double WavFile_Initial::Get_dataNumber(void)                                 //è·å–Doubleæ•°æ®çš„ä¸ªæ•°
 {
 	return WavFile::Get_dataNumber();
 }
 
-double WavFile_Initial::Get_dataEZNumber(void)                               //»ñÈ¡ÄÜÁ¿¹ıÁãÂÊµÄ¸öÊı
+double WavFile_Initial::Get_dataEZNumber(void)                               //è·å–èƒ½é‡è¿‡é›¶ç‡çš„ä¸ªæ•°
 {
 	return min(dataEnergy.size(), dataZCR.size());
 }
 
-double WavFile_Initial::Get_DataDouble(unsigned long Number)                 //»ñÈ¡×ª»»ºóµÄDoubleÊı¾İ
+double WavFile_Initial::Get_DataDouble(unsigned long Number)                 //è·å–è½¬æ¢åçš„Doubleæ•°æ®
 {
-	if (Number >= (this->Get_dataNumber()) || Number < 0) {                  //Èç¹ûËùĞèÒªµÄÊı³¬¹ıÁËÊı¾İ¸öÊı
+	if (Number >= (this->Get_dataNumber()) || Number < 0) {                  //å¦‚æœæ‰€éœ€è¦çš„æ•°è¶…è¿‡äº†æ•°æ®ä¸ªæ•°
 		MessageBoxA(NULL, "ERROR : Over list !", "ERROR", MB_ICONHAND);
 		throw invalid_argument("ERROR : Over list !");
 		return -1;
@@ -188,9 +188,9 @@ double WavFile_Initial::Get_DataDouble(unsigned long Number)                 //»
 	}
 }
 
-double WavFile_Initial::Get_DataEnergy(unsigned long Number)                 //ÒÀ¾İĞòºÅÕÒµ½¶ÔÓ¦µÄ¶ÌÊ±Ö¡ÄÜÁ¿
+double WavFile_Initial::Get_DataEnergy(unsigned long Number)                 //ä¾æ®åºå·æ‰¾åˆ°å¯¹åº”çš„çŸ­æ—¶å¸§èƒ½é‡
 {
-	if (Number >= dataEnergy.size() || Number < 0) {                         //Èç¹ûËùĞèÒªµÄÊı³¬¹ıÁËÊı¾İ¸öÊı
+	if (Number >= dataEnergy.size() || Number < 0) {                         //å¦‚æœæ‰€éœ€è¦çš„æ•°è¶…è¿‡äº†æ•°æ®ä¸ªæ•°
 		MessageBoxA(NULL, "ERROR : Over list !", "ERROR", MB_ICONHAND);
 		throw invalid_argument("ERROR : Over list !");
 		return -1;
@@ -199,9 +199,9 @@ double WavFile_Initial::Get_DataEnergy(unsigned long Number)                 //Ò
 		return dataEnergy[Number];
 	}
 }
-double WavFile_Initial::Get_DataZCR(unsigned long Number)                    //ÒÀ¾İĞòºÅÕÒµ½¶ÔÓ¦µÄ¶ÌÊ±¹ıÁãÂÊ
+double WavFile_Initial::Get_DataZCR(unsigned long Number)                    //ä¾æ®åºå·æ‰¾åˆ°å¯¹åº”çš„çŸ­æ—¶è¿‡é›¶ç‡
 {
-	if (Number >= dataZCR.size() || Number < 0) {                            //Èç¹ûËùĞèÒªµÄÊı³¬¹ıÁËÊı¾İ¸öÊı
+	if (Number >= dataZCR.size() || Number < 0) {                            //å¦‚æœæ‰€éœ€è¦çš„æ•°è¶…è¿‡äº†æ•°æ®ä¸ªæ•°
 		MessageBoxA(NULL, "ERROR : Over list !", "ERROR", MB_ICONHAND);
 		throw invalid_argument("ERROR : Over list !");
 		return -1;
@@ -210,18 +210,18 @@ double WavFile_Initial::Get_DataZCR(unsigned long Number)                    //Ò
 		return dataZCR[Number];
 	}
 }
-int WavFile_Initial::Get_WindowLength(void)                                  //»ñÈ¡Ö¡³¤£¨´°µÄ´óĞ¡£©
+int WavFile_Initial::Get_WindowLength(void)                                  //è·å–å¸§é•¿ï¼ˆçª—çš„å¤§å°ï¼‰
 {
 	return N;
 }
 
-unsigned long WavFile_Initial::Get_voiceNumber(void)                         //»ñÈ¡ÓïÒô¶ÎÂä¸öÊı
+unsigned long WavFile_Initial::Get_voiceNumber(void)                         //è·å–è¯­éŸ³æ®µè½ä¸ªæ•°
 {
 	return this->voiceNumber;
 }
-VoiceParagraph WavFile_Initial::Get_dataVoicePoint(unsigned long Number)     //»ñÈ¡Ä³¸öÓïÒô¶ÎÂä
+VoiceParagraph WavFile_Initial::Get_dataVoicePoint(unsigned long Number)     //è·å–æŸä¸ªè¯­éŸ³æ®µè½
 {
-	if (Number >= voiceNumber || Number < 0) {                               //Èç¹ûËùĞèÒªµÄÊı³¬¹ıÁËÊı¾İ¸öÊı
+	if (Number >= voiceNumber || Number < 0) {                               //å¦‚æœæ‰€éœ€è¦çš„æ•°è¶…è¿‡äº†æ•°æ®ä¸ªæ•°
 		MessageBoxA(NULL, "ERROR : Over list !", "ERROR", MB_ICONHAND);
 		throw invalid_argument("ERROR : Over list !");
 	}
@@ -230,7 +230,7 @@ VoiceParagraph WavFile_Initial::Get_dataVoicePoint(unsigned long Number)     //»
 	}
 }
 
-void WavFile_Initial::ShowData(void)                                         //¸²¸Ç¸¸ÀàµÄÕ¹Ê¾Êı¾İº¯Êı
+void WavFile_Initial::ShowData(void)                                         //è¦†ç›–çˆ¶ç±»çš„å±•ç¤ºæ•°æ®å‡½æ•°
 {
 	int max = 0, min = 0;
 	cout << "TIP : Double data " << endl;
@@ -277,12 +277,12 @@ void WavFile_Initial::ShowData(void)                                         //¸
 	*/
 }
 
-void WavFile_Initial::SaveNewWav(void)                                       //±£´æÈ¥µô¿Õ°×´¦µÄÓïÒôÎÄ¼ş
+void WavFile_Initial::SaveNewWav(void)                                       //ä¿å­˜å»æ‰ç©ºç™½å¤„çš„è¯­éŸ³æ–‡ä»¶
 {
-	WavFile::SaveNewWav(voiceNumber, voiceParagraph);                        //µ÷ÓÃ¸¸ÀàµÄÉú³Éº¯Êı
+	WavFile::SaveNewWav(voiceNumber, voiceParagraph);                        //è°ƒç”¨çˆ¶ç±»çš„ç”Ÿæˆå‡½æ•°
 }
 
-void WavFile_Initial::Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDouble)  //¶ÔÒ»¸ö¶ÎÂäÄÚµÄÊı¾İ½øĞĞÔ¤¼ÓÖØ´¦Àí 
+void WavFile_Initial::Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDouble)  //å¯¹ä¸€ä¸ªæ®µè½å†…çš„æ•°æ®è¿›è¡Œé¢„åŠ é‡å¤„ç† 
 {
 	for (unsigned long i = 0; i < voiceParagraph.voiceLength; ++i) {
 		unsigned long dataIndex = voiceParagraph.begin + i;
@@ -293,30 +293,30 @@ void WavFile_Initial::Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDo
 	}
 }
 
-bool WavFile_Initial::Endpoint_Detection(void)                               //¶Ëµã¼ì²âº¯Êı
+bool WavFile_Initial::Endpoint_Detection(void)                               //ç«¯ç‚¹æ£€æµ‹å‡½æ•°
 {
-	//this->Frame_Energy();                                                    //¼ÆËã¶ÌÊ±Ö¡ÄÜÁ¿
-	//this->Frame_ZCR();                                                       //¼ÆËã¶ÌÊ±¹ıÁãÂÊ
-	this->Frame_EnergyZcr();                                                 //¼ÆËã¶ÌÊ±Ö¡ÄÜÁ¿Óë¶ÌÊ±¹ıÁãÂÊ
+	//this->Frame_Energy();                                                    //è®¡ç®—çŸ­æ—¶å¸§èƒ½é‡
+	//this->Frame_ZCR();                                                       //è®¡ç®—çŸ­æ—¶è¿‡é›¶ç‡
+	this->Frame_EnergyZcr();                                                 //è®¡ç®—çŸ­æ—¶å¸§èƒ½é‡ä¸çŸ­æ—¶è¿‡é›¶ç‡
 
-	energyHigh = 10;                                                         //³õÊ¼»¯¶ÌÊ±Ö¡ÄÜÁ¿¸ßÃÅÏŞ
-	energyLow = 2;                                                           //³õÊ¼»¯¶ÌÊ±Ö¡ÄÜÁ¿µÍÃÅÏŞ
-	zcrHigh = 10;                                                            //³õÊ¼»¯¶ÌÊ±¹ıÁãÂÊ¸ßÃÅÏŞ
-	zcrLow = 5;                                                              //³õÊ¼»¯¶ÌÊ±¹ıÁãÂÊµÍÃÅÏŞ
+	energyHigh = 10;                                                         //åˆå§‹åŒ–çŸ­æ—¶å¸§èƒ½é‡é«˜é—¨é™
+	energyLow = 2;                                                           //åˆå§‹åŒ–çŸ­æ—¶å¸§èƒ½é‡ä½é—¨é™
+	zcrHigh = 10;                                                            //åˆå§‹åŒ–çŸ­æ—¶è¿‡é›¶ç‡é«˜é—¨é™
+	zcrLow = 5;                                                              //åˆå§‹åŒ–çŸ­æ—¶è¿‡é›¶ç‡ä½é—¨é™
 
-	energyHigh = min(energyHigh, Get_maxEnergy() / 4);                       //µ÷Õû¶ÌÊ±Ö¡ÄÜÁ¿¸ßÃÅÏŞ
-	energyLow = min(energyLow, Get_maxEnergy() / 8);                         //µ÷Õû¶ÌÊ±Ö¡ÄÜÁ¿µÍÃÅÏŞ
-	zcrHigh = min(zcrHigh, Get_maxZCR() / 4);                                //µ÷Õû¶ÌÊ±Ö¡ÄÜÁ¿¸ßÃÅÏŞ
-	zcrLow = min(zcrLow, Get_maxZCR() / 8);                                  //µ÷Õû¶ÌÊ±Ö¡ÄÜÁ¿µÍÃÅÏŞ
+	energyHigh = min(energyHigh, Get_maxEnergy() / 4);                       //è°ƒæ•´çŸ­æ—¶å¸§èƒ½é‡é«˜é—¨é™
+	energyLow = min(energyLow, Get_maxEnergy() / 8);                         //è°ƒæ•´çŸ­æ—¶å¸§èƒ½é‡ä½é—¨é™
+	zcrHigh = min(zcrHigh, Get_maxZCR() / 4);                                //è°ƒæ•´çŸ­æ—¶å¸§èƒ½é‡é«˜é—¨é™
+	zcrLow = min(zcrLow, Get_maxZCR() / 8);                                  //è°ƒæ•´çŸ­æ—¶å¸§èƒ½é‡ä½é—¨é™
 
-	int statusFlag = 0;                                                      //ÉèÖÃÓïÒô×´Ì¬±êÖ¾
-	unsigned long begin = 0;                                                 //ÓïÒô¶ÎÂäµÄÆğµã
-	unsigned long end = 0;                                                   //ÓïÒô¶ÎÂäµÄÖÕµã
-	unsigned long voiceLength = 0;                                           //ÓïÒô¶ÎÂäµÄ³¤¶È
-	unsigned long silence = 0;                                               //¾²Òô¶ÎÂäµÄ³¤¶È
+	int statusFlag = 0;                                                      //è®¾ç½®è¯­éŸ³çŠ¶æ€æ ‡å¿—
+	unsigned long begin = 0;                                                 //è¯­éŸ³æ®µè½çš„èµ·ç‚¹
+	unsigned long end = 0;                                                   //è¯­éŸ³æ®µè½çš„ç»ˆç‚¹
+	unsigned long voiceLength = 0;                                           //è¯­éŸ³æ®µè½çš„é•¿åº¦
+	unsigned long silence = 0;                                               //é™éŸ³æ®µè½çš„é•¿åº¦
 	voiceNumber = 0;
 
-	for (unsigned long i = 0, frame = 0; i < this->Get_dataNumber() - N; ++i) { //±éÀúÃ¿Ò»Ö¡
+	for (unsigned long i = 0, frame = 0; i < this->Get_dataNumber() - N; ++i) { //éå†æ¯ä¸€å¸§
 		frame = (i - N) / WavFile_Initial::FrameShift + 1;
 		if (i <= 256){
 			frame = 0;
@@ -325,37 +325,37 @@ bool WavFile_Initial::Endpoint_Detection(void)                               //¶
 		{
 		case MUTEPARAGRAPH:
 		case INTERIMPARAGRAPH:
-			if (Get_DataEnergy(frame) > energyHigh) {                        //Ö¡ÄÜÁ¿´óÓÚÄÜÁ¿¸ßÃÅÏŞ,½øÈëÓïÒô¶Î
+			if (Get_DataEnergy(frame) > energyHigh) {                        //å¸§èƒ½é‡å¤§äºèƒ½é‡é«˜é—¨é™,è¿›å…¥è¯­éŸ³æ®µ
 				begin = max(i - voiceLength - 1, 0);
 				statusFlag = VOICEPARAGRAPH;
 				voiceLength++;
 				silence = 0;
 			}
-			else if (Get_DataEnergy(frame) > energyLow || Get_DataZCR(frame) > zcrLow) {         //¹ı¶É¶Î
+			else if (Get_DataEnergy(frame) > energyLow || Get_DataZCR(frame) > zcrLow) {         //è¿‡æ¸¡æ®µ
 				statusFlag = INTERIMPARAGRAPH;
 				voiceLength++;
 			}
-			else {                                                           //¾²Òô¶Î
+			else {                                                           //é™éŸ³æ®µ
 				statusFlag = MUTEPARAGRAPH;
 				voiceLength = 0;
 			}
 			break;
 		case VOICEPARAGRAPH:
-			if (Get_DataEnergy(frame) > Get_minEnergy() || Get_DataZCR(frame) > Get_minZCR()) {  //±£³ÖÔÚÓïÒô¶Î
+			if (Get_DataEnergy(frame) > Get_minEnergy() || Get_DataZCR(frame) > Get_minZCR()) {  //ä¿æŒåœ¨è¯­éŸ³æ®µ
 				voiceLength++;
 			}
-			else {                                                           //ÓïÒô½«½áÊø
+			else {                                                           //è¯­éŸ³å°†ç»“æŸ
 				silence++;
-				if (silence < minSilence) {                                  //¾²Òô»¹²»¹»³¤£¬ÉĞÎ´½áÊø
+				if (silence < minSilence) {                                  //é™éŸ³è¿˜ä¸å¤Ÿé•¿ï¼Œå°šæœªç»“æŸ
 					voiceLength++;
 				}
 				else {
-					if (voiceLength < minVoiceLength) {                      //ÓïÒô¶Î³¤¶ÈÌ«¶Ì£¬ÈÏÎªÊÇÔëÉù
+					if (voiceLength < minVoiceLength) {                      //è¯­éŸ³æ®µé•¿åº¦å¤ªçŸ­ï¼Œè®¤ä¸ºæ˜¯å™ªå£°
 						statusFlag = MUTEPARAGRAPH;
 						silence = 0;
 						voiceLength = 0;
 					}
-					else {                                                   //ÓïÒô½áÊø
+					else {                                                   //è¯­éŸ³ç»“æŸ
 						statusFlag = OVERPARAGRAPH;
 						end = max(begin + voiceLength, 0);
 					}
@@ -363,8 +363,8 @@ bool WavFile_Initial::Endpoint_Detection(void)                               //¶
 			}
 			break;
 		case OVERPARAGRAPH:
-			voiceParagraph.push_back(VoiceParagraph(begin, end, voiceLength));         //±£´æÓïÒô¶ÎÂäĞÅÏ¢
-			voiceNumber++;                                                   //ÓïÒô¶ÎÂä+1
+			voiceParagraph.push_back(VoiceParagraph(begin, end, voiceLength));         //ä¿å­˜è¯­éŸ³æ®µè½ä¿¡æ¯
+			voiceNumber++;                                                   //è¯­éŸ³æ®µè½+1
 			statusFlag = MUTEPARAGRAPH;
 			break;
 		default:
