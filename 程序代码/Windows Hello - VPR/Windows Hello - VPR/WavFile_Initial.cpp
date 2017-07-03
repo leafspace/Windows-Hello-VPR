@@ -1,7 +1,7 @@
 ﻿#include "WavFile_Initial.h"
 
 const int WavFile_Initial::N = 256;                                          //初始化每个窗的窗长
-const int WavFile_Initial::FrameShift = 10;                                  //初始化窗函数的帧移
+const int WavFile_Initial::FrameShift = 125;                                 //初始化窗函数的帧移
 const double WavFile_Initial::PI = 3.14159;                                  //初始化圆周率
 const double WavFile_Initial::preCoefficient = -0.98;                        //预加重系数
 
