@@ -222,7 +222,12 @@ unsigned long WavFile_Initial::Get_voiceNumber(void)                         //�
 
 unsigned long WavFile_Initial::Get_frameNumber(double dataSize)              //计算长度内的帧数
 {
-	return (unsigned long)((dataSize - WavFile_Initial::N) / WavFile_Initial::FrameShift);       //计算这段数据内有多少帧
+	unsigned long frameNumber = (unsigned long)((dataSize - WavFile_Initial::N) / WavFile_Initial::FrameShift);       //计算这段数据内有多少帧
+	unsigned long end = (frameNumber - 1) * WavFile_Initial::FrameShift + WavFile_Initial::N;    //求出当前计算帧数中所包含的数据量
+	if (end < this->Get_dataNumber()) {                                      //如果没有包含所有的数据，则帧数+1
+		frameNumber++;
+	}
+	return frameNumber;
 }
 
 VoiceParagraph WavFile_Initial::Get_dataVoicePoint(unsigned long Number)     //获取某个语音段落

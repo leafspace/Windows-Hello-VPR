@@ -75,10 +75,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main_Source.cpp" />
+    <ClCompile Include="WavData_CharaParameter.cpp" />
     <ClCompile Include="WavFile_Struct.cpp" />
     <ClCompile Include="WavFile_Initial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="WavData_CharaParameter.h" />
     <ClInclude Include="WavFile_Initial.h" />
     <ClInclude Include="WavFile_Struct.h" />
   </ItemGroup>

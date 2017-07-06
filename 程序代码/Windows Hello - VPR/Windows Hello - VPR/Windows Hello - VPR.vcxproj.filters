@@ -24,12 +24,18 @@
     <ClCompile Include="WavFile_Struct.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="WavData_CharaParameter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WavFile_Struct.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="WavFile_Initial.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WavData_CharaParameter.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
