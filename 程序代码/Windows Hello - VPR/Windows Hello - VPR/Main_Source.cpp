@@ -22,6 +22,7 @@ int main()
 		wavFile->Frame_Data(wavFile->Get_WavFileData(), wavFile->Get_dataNumber(), i, dataSpace, WavFile_Initial::N);//分帧并加窗
 		charaParameter->Push_data(i, dataSpace);                                                                      //将分帧完成的数据保存进特征参数备用
 	}
+	delete wavFile;
 
 	return 0;
 }

@@ -60,6 +60,7 @@ public:
 		fp = f;
 		::WavFile();
 	}
+	~WavFile() {}
 	void Give_FP(FILE *f) {
 		fp = f;
 	}
