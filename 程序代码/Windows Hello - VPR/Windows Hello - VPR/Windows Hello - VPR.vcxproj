@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClCompile Include="Main_Source.cpp" />
     <ClCompile Include="WavData_CharaParameter.cpp" />
+    <ClCompile Include="WavData_SupportFunction.cpp" />
     <ClCompile Include="WavFile_Struct.cpp" />
     <ClCompile Include="WavFile_Initial.cpp" />
   </ItemGroup>

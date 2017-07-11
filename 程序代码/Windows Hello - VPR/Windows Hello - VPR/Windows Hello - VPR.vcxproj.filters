@@ -24,6 +24,9 @@
     <ClCompile Include="WavFile_Struct.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="WavData_SupportFunction.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="WavData_CharaParameter.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
