@@ -5,6 +5,7 @@ class CharaParameter
 private:
 	unsigned long frameNumber;                                               //帧数量
 	double **frameData;                                                      //帧数据
+	double **frameFFTParameter;                                              //帧数据通过快速傅里叶变换后的数据
 
 	//底层内存操作
 	double *DistributionSpace(unsigned long col);                            //分配一维数组空间
@@ -25,5 +26,5 @@ public:
 	bool Push_data(unsigned long index, double *frame);                      //初始化特征参数类使用，将index帧的数据存放如类内
 
 	//特征参数求解列表
-	
+	double** MFCC_CharaParameter();                                          //求解MFCC特诊参数
 };
