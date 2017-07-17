@@ -18,9 +18,11 @@ private:
 	unsigned long fftNumber;                                                 //傅里叶变换后的数据的个数
 	double* FFT(double *data, unsigned long dataNumber);                     //快速离散傅立叶变换，无虚部 (严重警告，因为可能出现扩展内存的情况，所以必须返回新地址)
 	bool IFFT(double *data, unsigned long dataNumber);                       //快速离散逆傅立叶变换，无虚部
+	bool DCT(double **dataEngrgy, double **dataRet, unsigned long row, unsigned long col, int degree);     //离散余弦变换
 public:
 	static const int MelCoefficient;                                         //计算mel频率的系数，简称mel系数
 	static const int MelFilterNumber;                                        //mel频率滤波器组的滤波器个数
+	static const int MelDegreeNumber;                                        //mel频率的阶数
 
 	CharaParameter(unsigned long frameNumber) {
 		this->frameNumber = frameNumber;

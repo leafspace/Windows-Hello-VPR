@@ -128,6 +128,18 @@ bool CharaParameter::IFFT(double *data, unsigned long dataNumber)             //
 	return true;
 }
 
+bool CharaParameter::DCT(double **dataEngrgy, double **dataRet, unsigned long row, unsigned long col, int degree)        //离散余弦变换
+{
+	for (unsigned long i = 0; i < row; ++i) {
+		for (int j = 0; j < degree; ++j) {
+			for (unsigned long k = 0; k < col; ++k) {
+				dataRet[i][j] += dataEngrgy[i][k] * cos(WavFile_Initial::PI * j * (0.5 + k) / (col)); //计算公式
+			}
+		}
+	}
+	return true;
+}
+
 bool CharaParameter::Push_data(unsigned long index, double *frame) {         //初始化特征参数类使用，将index帧的数据存放如类内
 	if (index < 1 || index > frameNumber) {
 		return false;

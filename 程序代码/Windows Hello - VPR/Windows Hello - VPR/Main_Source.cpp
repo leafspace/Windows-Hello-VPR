@@ -28,6 +28,5 @@ int main()
 	delete wavFile;
 
 	charaParameter->MFCC_CharaParameter(sampleRate);                                                                 //计算MFCC特征参数
-
 	return 0;
 }
