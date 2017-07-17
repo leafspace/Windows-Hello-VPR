@@ -65,7 +65,7 @@ double**  CharaParameter::MFCC_CharaParameter(unsigned long sampleRate)       //
 				} else if (k >= melFrequency[j] && k <= melFrequency[j + 1]) {
 					tempCoefficient = (melFrequency[j + 1] - k) * (melFrequency[j + 1] - melFrequency[j]);
 				}
-				melEnergy[i][j - 1] += this->frameFFTParameter[i][k] * tempCoefficient;
+				melEnergy[i][j - 1] += this->frameFFTParameter[i][k]* tempCoefficient;
 			}
 		}
 	}
@@ -73,7 +73,11 @@ double**  CharaParameter::MFCC_CharaParameter(unsigned long sampleRate)       //
 	//5.求对数
 	for (unsigned long i = 0; i < this->frameNumber; ++i) {
 		for (int j = 0; j < CharaParameter::MelFilterNumber; ++j) {
-			melEnergy[i][j] = log(melEnergy[i][j]);
+			if (melEnergy[i][j] < 0) {                                       //处理数据为负数的情况，以免出现无效数据
+				melEnergy[i][j] = log(fabs(melEnergy[i][j])) * -1;
+			} else {
+				melEnergy[i][j] = log(melEnergy[i][j]);
+			}
 		}
 	}
 

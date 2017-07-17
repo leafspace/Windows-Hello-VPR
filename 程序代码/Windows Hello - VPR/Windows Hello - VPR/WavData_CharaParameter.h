@@ -14,6 +14,9 @@ private:
 	void DestorySpace(double* space);                                        //销毁一维数组空间
 	void DestorySpace(double** space, unsigned long row);                    //销毁二位数组空间
 
+	//数据校对操作
+	void ShowDataValue(bool showOnTerminal = true);                          //显示求值过程中的数据并保存在文件中
+
 	//傅里叶变换操作
 	unsigned long fftNumber;                                                 //傅里叶变换后的数据的个数
 	double* FFT(double *data, unsigned long dataNumber);                     //快速离散傅立叶变换，无虚部 (严重警告，因为可能出现扩展内存的情况，所以必须返回新地址)

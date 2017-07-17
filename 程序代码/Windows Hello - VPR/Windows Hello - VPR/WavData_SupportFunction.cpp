@@ -6,6 +6,10 @@ double* CharaParameter::DistributionSpace(unsigned long col)                 //�
 	if (tempspace == NULL) {
 		throw invalid_argument("ERROR : Memory failure !");
 		return false;
+	} else {
+		for (unsigned long i = 0; i < col; ++i) {
+			tempspace[i] = 0;
+		}
 	}
 	return tempspace;
 }
@@ -38,6 +42,37 @@ void CharaParameter::DestorySpace(double **space, unsigned long row)         //�
 		delete space[i];
 	}
 	delete space;
+}
+
+void CharaParameter::ShowDataValue(bool showOnTerminal)                      //显示求值过程中的数据并保存在文件中
+{
+	/*
+	cout << "TIP : This is orgin data :" << endl;
+	for (unsigned long i = 0; i < this->frameNumber; ++i) {
+		for (int j = 0; j < WavFile_Initial::N; ++j) {
+			cout << this->frameData[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
+
+	cout << "TIP : This is FFT past data :" << endl;
+	for (unsigned long i = 0; i < this->frameNumber; ++i) {
+		for (int j = 0; j < WavFile_Initial::N; ++j) {
+			cout << this->frameFFTParameter[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
+	*/
+
+	cout << "TIP : This is Mel data :" << endl;
+	for (unsigned long i = 0; i < this->frameNumber; ++i) {
+		for (int j = 0; j < CharaParameter::MelDegreeNumber; ++j) {
+			cout << this->frameMelParameter[i][j] << "\t";
+		}
+		cout << endl;
+	}
 }
 
 double* CharaParameter::FFT(double *data, unsigned long dataNumber)          //快速离散傅立叶变换，无虚部
