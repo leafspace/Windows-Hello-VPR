@@ -139,6 +139,11 @@ double* WavFile_Initial::Get_WavFileData(void)                               //�
 	return this->dataDouble;
 }
 
+unsigned long WavFile_Initial::Get_SampleRate(void)                          //获取采样频率
+{
+	return WavFile::Get_SampleRate();
+}
+
 vector<double> WavFile_Initial::Get_DataEnergy(void)                         //获取短时帧能量的数据
 {
 	return this->dataEnergy;

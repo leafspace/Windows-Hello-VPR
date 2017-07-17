@@ -24,8 +24,10 @@ int main()
 		wavFile->Frame_Data(wavFile->Get_WavFileData(), wavFile->Get_dataNumber(), i, dataSpace, WavFile_Initial::N);//分帧并加窗
 		charaParameter->Push_data(i, dataSpace);                                                                     //将分帧完成的数据保存进特征参数备用
 	}
+	unsigned long sampleRate = wavFile->Get_SampleRate();
 	delete wavFile;
 
-	charaParameter->MFCC_CharaParameter();                                                                           //计算MFCC特征参数
+	charaParameter->MFCC_CharaParameter(sampleRate);                                                                 //计算MFCC特征参数
+
 	return 0;
 }

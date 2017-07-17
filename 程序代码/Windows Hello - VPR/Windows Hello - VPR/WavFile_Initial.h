@@ -68,6 +68,7 @@ public:
 	}
 
 	double* Get_WavFileData(void);                                           //获取合成完毕的语音数据
+	unsigned long Get_SampleRate(void);                                      //获取采样频率
 	vector<double> Get_DataEnergy(void);                                     //获取短时帧能量的数据
 	vector<double> Get_DataZCR(void);                                        //获取短时过零率的数据
 	double Get_maxEnergy(void);                                              //获取最大短时帧能量
