@@ -48,11 +48,11 @@ public:
 	friend std::istream& operator>>(std::istream& in, GMM& gmm);
 
 private:
-	int m_dimNum;		// Ñù±¾Î¬Êı
-	int m_mixNum;		// GaussianÊıÄ¿
-	double* m_priors;	// GaussianÈ¨ÖØ
-	double** m_means;	// Gaussian¾ùÖµ
-	double** m_vars;	// Gaussian·½²î
+	int m_dimNum;		// æ ·æœ¬ç»´æ•°
+	int m_mixNum;		// Gaussianæ•°ç›®
+	double* m_priors;	// Gaussianæƒé‡
+	double** m_means;	// Gaussianå‡å€¼
+	double** m_vars;	// Gaussianæ–¹å·®
 
 	// A minimum variance is required. Now, it is the overall variance * 0.01.
 	double* m_minVars;

@@ -153,7 +153,7 @@ void KMeans::Cluster(const char* sampleFileName, const char* labelFileName)
 	delete[] next_means;
 }
 
-//N 为特征向量数
+//N 涓虹壒寰佸悜閲忔暟
 void KMeans::Cluster(double *data, int N, int *Label)
 {
 	int size = 0;
