@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="GMM.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="445" topLine="33" />
+	</File>
+	<File name="GMM.h" open="1" top="0" tabpos="1">
+		<Cursor position="1398" topLine="34" />
+	</File>
+	<File name="KMeans.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="133" topLine="0" />
+	</File>
+	<File name="KMeans.h" open="1" top="0" tabpos="3">
+		<Cursor position="1270" topLine="33" />
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="164" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>
