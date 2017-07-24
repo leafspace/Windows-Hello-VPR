@@ -75,12 +75,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main_Source.cpp" />
+    <ClCompile Include="Model_GMM.cpp" />
+    <ClCompile Include="Model_KMeans.cpp" />
     <ClCompile Include="WavData_CharaParameter.cpp" />
     <ClCompile Include="WavData_SupportFunction.cpp" />
     <ClCompile Include="WavFile_Struct.cpp" />
     <ClCompile Include="WavFile_Initial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Model_GMM.h" />
+    <ClInclude Include="Model_KMeans.h" />
     <ClInclude Include="WavData_CharaParameter.h" />
     <ClInclude Include="WavFile_Initial.h" />
     <ClInclude Include="WavFile_Struct.h" />
