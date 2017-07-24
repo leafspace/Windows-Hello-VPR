@@ -1,14 +1,10 @@
-﻿生成启动时间为 2017/7/23 10:51:37。
+﻿生成启动时间为 2017/7/24 13:26:55。
      1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\GMM\GMM\GMM.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\GMM.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GMM.cpp main.cpp
-         GMM.cpp
-         正在生成代码...
-         正在编译...
-         main.cpp
-         正在生成代码...
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt KMeans.cpp
+         KMeans.cpp
        ManifestResourceCompile:
          所有输出均为最新。
        Link:
@@ -29,4 +25,4 @@
 
 生成成功。
 
-已用时间 00:00:01.10
+已用时间 00:00:01.78
