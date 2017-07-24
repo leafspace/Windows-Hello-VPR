@@ -1,21 +1,24 @@
 /***************************************************************************
-
 Module Name:
-
-	Gaussian Mixture Model with Diagonal Covariance Matrix
+	KMeans
 
 History:
-
-	2003/11/01	Fei Wang
+	2003/10/16	Fei Wang
 	2013 luxiaoxun
+	Edit by leafspace
+		TIME
+			First time : 2017-7-24
+			Last time : 2017-7-24
+		CONTACT ME
+			E-mail : 18852923073@163.com
 ***************************************************************************/
+
+#include "GMM.h"
 #include <math.h>
 #include <iostream>
-#include "GMM.h"
 #include "KMeans.h"
-using namespace std;
 
-//double M_PI=3.14159;
+using namespace std;
 
 GMM::GMM(int dimNum, int mixNum)
 {
@@ -126,7 +129,7 @@ void GMM::Train(const char* sampleFileName)
 	double lastL = 0;
 	double currL = 0;
 	int unchanged = 0;
-	double* x = new double[m_dimNum];	// Sample data
+	double* x = new double[m_dimNum];	                                     // Sample data
 	double* next_priors = new double[m_mixNum];
 	double** next_vars = new double*[m_mixNum];
 	double** next_means = new double*[m_mixNum];
@@ -200,8 +203,6 @@ void GMM::Train(const char* sampleFileName)
 		{
 			loop = false;
 		}
-		//--- Debug ---
-		//cout << "Iter: " << iterNum << ", Average Log-Probability: " << currL << endl;
 	}
 
 	sampleFile.close();
@@ -218,7 +219,7 @@ void GMM::Train(const char* sampleFileName)
 
 void GMM::Train(double *data, int N)
 {
-	Init(data,N);
+	Init(data, N);
 
 	int size = N;
 
@@ -228,7 +229,7 @@ void GMM::Train(double *data, int N)
 	double lastL = 0;
 	double currL = 0;
 	int unchanged = 0;
-	double* x = new double[m_dimNum];	// Sample data
+	double* x = new double[m_dimNum];	                                     // Sample data
 	double* next_priors = new double[m_mixNum];
 	double** next_vars = new double*[m_mixNum];
 	double** next_means = new double*[m_mixNum];
@@ -255,8 +256,10 @@ void GMM::Train(double *data, int N)
 		// Predict
 		for (int k = 0; k < size; k++)
 		{
-			for(int j=0;j<m_dimNum;j++)
-				x[j]=data[k*m_dimNum+j];
+			for (int j = 0; j < m_dimNum; j++)
+			{
+				x[j] = data[k * m_dimNum + j];
+			}
 			double p = GetProbability(x);
 
 			for (int j = 0; j < m_mixNum; j++)
@@ -268,7 +271,7 @@ void GMM::Train(double *data, int N)
 				for (int d = 0; d < m_dimNum; d++)
 				{
 					next_means[j][d] += pj * x[d];
-					next_vars[j][d] += pj* x[d] * x[d];
+					next_vars[j][d] += pj * x[d] * x[d];
 				}
 			}
 
@@ -305,9 +308,6 @@ void GMM::Train(double *data, int N)
 		{
 			loop = false;
 		}
-
-		//--- Debug ---
-		//cout << "Iter: " << iterNum << ", Average Log-Probability: " << currL << endl;
 	}
 	delete[] next_priors;
 	for (int i = 0; i < m_mixNum; i++)
@@ -320,95 +320,6 @@ void GMM::Train(double *data, int N)
 	delete[] x;
 }
 
-void GMM::Init(double *data, int N)
-{
-	const double MIN_VAR = 1E-10;
-
-	KMeans* kmeans = new KMeans(m_dimNum, m_mixNum);
-	kmeans->SetInitMode(KMeans::InitUniform);
-	int *Label;
-	Label=new int[N];
-	kmeans->Cluster(data,N,Label);
-
-	int* counts = new int[m_mixNum];
-	double* overMeans = new double[m_dimNum];	// Overall mean of training data
-	for (int i = 0; i < m_mixNum; i++)
-	{
-		counts[i] = 0;
-		m_priors[i] = 0;
-		memcpy(m_means[i], kmeans->GetMean(i), sizeof(double) * m_dimNum);
-		memset(m_vars[i], 0, sizeof(double) * m_dimNum);
-	}
-	memset(overMeans, 0, sizeof(double) * m_dimNum);
-	memset(m_minVars, 0, sizeof(double) * m_dimNum);
-
-	int size = 0;
-	size=N;
-
-	double* x = new double[m_dimNum];
-	int label = -1;
-
-	for (int i = 0; i < size; i++)
-	{
-		for(int j=0;j<m_dimNum;j++)
-			x[j]=data[i*m_dimNum+j];
-		label=Label[i];
-
-		// Count each Gaussian
-		counts[label]++;
-		double* m = kmeans->GetMean(label);
-		for (int d = 0; d < m_dimNum; d++)
-		{
-			m_vars[label][d] += (x[d] - m[d]) * (x[d] - m[d]);
-		}
-
-		// Count the overall mean and variance.
-		for (int d = 0; d < m_dimNum; d++)
-		{
-			overMeans[d] += x[d];
-			m_minVars[d] += x[d] * x[d];
-		}
-	}
-
-	// Compute the overall variance (* 0.01) as the minimum variance.
-	for (int d = 0; d < m_dimNum; d++)
-	{
-		overMeans[d] /= size;
-		m_minVars[d] = max(MIN_VAR, 0.01 * (m_minVars[d] / size - overMeans[d] * overMeans[d]));
-	}
-
-	// Initialize each Gaussian.
-	for (int i = 0; i < m_mixNum; i++)
-	{
-		m_priors[i] = 1.0 * counts[i] / size;
-
-		if (m_priors[i] > 0)
-		{
-			for (int d = 0; d < m_dimNum; d++)
-			{
-				m_vars[i][d] = m_vars[i][d] / counts[i];
-
-				// A minimum variance for each dimension is required.
-				if (m_vars[i][d] < m_minVars[d])
-				{
-					m_vars[i][d] = m_minVars[d];
-				}
-			}
-		}
-		else
-		{
-			memcpy(m_vars[i], m_minVars, sizeof(double) * m_dimNum);
-			cout << "[WARNING] Gaussian " << i << " of GMM is not used!\n";
-		}
-	}
-	delete kmeans;
-	delete[] x;
-	delete[] counts;
-	delete[] overMeans;
-	delete[] Label;
-
-}
-
 void GMM::Init(const char* sampleFileName)
 {
 	const double MIN_VAR = 1E-10;
@@ -418,7 +329,7 @@ void GMM::Init(const char* sampleFileName)
 	kmeans->Cluster(sampleFileName, "gmm_init.tmp");
 
 	int* counts = new int[m_mixNum];
-	double* overMeans = new double[m_dimNum];	// Overall mean of training data
+	double* overMeans = new double[m_dimNum];	                             // Overall mean of training data
 	for (int i = 0; i < m_mixNum; i++)
 	{
 		counts[i] = 0;
@@ -506,6 +417,95 @@ void GMM::Init(const char* sampleFileName)
 	labelFile.close();
 }
 
+void GMM::Init(double *data, int N)
+{
+	const double MIN_VAR = 1E-10;
+
+	KMeans* kmeans = new KMeans(m_dimNum, m_mixNum);
+	kmeans->SetInitMode(KMeans::InitUniform);
+	int *Label;
+	Label = new int[N];
+	kmeans->Cluster(data, N, Label);
+
+	int* counts = new int[m_mixNum];
+	double* overMeans = new double[m_dimNum];	                             // Overall mean of training data
+	for (int i = 0; i < m_mixNum; i++)
+	{
+		counts[i] = 0;
+		m_priors[i] = 0;
+		memcpy(m_means[i], kmeans->GetMean(i), sizeof(double) * m_dimNum);
+		memset(m_vars[i], 0, sizeof(double) * m_dimNum);
+	}
+	memset(overMeans, 0, sizeof(double) * m_dimNum);
+	memset(m_minVars, 0, sizeof(double) * m_dimNum);
+
+	int size = 0;
+	size = N;
+
+	double* x = new double[m_dimNum];
+	int label = -1;
+
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < m_dimNum; j++)
+			x[j] = data[i*m_dimNum + j];
+		label = Label[i];
+
+		// Count each Gaussian
+		counts[label]++;
+		double* m = kmeans->GetMean(label);
+		for (int d = 0; d < m_dimNum; d++)
+		{
+			m_vars[label][d] += (x[d] - m[d]) * (x[d] - m[d]);
+		}
+
+		// Count the overall mean and variance.
+		for (int d = 0; d < m_dimNum; d++)
+		{
+			overMeans[d] += x[d];
+			m_minVars[d] += x[d] * x[d];
+		}
+	}
+
+	// Compute the overall variance (* 0.01) as the minimum variance.
+	for (int d = 0; d < m_dimNum; d++)
+	{
+		overMeans[d] /= size;
+		m_minVars[d] = max(MIN_VAR, 0.01 * (m_minVars[d] / size - overMeans[d] * overMeans[d]));
+	}
+
+	// Initialize each Gaussian.
+	for (int i = 0; i < m_mixNum; i++)
+	{
+		m_priors[i] = 1.0 * counts[i] / size;
+
+		if (m_priors[i] > 0)
+		{
+			for (int d = 0; d < m_dimNum; d++)
+			{
+				m_vars[i][d] = m_vars[i][d] / counts[i];
+
+				// A minimum variance for each dimension is required.
+				if (m_vars[i][d] < m_minVars[d])
+				{
+					m_vars[i][d] = m_minVars[d];
+				}
+			}
+		}
+		else
+		{
+			memcpy(m_vars[i], m_minVars, sizeof(double) * m_dimNum);
+			cout << "[WARNING] Gaussian " << i << " of GMM is not used!\n";
+		}
+	}
+	delete kmeans;
+	delete[] x;
+	delete[] counts;
+	delete[] overMeans;
+	delete[] Label;
+
+}
+
 void GMM::DumpSampleFile(const char* fileName)
 {
 	ifstream sampleFile(fileName, ios_base::binary);
@@ -579,24 +579,24 @@ ostream& operator<<(ostream& out, GMM& gmm)
 istream& operator>>(istream& in, GMM& gmm)
 {
 	char label[50];
-	in >> label; // "<GMM>"
+	in >> label;                                                             // "<GMM>"
 	assert(strcmp(label, "<GMM>") == 0);
 
 	gmm.Dispose();
 
-	in >> label >> gmm.m_dimNum >> label; // "<DimNum>"
-	in >> label >> gmm.m_mixNum >> label; // "<MixNum>"
+	in >> label >> gmm.m_dimNum >> label;                                    // "<DimNum>"
+	in >> label >> gmm.m_mixNum >> label;                                    // "<MixNum>"
 
 	gmm.Allocate();
 
-	in >> label; // "<Prior>"
+	in >> label;                                                             // "<Prior>"
 	for (int i = 0; i < gmm.m_mixNum; i++)
 	{
 		in >> gmm.m_priors[i];
 	}
 	in >> label;
 
-	in >> label; // "<Mean>"
+	in >> label;                                                             // "<Mean>"
 	for (int i = 0; i < gmm.m_mixNum; i++)
 	{
 		for (int d = 0; d < gmm.m_dimNum; d++)
@@ -606,7 +606,7 @@ istream& operator>>(istream& in, GMM& gmm)
 	}
 	in >> label;
 
-	in >> label; // "<Variance>"
+	in >> label;                                                             // "<Variance>"
 	for (int i = 0; i < gmm.m_mixNum; i++)
 	{
 		for (int d = 0; d < gmm.m_dimNum; d++)
@@ -616,6 +616,6 @@ istream& operator>>(istream& in, GMM& gmm)
 	}
 	in >> label;
 
-	in >> label; // "</GMM>"
+	in >> label;                                                             // "</GMM>"
 	return in;
 }
