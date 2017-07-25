@@ -265,7 +265,7 @@ void WavFile_Initial::ShowData(void)                                         //�
 	int max = 0, min = 0;
 	cout << "TIP : Double data " << endl;
 	for (unsigned long i = 0; i < this->Get_dataNumber(); ++i) {
-		//cout << dataDouble[i] << "\t";
+		cout << dataDouble[i] << "\t";
 		if (dataDouble[i] > dataDouble[max]) {
 			max = i;
 		}
@@ -286,25 +286,25 @@ void WavFile_Initial::ShowData(void)                                         //�
 	/*
 	cout << "TIP : Energy " << endl;
 	for (auto i : dataEnergy) {
-	cout << i << "\t";
+		cout << i << "\t";
 	}
 	cout << endl;
 
 	cout << "TIP : ZCR " << endl;
 	for (auto i : dataZCR) {
-	cout << i << "\t";
+		cout << i << "\t";
 	}
 	cout << endl;
 	*/
-	/*
-	for (int i = 0; i < (Wav_File::Get_dataNumber() - N); ++i) {
-	cout << Get_DataEnergy(i) << endl;
+	
+	for (int i = 0; i < (WavFile_Initial::Get_dataNumber() - N); ++i) {
+		cout << Get_DataEnergy(i) << endl;
 	}
 
-	for (int i = 0; i < (Wav_File::Get_dataNumber() - N); ++i) {
-	cout << Get_DataZCR(i) << endl;
+	for (int i = 0; i < (WavFile_Initial::Get_dataNumber() - N); ++i) {
+		cout << Get_DataZCR(i) << endl;
 	}
-	*/
+	
 }
 
 void WavFile_Initial::SaveNewWav(void)                                       //保存去掉空白处的语音文件
