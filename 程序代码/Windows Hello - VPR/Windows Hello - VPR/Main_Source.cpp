@@ -43,6 +43,7 @@ int main()
 	unsigned long sampleRate = wavFile->Get_SampleRate();
 	delete wavFile;
 
+	//Todo 计算MFCC参数
 	charaParameter->MFCC_CharaParameter(sampleRate);                                                                 //计算MFCC特征参数
 
 
@@ -50,14 +51,14 @@ int main()
 	dataSpace = new double[charaParameter->Get_frameNumber() * CharaParameter::MelDegreeNumber];
 	for (unsigned long i = 0; i < charaParameter->Get_frameNumber(); ++i) {
 		memcpy(&dataSpace[i * CharaParameter::MelDegreeNumber], 
-			charaParameter->Get_frameMelParameter(i), sizeof(double) * CharaParameter::MelDegreeNumber);
+			charaParameter->Get_frameMelParameter(i), sizeof(double) * CharaParameter::MelDegreeNumber);             //拷贝mfcc数据到一段连续的存储空间中备用
 	}
 
 	//Todo 开始Kmeans聚类操作
-	KMeans* kmeans = new KMeans(CharaParameter::MelDegreeNumber, 13);
+	KMeans* kmeans = new KMeans(CharaParameter::MelDegreeNumber, 13);                                                //使用阶数跟簇数初始化Kmeans类
 	int* labels = new int[charaParameter->Get_frameNumber()];
-	kmeans->SetInitMode(KMeans::InitUniform);
-	kmeans->Cluster(dataSpace, charaParameter->Get_frameNumber(), labels);
+	kmeans->SetInitMode(KMeans::InitUniform);                                                                        //设置数据的初始化方法
+	kmeans->Cluster(dataSpace, charaParameter->Get_frameNumber(), labels);                                           //开始聚类
 
 	//Todo  初始化GMM数据
 	double **test_data = new double*[13];
@@ -72,17 +73,9 @@ int main()
 	delete[]labels;
 	delete kmeans;
 
+	//Todo GMM训练数据
 	GMM *gmm = new GMM(CharaParameter::MelDegreeNumber, 13);                                                         //GMM has 13 SGM
-	gmm->Train(dataSpace, charaParameter->Get_frameNumber());                                                        //Training GMM
-
-	printf("\nTest GMM:\n");
-	for (int i = 0; i < 13; ++i) {
-		cout << "The Probability of :" << endl;
-		for (int j = 0; j < CharaParameter::MelDegreeNumber; ++j) {
-			cout << test_data[i][j] << " ";
-		}
-		cout << "is " << gmm->GetProbability(test_data[i]) << endl;
-	}
+	gmm->Train(dataSpace, charaParameter->Get_frameNumber());                                                        //GMM训练数据
 
 	//save GMM to file
 	ofstream gmm_file("gmm.txt");
