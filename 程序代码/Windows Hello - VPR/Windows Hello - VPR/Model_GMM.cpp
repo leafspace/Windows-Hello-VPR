@@ -20,6 +20,8 @@ History:
 
 using namespace std;
 
+const int GMM::SGMNumber = 13;                                               //单高斯混合模型的个数
+
 GMM::GMM(int dimNum, int mixNum)
 {
 	m_dimNum = dimNum;

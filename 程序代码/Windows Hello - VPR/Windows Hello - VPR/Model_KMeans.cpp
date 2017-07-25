@@ -18,7 +18,10 @@ History:
 #include <stdlib.h>
 #include <iostream>
 #include "Model_KMeans.h"
+
 using namespace std;
+
+const int KMeans::ClusterNumber = 13;                                        //聚类中簇的个数
 
 KMeans::KMeans(int dimNum, int clusterNum)
 {

@@ -20,6 +20,8 @@ History:
 class KMeans
 {
 public:
+	static const int ClusterNumber;                                          //聚类中簇的个数
+
 	enum InitMode                                                            //定义的模型初始化方法标签类型，代表着三种数据初始化的方法，与本类内m_initMode相关联
 	{
 		InitRandom,

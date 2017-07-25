@@ -55,14 +55,14 @@ int main()
 	}
 
 	//Todo 开始Kmeans聚类操作
-	KMeans* kmeans = new KMeans(CharaParameter::MelDegreeNumber, 13);                                                //使用阶数跟簇数初始化Kmeans类
+	KMeans* kmeans = new KMeans(CharaParameter::MelDegreeNumber, KMeans::ClusterNumber);                             //使用阶数跟簇数初始化Kmeans类
 	int* labels = new int[charaParameter->Get_frameNumber()];
 	kmeans->SetInitMode(KMeans::InitUniform);                                                                        //设置数据的初始化方法
 	kmeans->Cluster(dataSpace, charaParameter->Get_frameNumber(), labels);                                           //开始聚类
 
 	//Todo  初始化GMM数据
-	double **test_data = new double*[13];
-	for (int i = 0; i < 13; ++i) {
+	double **test_data = new double*[KMeans::ClusterNumber];
+	for (int i = 0; i < KMeans::ClusterNumber; ++i) {
 		test_data[i] = new double[CharaParameter::MelDegreeNumber];
 		double *tempSpace = kmeans->GetMean(i);
 		for (int j = 0; j < CharaParameter::MelDegreeNumber; ++j) {
@@ -74,7 +74,7 @@ int main()
 	delete kmeans;
 
 	//Todo GMM训练数据
-	GMM *gmm = new GMM(CharaParameter::MelDegreeNumber, 13);                                                         //GMM has 13 SGM
+	GMM *gmm = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
 	gmm->Train(dataSpace, charaParameter->Get_frameNumber());                                                        //GMM训练数据
 
 	//save GMM to file
@@ -84,6 +84,8 @@ int main()
 	gmm_file.close();
 
 	delete gmm;
+
+
 
 	return 0;
 }

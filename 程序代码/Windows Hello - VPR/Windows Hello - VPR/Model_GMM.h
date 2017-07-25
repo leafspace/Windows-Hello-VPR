@@ -19,6 +19,8 @@ History:
 class GMM
 {
 public:
+	static const int SGMNumber;                                              //单高斯混合模型的个数
+
 	GMM(int dimNum = 1, int mixNum = 1);
 	~GMM();
 
