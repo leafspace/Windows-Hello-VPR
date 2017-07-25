@@ -82,11 +82,14 @@ public:
 	double Get_DataZCR(unsigned long Number);                                //依据序号找到对应的短时过零率
 	int Get_WindowLength(void);                                              //获取帧长（窗的大小）
 	unsigned long Get_voiceNumber(void);                                     //获取语音段落个数
+	unsigned long Get_frameNumber(void);                                     //获取端点检测后每个段落的帧数和
 	unsigned long Get_frameNumber(double dataSize);                          //计算长度内的帧数
+	unsigned long Get_frameNumber(VoiceParagraph voiceParagraph);            //获取某个语音段落的帧数
 	VoiceParagraph Get_dataVoicePoint(unsigned long Number);                 //获取某个语音段落
 	void ShowData(void);                                                     //覆盖父类的展示数据函数
 	void SaveNewWav(void);                                                   //保存去掉空白处的语音文件
 	void Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDouble);    //对一个段落内的数据进行预加重处理 （注：预加重处理可以安防在分帧前，也可安放在分帧后）
+	bool Frame_Data(double *data, unsigned long index, double* dataSpace, int dataSpaceSize);                        //获取端点检测后第index帧的分帧加窗操作
 	bool Frame_Data(double *data, double dataSize, unsigned long index, double* dataSpace, int dataSpaceSize);       //对部分数据进行分帧加窗操作
 	bool Endpoint_Detection(void);                                           //端点检测函数
 };

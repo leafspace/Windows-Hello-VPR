@@ -46,7 +46,7 @@ void CharaParameter::DestorySpace(double **space, unsigned long row)         //�
 
 void CharaParameter::ShowDataValue(bool showOnTerminal)                      //显示求值过程中的数据并保存在文件中
 {
-	/*
+	
 	cout << "TIP : This is orgin data :" << endl;
 	for (unsigned long i = 0; i < this->frameNumber; ++i) {
 		for (int j = 0; j < WavFile_Initial::N; ++j) {
@@ -64,7 +64,7 @@ void CharaParameter::ShowDataValue(bool showOnTerminal)                      //�
 		cout << endl;
 	}
 	cout << endl;
-	*/
+	
 
 	cout << "TIP : This is Mel data :" << endl;
 	for (unsigned long i = 0; i < this->frameNumber; ++i) {

@@ -225,6 +225,15 @@ unsigned long WavFile_Initial::Get_voiceNumber(void)                         //�
 	return this->voiceNumber;
 }
 
+unsigned long WavFile_Initial::Get_frameNumber()                             //获取端点检测后每个段落的帧数和
+{
+	unsigned long sumNumber = 0;
+	for (unsigned long i = 0; i < this->voiceParagraph.size(); ++i) {
+		sumNumber += this->Get_frameNumber(this->voiceParagraph[i]);
+	}
+	return sumNumber;
+}
+
 unsigned long WavFile_Initial::Get_frameNumber(double dataSize)              //计算长度内的帧数
 {
 	unsigned long frameNumber = (unsigned long)((dataSize - WavFile_Initial::N) / WavFile_Initial::FrameShift);       //计算这段数据内有多少帧
@@ -233,6 +242,11 @@ unsigned long WavFile_Initial::Get_frameNumber(double dataSize)              //�
 		frameNumber++;
 	}
 	return frameNumber;
+}
+
+unsigned long WavFile_Initial::Get_frameNumber(VoiceParagraph voiceParagraph)//获取某个语音段落的帧数
+{
+	return this->Get_frameNumber(voiceParagraph.voiceLength);
 }
 
 VoiceParagraph WavFile_Initial::Get_dataVoicePoint(unsigned long Number)     //获取某个语音段落
@@ -307,6 +321,45 @@ void WavFile_Initial::Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDo
 		}
 		dataDouble[dataIndex] = dataDouble[dataIndex] - WavFile_Initial::preCoefficient * dataDouble[dataIndex - 1]; //加一阶数字滤波器
 	}
+}
+
+bool WavFile_Initial::Frame_Data(double *data, unsigned long index, double* dataSpace, int dataSpaceSize)                      //获取端点检测后第index帧的分帧加窗操作
+{
+	if (dataSpaceSize < WavFile_Initial::N) {                                //预分配的空间不足一帧时
+		return false;
+	}
+
+	VoiceParagraph voiceParagraph(-1, -1, -1);
+	for (unsigned long i = 0; i < this->voiceParagraph.size(); ++i) {
+		if ((int)(index - this->Get_frameNumber(this->voiceParagraph[i])) <= 0) {      //如果减去此段落的帧数，数据小于0，则此帧为当前数据段
+			voiceParagraph = this->voiceParagraph[i];
+			break;
+		}
+		index = index - this->Get_frameNumber(this->voiceParagraph[i]);
+	}
+
+	if (voiceParagraph.begin == -1 || voiceParagraph.end == -1 || voiceParagraph.voiceLength == -1) {
+		return false;
+	}
+
+	unsigned long begin = voiceParagraph.begin + (index - 1) * WavFile_Initial::FrameShift;
+	unsigned long end   = begin + WavFile_Initial::N - 1;
+	unsigned long voiceLength = WavFile_Initial::N;
+
+	if (end >= voiceParagraph.end) {
+		end = voiceParagraph.end;
+		voiceLength = end - begin + 1;
+	}
+
+	voiceParagraph.begin = begin;
+	voiceParagraph.end = end;
+	voiceParagraph.voiceLength = voiceLength;
+
+	for (unsigned long i = voiceParagraph.begin; i <= voiceParagraph.end; ++i) {
+		dataSpace[i - voiceParagraph.begin] = data[i] * this->Hamming_window(i - voiceParagraph.begin);    //加窗功能
+	}
+
+	return true;
 }
 
 bool WavFile_Initial::Frame_Data(double *data, double dataSize, unsigned long index, double* dataSpace, int dataSpaceSize)     //对部分数据进行分帧加窗操作
