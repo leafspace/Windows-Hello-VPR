@@ -425,7 +425,7 @@ bool WavFile_Initial::Endpoint_Detection(void)                               //�
 		case MUTEPARAGRAPH:
 		case INTERIMPARAGRAPH:
 			if (Get_DataEnergy(frame) > energyHigh) {                        //帧能量大于能量高门限,进入语音段
-				begin = max(i - voiceLength - 1, 0);
+				begin = (unsigned long) max((int)(i - voiceLength - 1), 0);
 				statusFlag = VOICEPARAGRAPH;
 				voiceLength++;
 				silence = 0;
@@ -472,6 +472,19 @@ bool WavFile_Initial::Endpoint_Detection(void)                               //�
 			break;
 		}
 	}
+
+	if (statusFlag == VOICEPARAGRAPH) {                                      //说明语音信号还没有结束，以当前记录下的最后一个点为终点保存语音段
+		end = begin + voiceLength;
+		voiceParagraph.push_back(VoiceParagraph(begin, end, voiceLength));
+		++voiceNumber;
+	}
+
+	if (voiceNumber == 0 && voiceParagraph.size() == 0) {                    //说明没有检测到语音段落，直接将整段语义合成为一个语音段落
+		end = 0 + voiceLength;
+		voiceParagraph.push_back(VoiceParagraph(0, end, voiceLength));
+		++voiceNumber;
+	}
+
 	cout << "TIP : Voice number is " << voiceNumber << endl;
 
 	return true;

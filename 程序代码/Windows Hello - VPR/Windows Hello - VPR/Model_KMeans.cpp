@@ -163,7 +163,7 @@ void KMeans::Cluster(const char* sampleFileName, const char* labelFileName)
 void KMeans::Cluster(double *data, int N, int *Label)
 {
 	int size = 0;
-	size=N;
+	size = N;
 
 	assert(size >= m_clusterNum);
 

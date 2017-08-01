@@ -5,7 +5,6 @@
 
 int main()
 {
-
 	FILE *fp;
 	if ((fp = fopen("微软默认.wav", "rb")) == NULL) {                                                                 //打开语音文件
 		cout << "ERROR : File open failed !" << endl;
@@ -21,6 +20,7 @@ int main()
 
 	//Todo 初始化特征参数类 计算语音数据特征参数
 	double *dataSpace = NULL;
+	
 	/*
 	//所有的数据分帧加窗
 	CharaParameter *charaParameter = new CharaParameter(wavFile->Get_frameNumber(wavFile->Get_dataNumber()));        //初始化特诊参数类
@@ -78,14 +78,12 @@ int main()
 	gmm->Train(dataSpace, charaParameter->Get_frameNumber());                                                        //GMM训练数据
 
 	//save GMM to file
-	ofstream gmm_file("gmm.txt");
+	ofstream gmm_file("voiceLib\\gmm.txt");
 	assert(gmm_file);
 	gmm_file << *gmm;
 	gmm_file.close();
 
 	delete gmm;
-
-
 
 	return 0;
 }
