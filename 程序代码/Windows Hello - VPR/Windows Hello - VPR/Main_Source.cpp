@@ -77,13 +77,33 @@ int main()
 	GMM *gmm = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
 	gmm->Train(dataSpace, charaParameter->Get_frameNumber());                                                        //GMM训练数据
 
-	//save GMM to file
+	//Todo save GMM to file
 	ofstream gmm_file("voiceLib\\gmm.txt");
 	assert(gmm_file);
 	gmm_file << *gmm;
 	gmm_file.close();
 
 	delete gmm;
+
+	/******************************识别示例******************************/
+
+	//Todo 初始化已有库的GMM模型
+	GMM **gmmLib = new GMM*[2];
+	gmmLib[0] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
+	gmmLib[1] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
+
+	ifstream gmm_file_ms("voiceLib\\ms-gmm(180123456).txt");
+	ifstream gmm_file_xf("voiceLib\\xf-gmm(180123456).txt");
+	assert(gmm_file_ms);
+	assert(gmm_file_xf);
+
+	gmm_file_ms >> *gmmLib[0];
+	gmm_file_xf >> *gmmLib[1];
+	gmm_file_ms.close();
+	gmm_file_xf.close();
+
+
+
 
 	return 0;
 }
