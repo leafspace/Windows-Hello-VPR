@@ -46,6 +46,7 @@ int main()
 	//Todo 计算MFCC参数
 	charaParameter->MFCC_CharaParameter(sampleRate);                                                                 //计算MFCC特征参数
 
+	/******************************训练示例******************************/
 
 	//Todo 初始化Kmeans数据
 	dataSpace = new double[charaParameter->Get_frameNumber() * CharaParameter::MelDegreeNumber];
@@ -102,8 +103,21 @@ int main()
 	gmm_file_ms.close();
 	gmm_file_xf.close();
 
+	//Todo 识别计算
 
+	double *libProbability = new double[2];
+	for (int i = 0; i < 2; ++i) {
+		libProbability[i] = 0;
+		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //计算当前GMM下，目标特征参数集在GMM模型下的概率密度
+			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(i));                   //获取GMM的数值
+			if (tempData > 0) {                                                                                      //取对数操作
+				tempData = log10(tempData);
+			}
+			libProbability[i] += tempData;
+		}
+	}
 
+	cout << libProbability[0] << "\t" << libProbability[1] << endl;
 
 	return 0;
 }
