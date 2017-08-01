@@ -104,7 +104,7 @@ int main()
 	gmm_file_xf.close();
 
 	//Todo 识别计算
-
+	cout << "TIP : Begin reservation ..." << endl;
 	double *libProbability = new double[2];
 	for (int i = 0; i < 2; ++i) {
 		libProbability[i] = 0;
@@ -117,7 +117,12 @@ int main()
 		}
 	}
 
-	cout << libProbability[0] << "\t" << libProbability[1] << endl;
+	cout << "TIP : Probability data is " << libProbability[0] << "\t" << libProbability[1] << endl;
+	if (libProbability[0] > libProbability[1]) {
+		cout << "INFO : This voice is Microsoft voice !" << endl;
+	} else {
+		cout << "INFO : This voice is iflytek voice !" << endl;
+	}
 
 	return 0;
 }

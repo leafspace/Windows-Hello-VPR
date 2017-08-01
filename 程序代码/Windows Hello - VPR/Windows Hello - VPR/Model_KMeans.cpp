@@ -51,6 +51,7 @@ KMeans::~KMeans()
 
 void KMeans::Cluster(const char* sampleFileName, const char* labelFileName)
 {
+	cout << "TIP : K-means begin cluster ..." << endl;
 	// Check the sample file
 	ifstream sampleFile(sampleFileName, ios_base::binary);                   //初始化文件流
 	assert(sampleFile);
@@ -162,6 +163,7 @@ void KMeans::Cluster(const char* sampleFileName, const char* labelFileName)
 //N 为特征向量数
 void KMeans::Cluster(double *data, int N, int *Label)
 {
+	cout << "TIP : K-means begin cluster ..." << endl;
 	int size = 0;
 	size = N;
 

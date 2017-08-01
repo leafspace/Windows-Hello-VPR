@@ -115,6 +115,7 @@ double GMM::GetProbability(const double* x, int j)
 
 void GMM::Train(const char* sampleFileName)
 {
+	cout << "TIP : GMM begin training ..." << endl;
 	//DumpSampleFile(sampleFileName);
 	Init(sampleFileName);
 
@@ -221,6 +222,7 @@ void GMM::Train(const char* sampleFileName)
 
 void GMM::Train(double *data, int N)
 {
+	cout << "TIP : GMM begin training ..." << endl;
 	Init(data, N);
 
 	int size = N;

@@ -6,6 +6,7 @@ const int CharaParameter::MelDegreeNumber = 13;                               //
 
 double**  CharaParameter::MFCC_CharaParameter(unsigned long sampleRate)       //求解MFCC特诊参数
 {
+	cout << "TIP : Calculate MFCC parameter ..." << endl;
 	//1.拷贝数据，保存原先分帧后的数据
 	this->frameFFTParameter = 
 		this->DistributionSpace(this->frameNumber, WavFile_Initial::N);      //分配FFT保存的内存
