@@ -1,10 +1,11 @@
 ﻿#include "WaveRecorder.h"
 
 // 静态变量初始化
-WAVEHDR WaveRecorder::pwh[BUFFER_LAYER] = {};
 array <char, CHUNCK_SIZE> WaveRecorder::ChunkData = {};
 vector<array<char, CHUNCK_SIZE>> WaveRecorder::RawData;
 UINT WaveRecorder::ChunksCount = 0;
+
+WAVEHDR WaveRecorder::pwh[BUFFER_LAYER] = {};
 BOOL WaveRecorder::bCallback = false;
 CNKDATAUpdateCallback WaveRecorder::callback = NULL;
 bool WaveRecorder::stop = false;
@@ -23,20 +24,18 @@ void WaveRecorder::set_FileName(string Target)
 	dest_path = Target;
 	// 尝试打开文件【不存在则创建】
 	errno_t err = fopen_s(&fp, dest_path.c_str(), "wb");
-	if (err > 0)
-	{
+	if (err > 0) {
 #if _DEBUG
 		cout << "文件创建失败：" << err << " 检查文件名和占用" << endl;
 		system("pause");
-#endif // _DEBUG
+#endif
 		bSaveFile = false;
 	}
 }
 
 void WaveRecorder::Start()
 {
-	for (int layer = 0; layer < BUFFER_LAYER; layer++)
-	{
+	for (int layer = 0; layer < BUFFER_LAYER; layer++) {
 		// 配置缓冲区
 		pwh[layer].lpData = new char[CHUNCK_SIZE];
 		pwh[layer].dwBufferLength = CHUNCK_SIZE;
@@ -50,12 +49,13 @@ void WaveRecorder::Start()
 		waveInPrepareHeader(hwi, &pwh[layer], sizeof(WAVEHDR));
 		waveInAddBuffer(hwi, &pwh[layer], sizeof(WAVEHDR));
 	}
-		// 初始化裸数据缓存
-		RawData.clear();
-		RawData.reserve(10);
-		// 发送录音开始消息
-		waveInStart(hwi);
+	// 初始化裸数据缓存
+	RawData.clear();
+	RawData.reserve(10);
+	// 发送录音开始消息
+	waveInStart(hwi);
 }
+
 void WaveRecorder::Stop()
 {
 	// 停止标记
@@ -64,19 +64,18 @@ void WaveRecorder::Stop()
 	waveInStop(hwi);
 	waveInReset(hwi);
 	// 释放缓冲区
-	for (int layer = 0; layer<BUFFER_LAYER; layer++)
-	{
+	for (int layer = 0; layer<BUFFER_LAYER; layer++) {
 		waveInUnprepareHeader(hwi, &pwh[layer], sizeof(WAVEHDR));
 		delete pwh[layer].lpData;
 	}
 	// 保存Header+RawData
-	if(bSaveFile)
+	if(bSaveFile) {
 		WaveFileWrite();
+	}
 }
 
 void WaveRecorder::Reset()
 {
-	// 尝试reset
 	// 静态变量初始化
 	RawData.clear();
 	ChunksCount = 0;
@@ -98,12 +97,13 @@ void WaveRecorder::WaveInitFormat(LPWAVEFORMATEX WaveFormat, WORD Ch, DWORD Samp
 	WaveFormat->wBitsPerSample = BitsPerSample;
 	WaveFormat->cbSize = 0;
 #if _DEBUG
-	cout << "采样参数：" << endl;
-	cout << "\t声道数" << Ch << endl;
-	cout << "\t每秒采样率" << SampleRate << "Hz" << endl;
-	cout << "\t位深" << BitsPerSample << endl;
-#endif // _DEBUG
+	cout << "  采样参数：" << endl;
+	cout << "    声道数" << Ch << endl;
+	cout << "    每秒采样率" << SampleRate << "Hz" << endl;
+	cout << "    位深" << BitsPerSample << endl;
+#endif
 }
+
 void WaveRecorder::WaveFileWrite()
 {
 	// 编辑并写入Wave头信息
@@ -115,53 +115,45 @@ void WaveRecorder::WaveFileWrite()
 	// 写入结束
 	fclose(fp);
 }
+
 DWORD WaveRecorder::WaveXAPI_Callback(HWAVEIN hwavein, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
 {
 	// 消息switch
 	switch (uMsg)
 	{
-	case WIM_OPEN:		// 设备成功已打开
-		ChunksCount = 0;// 这次"session"的数据块计数
+	case WIM_OPEN:		                                                     // 设备成功已打开
+		ChunksCount = 0;                                                     // 这次"session"的数据块计数
 		break;
 
-	case WIM_DATA:		// 缓冲区数据填充完毕
+	case WIM_DATA:                                                           // 缓冲区数据填充完毕
 		// 停止后会频繁发出WIM_DATA,已经将数据转移所以不必理会后继数据【后继数据在这里来看是是重复的】
-		if (!dat_ignore)
-		{
+		if (!dat_ignore) {
 			// 把缓冲区数据拷贝出来
 			memcpy(ChunkData.data(), ((LPWAVEHDR)dwParam1)->lpData, CHUNCK_SIZE);
 			// 没有录进去的被填充为0xcd,改成0来避免末尾出现爆音【只在结束录音时进行，不影响添加缓存效率】
-			if (((LPWAVEHDR)dwParam1)->dwBytesRecorded < CHUNCK_SIZE)
-			{
-				for (size_t i = ((LPWAVEHDR)dwParam1)->dwBytesRecorded; i < CHUNCK_SIZE; i++)
-				{
+			if (((LPWAVEHDR)dwParam1)->dwBytesRecorded < CHUNCK_SIZE) {
+				for (size_t i = ((LPWAVEHDR)dwParam1)->dwBytesRecorded; i < CHUNCK_SIZE; i++) {
 					ChunkData.at(i) = 0;
 				}
 			}
 			// 添加这一帧
 			RawData.push_back(ChunkData);
 			// 如果你设置了回调函数
-			if (bCallback)
-			{
+			if (bCallback) {
 				callback(ChunkData, ChunksCount, stop);
 			}
 		}
 		ChunksCount += 1;
 		// 如果需要停止录音则不继续添加缓存
-		if (!stop)
-		{
-			waveInAddBuffer(hwavein, (LPWAVEHDR)dwParam1, sizeof(WAVEHDR));//添加到缓冲区
+		if (!stop) {
+			waveInAddBuffer(hwavein, (LPWAVEHDR)dwParam1, sizeof(WAVEHDR));  //添加到缓冲区
 		}
-		else
-		{// 防止重复记录数据
+		else {                                                               // 防止重复记录数据
 			dat_ignore = true;
 		}
-
 		break;
 
 	case WIM_CLOSE:
-		// 操作成功完成
-		// cout << "录音设备已经关闭..." << endl;
 		break;
 
 	default:
@@ -173,7 +165,8 @@ DWORD WaveRecorder::WaveXAPI_Callback(HWAVEIN hwavein, UINT uMsg, DWORD dwInstan
 WaveRecorder::WaveRecorder()
 {
 	this->fp = NULL;
-	/*this->WavHeader = {
+	/*
+	this->WavHeader = {
 		{ 'R', 'I', 'F', 'F' },	
 		0,						
 		{ 'W', 'A', 'V', 'E' },
@@ -187,7 +180,8 @@ WaveRecorder::WaveRecorder()
 		SAMPLE_BITS,
 		{ 'd', 'a', 't', 'a' },
 		0
-	};*/
+	};
+	*/
 
 	this->WavHeader.riff[0] = 'R';
 	this->WavHeader.riff[1] = 'I';
@@ -216,18 +210,17 @@ WaveRecorder::WaveRecorder()
 	this->WavHeader.data_size = 0;
 
 	// 如果没有输入设备则析构
-	if (!waveInGetNumDevs())
-	{
+	if (!waveInGetNumDevs()) {
 #if _DEBUG
 		cout << "Windows没有找到音频输入设备" << endl;
-#endif //_DEBUG
+#endif
 	}
+
 #if _DEBUG
-	
 	WAVEINCAPS WaveInCaps;
 	MMRESULT mmResult = waveInGetDevCaps(0, &WaveInCaps, sizeof(WAVEINCAPS));
-	cout << "默认设备描述：" << WaveInCaps.szPname<<")\n\n";
-#endif //_DEBUG
+	cout << "默认设备描述：(" << WaveInCaps.szPname<<")" << endl;
+#endif
 	WAVEFORMATEX pwfx;
 	WaveInitFormat(&pwfx, CHANNEL_MUM, SAMPLE_RATE, SAMPLE_BITS);
 	waveInOpen(&hwi, WAVE_MAPPER, &pwfx, (DWORD)WaveXAPI_Callback, NULL, CALLBACK_FUNCTION);
