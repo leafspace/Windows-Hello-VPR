@@ -253,6 +253,7 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton1()
 void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 {
 	// TODO: 在此添加控件通知处理程序代码
+
 }
 
 
@@ -265,6 +266,34 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 void CVoiceprintRecognitionDlg::OnBnClickedButton4()
 {
 	// TODO: 在此添加控件通知处理程序代码
+
+	char szModuleFilePath[MAX_PATH];
+	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
+	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
+	
+	int index = 0;
+	char filePath[MAX_PATH];
+	for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {
+		filePath[index++] = szModuleFilePath[i];
+		if (szModuleFilePath[i] == '\\') {
+			filePath[index++] = '\\';
+		}
+	}
+	filePath[index++] = 0;
+
+	char voicePath[MAX_PATH];
+	char wavPath[MAX_PATH];
+
+	strcpy_s(voicePath, filePath);
+	strcpy_s(wavPath, filePath);
+	strcat_s(voicePath, "voiceLib");
+	strcat_s(wavPath, "wavLib");
+
+	vector<string> voiceFiles;
+	vector<string> wavFiles;
+
+	getFiles(voicePath, voiceFiles);
+	getFiles(wavPath, wavFiles);
 }
 
 

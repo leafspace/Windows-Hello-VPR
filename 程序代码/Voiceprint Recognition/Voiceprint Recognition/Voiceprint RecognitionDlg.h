@@ -3,10 +3,13 @@
 //
 
 #pragma once
+#include <io.h>
 #include <pthread.h>
 #include "resource.h"
 #include "WaveRecorder.h"
 #include "Shockwaveflash.h"
+
+struct FILESTRUCT;
 
 // CVoiceprintRecognitionDlg 对话框
 class CVoiceprintRecognitionDlg : public CDialogEx
@@ -41,6 +44,9 @@ private:
 
 	pthread_t thread_recordID;                                               //录音线程ID
 
+	vector<FILESTRUCT> voiceLib;
+	vector<FILESTRUCT> wavLib;
+
 	bool flagRecord;                                                         //用于标识当前状态，如果flag=true则表示当前处于录音状态 flag=false则表示当前属于空白状态
 
 	bool OnButton1_record(char* fileName);                                   //开启录音线程
@@ -54,7 +60,14 @@ public:
 	afx_msg void OnBnClickedButton5();                                       //刷新
 };
 
+typedef struct FILESTRUCT
+{
+	string fileName;
+	string peopleName;
+}FILESTRUCT;
+
 extern WaveRecorder waveRecorder;
 extern char* fileName;
 
 void* record(void* args);                                                    //录音线程
+void getFiles(string path, vector<string>& files);                           //获取path文件夹下的所有文件名
