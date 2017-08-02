@@ -1,4 +1,5 @@
-﻿#include "WaveRecorder.h"
+﻿#include "stdafx.h"
+#include "WaveRecorder.h"
 
 // 静态变量初始化
 array <char, CHUNCK_SIZE> WaveRecorder::ChunkData = {};

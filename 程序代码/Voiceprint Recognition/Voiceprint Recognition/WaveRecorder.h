@@ -1,34 +1,34 @@
-ï»¿/****************************************************************************
+/****************************************************************************
 *
-*						MMAPI API WaveRecorderå½•éŸ³ç±»
+*						MMAPI API WaveRecorderÂ¼ÒôÀà
 *
-*@ç±»åï¼šWaveRecorder
+*@ÀàÃû£ºWaveRecorder
 *
-*@æˆå‘˜å‡½æ•°ï¼š
+*@³ÉÔ±º¯Êı£º
 *
-*--ã€åœ¨Startä¹‹å‰è®¾ç½®ã€‘
+*--¡¾ÔÚStartÖ®Ç°ÉèÖÃ¡¿
 *	void set_FileName(string des_path);
-*	|_______è®¾ç½®éœ€è¦ä¿å­˜çš„æ–‡ä»¶ç›®æ ‡ï¼Œä¸è®¾ç½®åˆ™ä¸ä¿å­˜
+*	|_______ÉèÖÃĞèÒª±£´æµÄÎÄ¼şÄ¿±ê£¬²»ÉèÖÃÔò²»±£´æ
 *
-*--ã€Stopä¹‹å‰ä»»æ„è®¾ç½®ã€‘
+*--¡¾StopÖ®Ç°ÈÎÒâÉèÖÃ¡¿
 *	void set_Callback(CNKDATAUpdateCallback fn);
-*	|_______è®¾ç½®å¾—åˆ°æ–°çš„ChunkDataæ—¶çš„å¤„ç†å‡½æ•°ï¼Œå¯ä»¥ä¸è®¾ç½®
+*	|_______ÉèÖÃµÃµ½ĞÂµÄChunkDataÊ±µÄ´¦Àíº¯Êı£¬¿ÉÒÔ²»ÉèÖÃ
 *
-*--ã€Startä¼šæ¶ˆè€—3~4msçš„æ—¶é—´ã€‘
+*--¡¾Start»áÏûºÄ3~4msµÄÊ±¼ä¡¿
 *	void Start();
-*	|_______åˆå§‹åŒ–å¹¶å¼€å§‹å½•éŸ³
+*	|_______³õÊ¼»¯²¢¿ªÊ¼Â¼Òô
 *
-*--ã€Stopè‡³å°‘ä¼šæ¶ˆè€—4msçš„æ—¶é—´ã€‘
+*--¡¾StopÖÁÉÙ»áÏûºÄ4msµÄÊ±¼ä¡¿
 *	void Stop();
-*	|_______ç»“æŸå½•éŸ³å¹¶åšæ”¶å°¾
+*	|_______½áÊøÂ¼Òô²¢×öÊÕÎ²
 *
-*--ã€åœ¨Stopä¹‹åç”¨ã€‘
+*--¡¾ÔÚStopÖ®ºóÓÃ¡¿
 *	void Reset();
-*	|_______é‡ç½®çŠ¶æ€å¹¶æ¸…é™¤setè¿‡çš„å‚æ•°
+*	|_______ÖØÖÃ×´Ì¬²¢Çå³ıset¹ıµÄ²ÎÊı
 *
-*@å¤‡æ³¨ï¼šæ„é€ å‡½æ•°å°è¯•æ‰“å¼€éŸ³é¢‘è®¾å¤‡ï¼Œè€—æ—¶çº¦43msï¼Œå…³é—­è®¾å¤‡äºææ„å‡½æ•°ï¼Œè€—æ—¶çº¦900ms
+*@±¸×¢£º¹¹Ôìº¯Êı³¢ÊÔ´ò¿ªÒôÆµÉè±¸£¬ºÄÊ±Ô¼43ms£¬¹Ø±ÕÉè±¸ÓÚÎö¹¹º¯Êı£¬ºÄÊ±Ô¼900ms
 *
-*â€”â€”au:æ¯•æˆÂ·zzu 15/11/11
+*¡ª¡ªau:±Ï³É¡¤zzu 15/11/11
 *--lastEdit : leafspace
 *--contact : 18852923073@163.com
 *
@@ -40,87 +40,88 @@
 #include <array>
 #include <vector>
 #include <stdio.h>
-#include <Windows.h>
 #include <iostream>
+#include <Windows.h>
+#include "mmsystem.h"                               //²»¼ÓÕâ¸ö»á³öÏÖÒ»ÏµÁĞ´íÎó
 
 using namespace std;
 #pragma comment(lib, "winmm.lib")
 
-// PCMå½•éŸ³å‚æ•°
-#define CHANNEL_MUM 1								// å£°é“æ•°
-#define SAMPLE_RATE 16000							// æ¯ç§’é‡‡æ ·ç‡
-#define SAMPLE_BITS 16								// é‡‡æ ·ä½æ·±
-#define CHUNCK_SIZE (SAMPLE_RATE*SAMPLE_BITS/8*1)	// ç¼“å­˜æ•°æ®å—å¤§å° = é‡‡æ ·ç‡*ä½æ·±/2*ç§’ï¼ˆå­—èŠ‚ï¼‰
-#define BUFFER_LAYER 5								// ç¼“å†²åŒºå±‚æ•°
+// PCMÂ¼Òô²ÎÊı
+#define CHANNEL_MUM 1								// ÉùµÀÊı
+#define SAMPLE_RATE 16000							// Ã¿Ãë²ÉÑùÂÊ
+#define SAMPLE_BITS 16								// ²ÉÑùÎ»Éî
+#define CHUNCK_SIZE (SAMPLE_RATE*SAMPLE_BITS/8*1)	// »º´æÊı¾İ¿é´óĞ¡ = ²ÉÑùÂÊ*Î»Éî/2*Ãë£¨×Ö½Ú£©
+#define BUFFER_LAYER 5								// »º³åÇø²ãÊı
 
-/* å›è°ƒå‡½æ•° */
+/* »Øµ÷º¯Êı */
 typedef void(__stdcall *CNKDATAUpdateCallback)(array <char, CHUNCK_SIZE> ChunkData,UINT ChunksCount, bool bIsLast);
-/*WaveRecorderç±»*/
+/*WaveRecorderÀà*/
 class WaveRecorder 
 {
 protected:
-	/* wavéŸ³é¢‘å¤´éƒ¨æ ¼å¼ */
+	/* wavÒôÆµÍ·²¿¸ñÊ½ */
 	typedef struct WAVEPCMHDR
 	{
 		char            riff[4];					// = "RIFF"
 		UINT32			size_8;						// = FileSize - 8
 		char            wave[4];					// = "WAVE"
 		char            fmt[4];						// = "fmt "
-		UINT32			fmt_size;					// = PCMWAVEFORMATçš„å¤§å° : 
+		UINT32			fmt_size;					// = PCMWAVEFORMATµÄ´óĞ¡ : 
 		
 		//PCMWAVEFORMAT
 		UINT16	        format_tag;					// = PCM : 1
-		UINT16	        channels;					// = é€šé“æ•° : 1
-		UINT32			samples_per_sec;			// = é‡‡æ ·ç‡ : 8000 | 6000 | 11025 | 16000
-		UINT32			avg_bytes_per_sec;			// = æ¯ç§’å¹³å‡å­—èŠ‚æ•° : samples_per_sec * bits_per_sample / 8
-		UINT16		    block_align;				// = æ¯é‡‡æ ·ç‚¹å­—èŠ‚æ•° : wBitsPerSample / 8
-		UINT16			bits_per_sample;			// = é‡åŒ–ç²¾åº¦: 8 | 16
+		UINT16	        channels;					// = Í¨µÀÊı : 1
+		UINT32			samples_per_sec;			// = ²ÉÑùÂÊ : 8000 | 6000 | 11025 | 16000
+		UINT32			avg_bytes_per_sec;			// = Ã¿ÃëÆ½¾ù×Ö½ÚÊı : samples_per_sec * bits_per_sample / 8
+		UINT16		    block_align;				// = Ã¿²ÉÑùµã×Ö½ÚÊı : wBitsPerSample / 8
+		UINT16			bits_per_sample;			// = Á¿»¯¾«¶È: 8 | 16
 		char            data[4];					// = "data";
 
 		//DATA
-		UINT32			data_size;					// = è£¸æ•°æ®é•¿åº¦ 
+		UINT32			data_size;					// = ÂãÊı¾İ³¤¶È 
 	} WAVEPCMHDR;
 
 private:
-	void WaveInitFormat(							// è®¾ç½®PCMæ ¼å¼
+	void WaveInitFormat(							// ÉèÖÃPCM¸ñÊ½
 		LPWAVEFORMATEX WaveFormat,					//	.PCM
 		WORD Ch,									//	.CHANNEL
 		DWORD SampleRate,							//	.SAMPLE_RATE
 		WORD BitsPerSample);						//	.SAMPLE_BITS
 	void WaveFileWrite();
-	static DWORD (CALLBACK WaveXAPI_Callback)(		// WaveXAPIå›è°ƒå‡½æ•°
-		HWAVEIN hwavein,							//	.è¾“å…¥è®¾å¤‡
-		UINT uMsg,									//	.æ¶ˆæ¯
-		DWORD dwInstance,							//	.ä¿ç•™
-		DWORD dwParam1,								//	.åˆšå¡«å……å¥½çš„ç¼“å†²åŒºæŒ‡é’ˆ
-		DWORD dwParam2);							//	.ä¿ç•™
+	static DWORD (CALLBACK WaveXAPI_Callback)(		// WaveXAPI»Øµ÷º¯Êı
+		HWAVEIN hwavein,							//	.ÊäÈëÉè±¸
+		UINT uMsg,									//	.ÏûÏ¢
+		DWORD dwInstance,							//	.±£Áô
+		DWORD dwParam1,								//	.¸ÕÌî³äºÃµÄ»º³åÇøÖ¸Õë
+		DWORD dwParam2);							//	.±£Áô
 
-	static CNKDATAUpdateCallback callback;			// å›è°ƒå‡½æ•°æŒ‡é’ˆ
-	static BOOL bCallback;							// æ˜¯å¦æœ‰å›è°ƒå‡½æ•°
+	static CNKDATAUpdateCallback callback;			// »Øµ÷º¯ÊıÖ¸Õë
+	static BOOL bCallback;							// ÊÇ·ñÓĞ»Øµ÷º¯Êı
 
-	HWAVEIN hwi;									// éŸ³é¢‘è¾“å…¥è®¾å¤‡
-	static WAVEHDR pwh[BUFFER_LAYER];				// ç¡¬ä»¶ç¼“å†²åŒº
+	HWAVEIN hwi;									// ÒôÆµÊäÈëÉè±¸
+	static WAVEHDR pwh[BUFFER_LAYER];				// Ó²¼ş»º³åÇø
 
-	bool bSaveFile;									// æ˜¯å¦å­˜å‚¨æ–‡ä»¶
-	static bool stop;								// æ˜¯å¦è§¦å‘åœæ­¢
-	static bool dat_ignore;							// é˜²æ­¢é‡å¤è®°å½•
+	bool bSaveFile;									// ÊÇ·ñ´æ´¢ÎÄ¼ş
+	static bool stop;								// ÊÇ·ñ´¥·¢Í£Ö¹
+	static bool dat_ignore;							// ·ÀÖ¹ÖØ¸´¼ÇÂ¼
 
-	WAVEPCMHDR WavHeader;                           // é»˜è®¤wavéŸ³é¢‘å¤´éƒ¨æ•°æ®
+	WAVEPCMHDR WavHeader;                           // Ä¬ÈÏwavÒôÆµÍ·²¿Êı¾İ
 
 public:
-	string dest_path;								// å­˜å‚¨è·¯å¾„
-	FILE* fp;	        							// waveæ–‡ä»¶æŒ‡é’ˆ
+	string dest_path;								// ´æ´¢Â·¾¶
+	FILE* fp;	        							// waveÎÄ¼şÖ¸Õë
 
-	WaveRecorder();									// æ„é€ ï¼Œæ‰“å¼€è®¾å¤‡
-	~WaveRecorder();								// ææ„ï¼Œå…³é—­è®¾å¤‡
-	void set_Callback(CNKDATAUpdateCallback fn);	// è®¾ç½®å®æ—¶å¤„ç†æ•°æ®å—çš„å›è°ƒå‡½æ•°ï¼Œå¯ä»¥ä¸è®¾ç½®
-	void set_FileName(string des_path);				// è®¾ç½®éœ€è¦ä¿å­˜çš„æ–‡ä»¶ç›®æ ‡ï¼Œä¸è®¾ç½®åˆ™ä¸ä¿å­˜
-	void Start();									// åˆå§‹åŒ–å¹¶å¼€å§‹å½•éŸ³
-	void Stop();									// ç»“æŸå½•éŸ³å¹¶åšæ”¶å°¾
-	void Reset();									// å‚æ•°é‡è®¾
+	WaveRecorder();									// ¹¹Ôì£¬´ò¿ªÉè±¸
+	~WaveRecorder();								// Îö¹¹£¬¹Ø±ÕÉè±¸
+	void set_Callback(CNKDATAUpdateCallback fn);	// ÉèÖÃÊµÊ±´¦ÀíÊı¾İ¿éµÄ»Øµ÷º¯Êı£¬¿ÉÒÔ²»ÉèÖÃ
+	void set_FileName(string des_path);				// ÉèÖÃĞèÒª±£´æµÄÎÄ¼şÄ¿±ê£¬²»ÉèÖÃÔò²»±£´æ
+	void Start();									// ³õÊ¼»¯²¢¿ªÊ¼Â¼Òô
+	void Stop();									// ½áÊøÂ¼Òô²¢×öÊÕÎ²
+	void Reset();									// ²ÎÊıÖØÉè
 
-	static array <char, CHUNCK_SIZE> ChunkData;		// å½“å‰å—æ•°æ®
-	static vector<array<char, CHUNCK_SIZE>> RawData;// å·²å½•åˆ¶çš„è£¸æ•°æ®
-	static UINT ChunksCount;						// è£¸æ•°æ®å†…å—è®¡æ•°
+	static array <char, CHUNCK_SIZE> ChunkData;		// µ±Ç°¿éÊı¾İ
+	static vector<array<char, CHUNCK_SIZE>> RawData;// ÒÑÂ¼ÖÆµÄÂãÊı¾İ
+	static UINT ChunksCount;						// ÂãÊı¾İÄÚ¿é¼ÆÊı
 };
 #endif

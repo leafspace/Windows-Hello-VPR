@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "resource.h"
 #include "Shockwaveflash.h"
 
 // CVoiceprintRecognitionDlg 对话框
@@ -35,4 +36,10 @@ private:
 	CListCtrl listCtrl_1;
 	CListCtrl listCtrl_2;
 	CButton buttonCtrl_1;
+public:
+	afx_msg void OnBnClickedButton1();                                       //录音
+	afx_msg void OnBnClickedButton2();                                       //训练
+	afx_msg void OnBnClickedButton3();                                       //识别
+	afx_msg void OnBnClickedButton4();                                       //刷新
+	afx_msg void OnBnClickedButton5();                                       //刷新
 };

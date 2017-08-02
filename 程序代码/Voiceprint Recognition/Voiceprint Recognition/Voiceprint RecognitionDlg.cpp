@@ -67,6 +67,11 @@ BEGIN_MESSAGE_MAP(CVoiceprintRecognitionDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON1, &CVoiceprintRecognitionDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CVoiceprintRecognitionDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &CVoiceprintRecognitionDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON4, &CVoiceprintRecognitionDlg::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON5, &CVoiceprintRecognitionDlg::OnBnClickedButton5)
 END_MESSAGE_MAP()
 
 
@@ -119,6 +124,7 @@ BOOL CVoiceprintRecognitionDlg::OnInitDialog()
 	strFileName += "flash.swf";
 	this->flashshow.LoadMovie(0, strFileName);
 	this->flashshow.Play();
+	this->flashshow.Stop();
 	SetWindowPos(&this->flashshow,0,0,0,0, SWP_NOMOVE | SWP_NOSIZE);
 
 
@@ -192,3 +198,32 @@ HCURSOR CVoiceprintRecognitionDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+void CVoiceprintRecognitionDlg::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	this->flashshow.Play();
+}
+
+
+void CVoiceprintRecognitionDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CVoiceprintRecognitionDlg::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CVoiceprintRecognitionDlg::OnBnClickedButton4()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CVoiceprintRecognitionDlg::OnBnClickedButton5()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}

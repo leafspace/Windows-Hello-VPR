@@ -62,6 +62,9 @@
     <ClCompile Include="Shockwaveflash.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Voiceprint RecognitionDlg Response.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="WaveRecorder.cpp">
       <Filter>源文件</Filter>
     </ClCompile>

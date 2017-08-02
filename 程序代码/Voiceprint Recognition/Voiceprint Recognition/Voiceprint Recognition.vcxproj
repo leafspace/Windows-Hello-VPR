@@ -115,6 +115,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Voiceprint Recognition.cpp" />
+    <ClCompile Include="Voiceprint RecognitionDlg Response.cpp" />
     <ClCompile Include="Voiceprint RecognitionDlg.cpp" />
     <ClCompile Include="WaveRecorder.cpp" />
   </ItemGroup>
