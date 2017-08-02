@@ -45,6 +45,9 @@
     <ClInclude Include="Shockwaveflash.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="WaveRecorder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Voiceprint Recognition.cpp">
@@ -57,6 +60,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Shockwaveflash.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WaveRecorder.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

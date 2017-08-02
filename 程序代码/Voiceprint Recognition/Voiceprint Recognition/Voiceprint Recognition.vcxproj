@@ -106,6 +106,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Voiceprint Recognition.h" />
     <ClInclude Include="Voiceprint RecognitionDlg.h" />
+    <ClInclude Include="WaveRecorder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shockwaveflash.cpp" />
@@ -115,6 +116,7 @@
     </ClCompile>
     <ClCompile Include="Voiceprint Recognition.cpp" />
     <ClCompile Include="Voiceprint RecognitionDlg.cpp" />
+    <ClCompile Include="WaveRecorder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Voiceprint Recognition.rc" />
