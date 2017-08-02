@@ -22,6 +22,9 @@
     <None Include="res\Voiceprint Recognition.ico">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="flash.swf">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Voiceprint Recognition.h">
@@ -39,6 +42,9 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Shockwaveflash.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Voiceprint Recognition.cpp">
@@ -48,6 +54,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Shockwaveflash.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -57,6 +57,10 @@ CVoiceprintRecognitionDlg::CVoiceprintRecognitionDlg(CWnd* pParent /*=NULL*/)
 void CVoiceprintRecognitionDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_SHOCKWAVEFLASH1, flashshow);
+	DDX_Control(pDX, IDC_LIST1, listCtrl_1);
+	DDX_Control(pDX, IDC_LIST2, listCtrl_2);
+	DDX_Control(pDX, IDC_BUTTON1, buttonCtrl_1);
 }
 
 BEGIN_MESSAGE_MAP(CVoiceprintRecognitionDlg, CDialogEx)
@@ -96,8 +100,45 @@ BOOL CVoiceprintRecognitionDlg::OnInitDialog()
 	//  执行此操作
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
-
+	
 	// TODO: 在此添加额外的初始化代码
+	CRect rectCtrl;
+	GetDlgItem(IDC_SHOCKWAVEFLASH1)->GetWindowRect(&rectCtrl);
+	rectCtrl.left = 35;
+	rectCtrl.right = 217;
+	rectCtrl.top = 45;
+	rectCtrl.bottom = 200;
+	flashshow.MoveWindow(&rectCtrl, true);
+	TCHAR strCurDrt[500];
+	int nLen = ::GetCurrentDirectory(500, strCurDrt);
+	if (strCurDrt[nLen] != '\\') {
+		strCurDrt[nLen++] = '\\';
+		strCurDrt[nLen] = '\0';
+	}
+	CString strFileName = strCurDrt;
+	strFileName += "flash.swf";
+	this->flashshow.LoadMovie(0, strFileName);
+	this->flashshow.Play();
+	SetWindowPos(&this->flashshow,0,0,0,0, SWP_NOMOVE | SWP_NOSIZE);
+
+
+	CRect rect;
+	this->listCtrl_1.GetHeaderCtrl()->EnableWindow(false);                   //固定标题不被移动
+	listCtrl_1.GetClientRect(&rect);                                   //获取编程语言列表视图控件的位置和大小
+	listCtrl_1.SetExtendedStyle(listCtrl_1.GetExtendedStyle()
+		| LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);                            //为列表视图控件添加全行选中和栅格风格
+
+	listCtrl_1.InsertColumn(0, _T("文件名"), LVCFMT_CENTER, rect.Width() / 2, 0);
+	listCtrl_1.InsertColumn(1, _T("录音人"), LVCFMT_CENTER, rect.Width() / 2, 1);
+
+	this->listCtrl_2.GetHeaderCtrl()->EnableWindow(false);                   //固定标题不被移动
+	listCtrl_2.GetClientRect(&rect);                                   //获取编程语言列表视图控件的位置和大小
+	listCtrl_2.SetExtendedStyle(listCtrl_2.GetExtendedStyle()
+		| LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);                            //为列表视图控件添加全行选中和栅格风格
+
+	listCtrl_2.InsertColumn(0, _T("文件名"), LVCFMT_CENTER, rect.Width() / 2, 0);
+	listCtrl_2.InsertColumn(1, _T("所属人"), LVCFMT_CENTER, rect.Width() / 2, 1);
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

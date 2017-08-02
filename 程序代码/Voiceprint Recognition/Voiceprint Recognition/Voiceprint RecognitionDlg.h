@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "Shockwaveflash.h"
 
 // CVoiceprintRecognitionDlg ¶Ô»°¿ò
 class CVoiceprintRecognitionDlg : public CDialogEx
@@ -29,4 +29,10 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
+private:
+	CShockwaveflash flashshow;
+	CListCtrl listCtrl_1;
+	CListCtrl listCtrl_2;
+	CButton buttonCtrl_1;
 };
