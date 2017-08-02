@@ -1,4 +1,4 @@
-﻿生成启动时间为 2017/8/2 16:42:11。
+﻿生成启动时间为 2017/8/2 20:44:33。
      1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Voiceprint Recognition\Voiceprint Recognition.vcxproj”在节点 2 上(rebuild 个目标)。
      1>_PrepareForClean:
          正在删除文件“Debug\Voiceprint Recognition.lastbuildstate”。
@@ -19,7 +19,7 @@
        ManifestResourceCompile:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\Voiceprint Recognition.exe.embed.manifest.res" "Debug\Voiceprint Recognition_manifest.rc" 
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\Voiceprint Recognition.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.lib" /MACHINE:X86 "Debug\Voiceprint Recognition.res"
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.exe" /INCREMENTAL /NOLOGO pthreadVC2.lib pthreadVCE2.lib pthreadVSE2.lib /MANIFEST /ManifestFile:"Debug\Voiceprint Recognition.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.lib" /MACHINE:X86 "Debug\Voiceprint Recognition.res"
          "Debug\Voiceprint Recognition.exe.embed.manifest.res"
          Debug\Shockwaveflash.obj
          Debug\stdafx.obj
@@ -32,7 +32,7 @@
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Voiceprint Recognition.exe.embed.manifest" /manifest "Debug\Voiceprint Recognition.exe.intermediate.manifest" "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\Voiceprint Recognition.exe.embed.manifest.res" "Debug\Voiceprint Recognition_manifest.rc" 
        LinkEmbedManifest:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\Voiceprint Recognition.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.lib" /MACHINE:X86 "Debug\Voiceprint Recognition.res"
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.exe" /INCREMENTAL /NOLOGO pthreadVC2.lib pthreadVCE2.lib pthreadVSE2.lib /MANIFEST /ManifestFile:"Debug\Voiceprint Recognition.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Debug\Voiceprint Recognition.lib" /MACHINE:X86 "Debug\Voiceprint Recognition.res"
          "Debug\Voiceprint Recognition.exe.embed.manifest.res"
          Debug\Shockwaveflash.obj
          Debug\stdafx.obj
@@ -48,4 +48,4 @@
 
 生成成功。
 
-已用时间 00:00:08.50
+已用时间 00:00:08.01

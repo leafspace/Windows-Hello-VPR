@@ -28,7 +28,6 @@ void WaveRecorder::set_FileName(string Target)
 	if (err > 0) {
 #if _DEBUG
 		cout << "文件创建失败：" << err << " 检查文件名和占用" << endl;
-		system("pause");
 #endif
 		bSaveFile = false;
 	}

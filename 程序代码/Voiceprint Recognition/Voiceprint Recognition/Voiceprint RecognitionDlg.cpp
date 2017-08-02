@@ -146,6 +146,8 @@ BOOL CVoiceprintRecognitionDlg::OnInitDialog()
 	listCtrl_2.InsertColumn(1, _T("所属人"), LVCFMT_CENTER, rect.Width() / 2, 1);
 
 
+	this->flagRecord = false;
+
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -201,7 +203,50 @@ HCURSOR CVoiceprintRecognitionDlg::OnQueryDragIcon()
 void CVoiceprintRecognitionDlg::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	this->flashshow.Play();
+	if (flagRecord) {
+		this->OnButton1_cancel();
+		this->flashshow.Stop();
+		this->flagRecord = false;
+		SetDlgItemText(IDC_BUTTON1, (CString)"录音");
+	} else {
+		bool success = false;
+		//弹出窗口并显示
+		CFileDialog opendlg(FALSE, _T("*.wav"), _T("*.wav"), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("所有文件(*.wav*;)|*.wav*||"), NULL);   //打开文件选择框
+		if (opendlg.DoModal() == IDOK)
+		{
+			CString fileName = opendlg.GetPathName();                        //获取选择的文件名
+			int nameLen = WideCharToMultiByte(CP_ACP, 0, fileName, -1, NULL, 0, NULL, NULL);
+			char *fileNameChar = new char[nameLen + 1];
+			WideCharToMultiByte(CP_ACP, 0, fileName, -1, fileNameChar, nameLen, NULL, NULL);     //将CString转为char*
+			char *fileNameTemp = new char[nameLen + 20];
+
+			int index = 0;                                                   //用于保存新文件名长度
+			for (int i = 0; i < nameLen + 1; ++i) {                          //处理'\'为'\\'，若文件中的路径分隔符为'\'则无法准确定位
+				fileNameTemp[index++] = fileNameChar[i];
+				if (fileNameChar[i] == '\\') {
+					fileNameTemp[index++] = '\\';
+				}
+			}
+			fileNameTemp[index] = 0;
+			if (fileNameTemp[index - 1] != 'v' || fileNameTemp[index - 2] != 'a' ||
+				fileNameTemp[index - 3] != 'w' || fileNameTemp[index - 4] != '.' ) {
+					fileNameTemp[index    ] = '.';
+					fileNameTemp[index + 1] = 'w';
+					fileNameTemp[index + 2] = 'a';
+					fileNameTemp[index + 3] = 'v';
+					fileNameTemp[index + 4] = 0;
+			}
+
+			success = this->OnButton1_record(fileNameTemp);                  //赋文件名给线程操作函数
+			delete fileNameChar;
+			//delete fileNameTemp;                                           //交给初始化完录音后清空
+		}
+		if (success) {
+			SetDlgItemText(IDC_BUTTON1, (CString)"停止");
+			this->flashshow.Play();
+			this->flagRecord = true;
+		}
+	}
 }
 
 
