@@ -52,7 +52,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -103,6 +103,7 @@
     <None Include="res\VoiceprintRecognition.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CChineseCode.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Shockwaveflash.h" />
     <ClInclude Include="stdafx.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="WaveRecorder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CChineseCode.cpp" />
     <ClCompile Include="Shockwaveflash.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

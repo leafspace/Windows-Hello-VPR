@@ -3,6 +3,83 @@
 
 WaveRecorder waveRecorder;
 char* fileName;
+string fileName_t;
+
+void CVoiceprintRecognitionDlg::CompoundFile(vector<FILESTRUCT>& fileLib, int flag)    //ÓÃÓÚ½«txtĞÅÏ¢Óëµ±Ç°ÎÄ¼ş¼ĞÏÂÄÚÈİÏà½áºÏ
+{
+	char szModuleFilePath[MAX_PATH];
+	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //»ñµÃµ±Ç°Ö´ĞĞÎÄ¼şµÄÂ·¾¶
+	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //½«×îºóÒ»¸ö"\\"ºóµÄ×Ö·ûÖÃÎª0
+	
+	int index = 0;
+	char filePath[MAX_PATH];
+	for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {               //²¹È«//
+		filePath[index++] = szModuleFilePath[i];
+		if (szModuleFilePath[i] == '\\') {
+			filePath[index++] = '\\';
+		}
+	}
+	filePath[index++] = 0;                                                   //Ä©Î²¹éÁã
+
+	char path[MAX_PATH];
+	strcpy_s(path, filePath);
+	if (flag == 0) {                                                         //°´ÕÕÒªÇóÁ¬½ÓÎÄ¼ş¼Ğ
+		strcat_s(path, "wavLib");
+	} else if (flag == 1) {
+		strcat_s(path, "voiceLib");
+	}
+
+	vector<string> files;
+	getFiles(path, files);                                                   //»ñÈ¡ÎÄ¼ş¼ĞÄÚµÄËùÓĞÎÄ¼şÃû£¨Â·¾¶Ãû£©
+
+	strcat_s(path, "\\\\info.list");                                         //Ö¸¶¨ÎÄ¼ş¼ĞµÄ¶ÁÈ¡ÎÄ¼ş
+	ifstream in(path);
+	fileLib.clear();
+	readList(in, fileLib);                                                   //¶ÁÈ¡listÎÄ¼şÄÚÈİ
+	in.close();
+
+	vector<FILESTRUCT> newLib;
+	for (int i = 0, j = 0; i < (int) files.size(); ++i) {
+		string fileName = files[i];
+		if (strcmp(getFileName(fileName).data(), "info.list") == 0) {        //Èç¹ûµ±Ç°ÎÄ¼şµÄÎÄ¼şÃûÎªinfo.listËµÃ÷ÆäÎªÅäÖÃÎÄ¼ş
+			continue;
+		}
+		for (j = 0; j < (int) fileLib.size(); ++j) {
+			if (strcmp(getFileName(fileName).data(), fileLib[j].fileName.data()) == 0) {         //Èç¹ûµ±Ç°ÎÄ¼şÃûÓëÁĞ±íÃûÏàÆ¥Åä£¬ÔòËµÃ÷ÕâÊÇÒ»¸ö²»±äµÄÁĞ±íÏî
+				newLib.push_back(fileLib[j]);
+				break;
+			}
+		}
+		if (j == fileLib.size()) {
+			FILESTRUCT item;
+			item.fileName = getFileName(fileName).data();
+			if (flag == 0) {
+				if (::fileName != NULL && (strcmp(::fileName_t.data(), fileName.data()) == 0)) { //Èç¹ûÂ¼ÒôÎÄ¼şÂ·¾¶Óëµ±Ç°Õâ¸öÎ´ÖªµÄÎÄ¼şÂ·¾¶ÏàÍ¬
+					CString str;
+					GetDlgItem(IDC_EDIT1)->GetWindowText(str);               //»ñÈ¡ËùÊôÈËÃû
+					string tempstr = CStringA(str);
+					if (tempstr.size() == 0) {                               //ËùÊôÈËÃûÃ»Ğ´
+						item.peopleName = "Î´Öª";
+					} else {
+						item.peopleName = tempstr;
+					}
+				} else {
+					item.peopleName = "Î´Öª";
+				}
+			} else if (flag == 1) {
+				item.peopleName = "Î´Öª";
+			}
+			newLib.push_back(item);
+		}
+	}
+
+	ofstream wavOut(path);
+	writeList(wavOut, newLib);                                               //ÖØĞÂĞ´ÈëÊı¾İ
+	wavOut.close();
+
+	fileLib.clear();
+	fileLib = newLib;
+}
 
 bool CVoiceprintRecognitionDlg::OnButton1_record(char* fileName)             //¿ªÆôÂ¼ÒôÏß³Ì
 {
@@ -26,12 +103,45 @@ bool CVoiceprintRecognitionDlg::OnButton1_cancel()                           //½
 	return true;
 }
 
+bool CVoiceprintRecognitionDlg::OnButton4_refresh()                          //Â¼ÒôÎÄ¼şË¢ĞÂ
+{
+	CString str_f, str_p;
+	listCtrl_1.DeleteAllItems();
+	for (int i = 0; i < (int) this->wavLib.size(); ++i) {
+		FILESTRUCT item = this->wavLib[i];
+		str_f = item.fileName.c_str();
+		str_p = item.peopleName.c_str();
+		listCtrl_1.InsertItem(i, str_f);                                     //ÉèÖÃÁĞ±íÎÄ¼şÃûĞÅÏ¢
+		listCtrl_1.SetItemText(i, 1, str_p);                                 //ÉèÖÃÁĞ±íÓÃ»§ĞÅÏ¢
+	}
+	return true;
+}
+
+bool CVoiceprintRecognitionDlg::OnButton5_refresh()                          //Ä£ĞÍÎÄ¼şË¢ĞÂ
+{
+	CString str_f, str_p;
+	listCtrl_2.DeleteAllItems();
+	for (int i = 0; i < (int) this->voiceLib.size(); ++i) {
+		FILESTRUCT item = this->voiceLib[i];
+		str_f = item.fileName.c_str();
+		str_p = item.peopleName.c_str();
+		listCtrl_2.InsertItem(i, str_f);                                     //ÉèÖÃÁĞ±íÎÄ¼şÃûĞÅÏ¢
+		listCtrl_2.SetItemText(i, 1, str_p);;                                //ÉèÖÃÁĞ±íÓÃ»§ĞÅÏ¢
+	}
+	return true;
+}
+
 void* record(void* args)                                                     //Â¼ÒôÏß³Ì
 {
 	waveRecorder.set_FileName((char*)fileName);
 	waveRecorder.Start();
 	delete fileName;
 	return NULL;
+}
+
+string getFileName(string path)                                              //½«Ä³¸öÂ·¾¶×ª»»ÎªÄ³¸öÎÄ¼şÃû
+{
+	return path.substr(path.rfind('\\') + 1, path.size() - path.rfind('\\') - 1);
 }
 
 void getFiles(string path, vector<string>& files)                            //»ñÈ¡pathÎÄ¼ş¼ĞÏÂµÄËùÓĞÎÄ¼şÃû
@@ -41,14 +151,47 @@ void getFiles(string path, vector<string>& files)                            //»
     string p;
     if((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1) {
 		do {
-            if((fileinfo.attrib & _A_SUBDIR)) {
+            if((fileinfo.attrib & _A_SUBDIR)) {                              //ÅĞ¶ÏÊÇ·ñÎªÎÄ¼ş¼Ğ
 				if(strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0) {
 					getFiles(p.assign(path).append("\\").append(fileinfo.name), files);  
 				}
             } else {
-				files.push_back(p.assign(path).append("\\").append(fileinfo.name));
+				files.push_back(p.assign(path).append("\\\\").append(fileinfo.name));
 			}
         } while(_findnext(hFile, &fileinfo) == 0);  
 		_findclose(hFile);
+	}
+}
+
+void readList(ifstream& in, vector<FILESTRUCT>& list)                        //¶ÁÈ¡ÎÄ¼şµÄÄÚÈİµ½listÖĞ
+{
+	char buffer[256];
+	string str_f, str_p;
+	char fileName[256], peopleName[256];
+	if (in.is_open()) {
+		while (!in.eof()) {
+			in.getline(buffer, 256);
+			if (strlen(buffer) == 0) {                                       //·ÀÖ¹µ½ÁË×îºóÒ»ĞĞÖ»ÊÇÒ»¸ö»»ĞĞ»¹ÖØ¸´¶ÁÈ¡
+				continue;
+			}
+			sscanf(buffer, "%s %s", &fileName, &peopleName);                 //¸ñÊ½»¯×Ö·û´®
+			CChineseCode::UTF_8ToGB2312(str_f, fileName, strlen(fileName));
+			CChineseCode::UTF_8ToGB2312(str_p, peopleName, strlen(peopleName));
+			FILESTRUCT item(str_f, str_p);
+			list.push_back(item);
+			memset(buffer, 0, 256);
+		}
+	}
+}
+
+void writeList(ofstream& out, vector<FILESTRUCT>& list)                      //½«listÎÄ¼şÄÚÈİĞ´ÈëÊı¾İÁ÷
+{
+	string str_f, str_p;
+	if (out.is_open()) {
+		for (int i = 0; i < (int) list.size(); ++i) {
+			CChineseCode::GB2312ToUTF_8(str_f, (char*) list[i].fileName.data(), list[i].fileName.length());
+			CChineseCode::GB2312ToUTF_8(str_p, (char*) list[i].peopleName.data(), list[i].peopleName.length());
+			out << str_f.data() << "\t" << str_p.data() << endl;
+		}
 	}
 }

@@ -4,8 +4,12 @@
 
 #pragma once
 #include <io.h>
+#include <iomanip>
+#include <fstream>
+#include <iostream>
 #include <pthread.h>
 #include "resource.h"
+#include "CChineseCode.h"
 #include "WaveRecorder.h"
 #include "Shockwaveflash.h"
 
@@ -49,8 +53,13 @@ private:
 
 	bool flagRecord;                                                         //用于标识当前状态，如果flag=true则表示当前处于录音状态 flag=false则表示当前属于空白状态
 
+	void CompoundFile(vector<FILESTRUCT>& fileLib, int flag);                //用于将txt信息与当前文件夹下内容相结合
+
 	bool OnButton1_record(char* fileName);                                   //开启录音线程
 	bool OnButton1_cancel();                                                 //结束录音
+
+	bool OnButton4_refresh();                                                //录音文件刷新
+	bool OnButton5_refresh();                                                //模型文件刷新
 
 public:
 	afx_msg void OnBnClickedButton1();                                       //录音
@@ -64,10 +73,19 @@ typedef struct FILESTRUCT
 {
 	string fileName;
 	string peopleName;
+	FILESTRUCT() {}
+	FILESTRUCT(string fileName, string peopleName) {
+		this->fileName = fileName;
+		this->peopleName = peopleName;
+	}
 }FILESTRUCT;
 
 extern WaveRecorder waveRecorder;
 extern char* fileName;
+extern string fileName_t;
 
 void* record(void* args);                                                    //录音线程
+string getFileName(string path);                                             //将某个路径转换为某个文件名
 void getFiles(string path, vector<string>& files);                           //获取path文件夹下的所有文件名
+void readList(ifstream& in, vector<FILESTRUCT>& list);                       //读取文件的内容到list中
+void writeList(ofstream& out, vector<FILESTRUCT>& list);                     //将list文件内容写入数据流
