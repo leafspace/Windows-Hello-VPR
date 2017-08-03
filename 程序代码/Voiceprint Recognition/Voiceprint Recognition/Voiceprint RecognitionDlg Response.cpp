@@ -1,4 +1,7 @@
 #include "stdafx.h"
+#include "VPR/WavData_CharaParameter.h"
+#include "VPR/Model_KMeans.h"
+#include "VPR/Model_GMM.h"
 #include "Voiceprint RecognitionDlg.h"
 
 WaveRecorder waveRecorder;
@@ -79,6 +82,35 @@ void CVoiceprintRecognitionDlg::CompoundFile(vector<FILESTRUCT>& fileLib, int fl
 
 	fileLib.clear();
 	fileLib = newLib;
+}
+
+int CVoiceprintRecognitionDlg::GetItemSelect(int index)                      //»ñÈ¡Ä³¸ölistControlµ±Ç°Ñ¡ÖÐÏîµÄÐÐºÅ
+{
+	int count = 0;
+	switch (index)
+	{
+	case 0 : count = this->listCtrl_1.GetItemCount(); break;
+	case 1 : count = this->listCtrl_2.GetItemCount(); break;
+	default : break;
+	}
+
+	for (int i = 0; i < count; ++i) {
+		switch (index)
+		{
+		case 0 : 
+			if (this->listCtrl_1.GetItemState(i, LVIS_SELECTED) == LVIS_SELECTED) {
+				return i;
+			}
+			break;
+		case 1 : 
+			if (this->listCtrl_2.GetItemState(i, LVIS_SELECTED) == LVIS_SELECTED) {
+				return i;
+			}
+			break;
+		default : break;
+		}
+	}
+	return -1;
 }
 
 bool CVoiceprintRecognitionDlg::OnButton1_record(char* fileName)             //¿ªÆôÂ¼ÒôÏß³Ì
@@ -194,4 +226,11 @@ void writeList(ofstream& out, vector<FILESTRUCT>& list)                      //½
 			out << str_f.data() << "\t" << str_p.data() << endl;
 		}
 	}
+}
+
+bool trainingWAV(string wavfilePath, string gmmfilePath, string peopleName)  //ÑµÁ·wavÎÄ¼þ
+{
+
+
+	return true;
 }

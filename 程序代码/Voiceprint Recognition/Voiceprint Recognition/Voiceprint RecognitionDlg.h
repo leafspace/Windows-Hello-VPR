@@ -54,6 +54,7 @@ private:
 	bool flagRecord;                                                         //用于标识当前状态，如果flag=true则表示当前处于录音状态 flag=false则表示当前属于空白状态
 
 	void CompoundFile(vector<FILESTRUCT>& fileLib, int flag);                //用于将txt信息与当前文件夹下内容相结合
+	int GetItemSelect(int index);                                            //获取某个listControl当前选中项的行号
 
 	bool OnButton1_record(char* fileName);                                   //开启录音线程
 	bool OnButton1_cancel();                                                 //结束录音
@@ -89,3 +90,4 @@ string getFileName(string path);                                             //�
 void getFiles(string path, vector<string>& files);                           //获取path文件夹下的所有文件名
 void readList(ifstream& in, vector<FILESTRUCT>& list);                       //读取文件的内容到list中
 void writeList(ofstream& out, vector<FILESTRUCT>& list);                     //将list文件内容写入数据流
+bool trainingWAV(string wavfilePath, string gmmfilePath, string peopleName); //训练wav文件

@@ -258,13 +258,40 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton1()
 void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	int selectIndex = this->GetItemSelect(0);
+	FILESTRUCT selectItem = this->wavLib[selectIndex];
 
+	char szModuleFilePath[MAX_PATH];
+	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
+	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
+	
+	int index = 0;
+	char filePath[MAX_PATH];
+	for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {               //补全//
+		filePath[index++] = szModuleFilePath[i];
+		if (szModuleFilePath[i] == '\\') {
+			filePath[index++] = '\\';
+		}
+	}
+	filePath[index++] = 0;                                                   //末尾归零
+
+	char wavfilePath[MAX_PATH], gmmfilePath[MAX_PATH];
+	strcpy_s(wavfilePath, filePath);
+	strcpy_s(gmmfilePath, filePath);
+	strcat_s(wavfilePath, "wavLib\\\\");
+	strcat_s(gmmfilePath, "voiceLib\\\\");
+	strcat_s(wavfilePath, selectItem.fileName.data());
+	strcat_s(gmmfilePath, selectItem.peopleName.data());
+	strcat_s(gmmfilePath, "-gmm(?).txt");
+
+	trainingWAV(wavfilePath, gmmfilePath, selectItem.peopleName);
 }
 
 
 void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	int selectIndex = this->GetItemSelect(1);
 }
 
 

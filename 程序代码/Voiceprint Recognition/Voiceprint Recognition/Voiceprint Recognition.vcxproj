@@ -110,6 +110,11 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Voiceprint Recognition.h" />
     <ClInclude Include="Voiceprint RecognitionDlg.h" />
+    <ClInclude Include="VPR\Model_GMM.h" />
+    <ClInclude Include="VPR\Model_KMeans.h" />
+    <ClInclude Include="VPR\WavData_CharaParameter.h" />
+    <ClInclude Include="VPR\WavFile_Initial.h" />
+    <ClInclude Include="VPR\WavFile_Struct.h" />
     <ClInclude Include="WaveRecorder.h" />
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +127,25 @@
     <ClCompile Include="Voiceprint Recognition.cpp" />
     <ClCompile Include="Voiceprint RecognitionDlg Response.cpp" />
     <ClCompile Include="Voiceprint RecognitionDlg.cpp" />
+    <ClCompile Include="VPR\Model_GMM.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="VPR\Model_KMeans.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="VPR\WavData_CharaParameter.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="VPR\WavData_SupportFunction.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="VPR\WavFile_Initial.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="VPR\WavFile_Struct.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="WaveRecorder.cpp" />
   </ItemGroup>
   <ItemGroup>

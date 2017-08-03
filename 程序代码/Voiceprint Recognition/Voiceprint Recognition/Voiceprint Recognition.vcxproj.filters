@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\VPR">
+      <UniqueIdentifier>{2d2fe02a-4215-4ece-8865-dab3a837f761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\VPR">
+      <UniqueIdentifier>{e3494377-200b-4198-9bf7-74006ac3610b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -27,12 +33,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Voiceprint Recognition.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Voiceprint RecognitionDlg.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -50,6 +50,27 @@
     </ClInclude>
     <ClInclude Include="CChineseCode.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\WavFile_Struct.h">
+      <Filter>头文件\VPR</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\WavFile_Initial.h">
+      <Filter>头文件\VPR</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\WavData_CharaParameter.h">
+      <Filter>头文件\VPR</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\Model_GMM.h">
+      <Filter>头文件\VPR</Filter>
+    </ClInclude>
+    <ClInclude Include="Voiceprint RecognitionDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Voiceprint Recognition.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\Model_KMeans.h">
+      <Filter>头文件\VPR</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +94,24 @@
     </ClCompile>
     <ClCompile Include="CChineseCode.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\Model_GMM.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\Model_KMeans.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\WavData_CharaParameter.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\WavData_SupportFunction.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\WavFile_Initial.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\WavFile_Struct.cpp">
+      <Filter>源文件\VPR</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
