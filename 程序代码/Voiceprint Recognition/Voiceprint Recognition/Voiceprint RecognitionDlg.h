@@ -82,10 +82,11 @@ typedef struct FILESTRUCT
 	}
 }FILESTRUCT;
 
-extern WaveRecorder waveRecorder;
-extern char* fileName;
-extern string fileName_t;
-extern double* mfccData;
+extern WaveRecorder waveRecorder;                                            //全局录音对象
+extern char* fileName;                                                       //文件对比之用
+extern string fileName_t;                                                    //文件对比之用
+extern double* mfccData;                                                     //用于保存当前语音训练出的数据
+extern CharaParameter* charaParameter;                                       //用于保存当前语音训练出的参数
 
 void* record(void* args);                                                    //录音线程
 string getFileName(string path);                                             //将某个路径转换为某个文件名
@@ -93,5 +94,6 @@ void getFiles(string path, vector<string>& files);                           //�
 void readList(ifstream& in, vector<FILESTRUCT>& list);                       //读取文件的内容到list中
 void writeList(ofstream& out, vector<FILESTRUCT>& list);                     //将list文件内容写入数据流
 
-CharaParameter* extractParameter(string wavfilePath);                        //训练目标路径的语音文件的特征参数
+bool extractParameter(string wavfilePath);                                   //训练目标路径的语音文件的特征参数
 bool trainingWAV(string wavfilePath, string gmmfilePath);                    //训练wav文件
+int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib);     //声纹识别

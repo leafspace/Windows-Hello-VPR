@@ -1,13 +1,14 @@
 #include "stdafx.h"
-#include "VPR/WavData_CharaParameter.h"
-#include "VPR/Model_KMeans.h"
 #include "VPR/Model_GMM.h"
+#include "VPR/Model_KMeans.h"
 #include "Voiceprint RecognitionDlg.h"
+#include "VPR/WavData_CharaParameter.h"
 
-WaveRecorder waveRecorder;
-char* fileName;
-string fileName_t;
-double* mfccData;
+WaveRecorder waveRecorder;                                                   //È«¾ÖÂ¼Òô¶ÔÏó
+char* fileName;                                                              //ÎÄ¼ş¶Ô±ÈÖ®ÓÃ
+string fileName_t;                                                           //ÎÄ¼ş¶Ô±ÈÖ®ÓÃ
+double* mfccData;                                                            //ÓÃÓÚ±£´æµ±Ç°ÓïÒôÑµÁ·³öµÄÊı¾İ
+CharaParameter* charaParameter;                                              //ÓÃÓÚ±£´æµ±Ç°ÓïÒôÑµÁ·³öµÄ²ÎÊı
 
 void CVoiceprintRecognitionDlg::CompoundFile(vector<FILESTRUCT>& fileLib, int flag)    //ÓÃÓÚ½«txtĞÅÏ¢Óëµ±Ç°ÎÄ¼ş¼ĞÏÂÄÚÈİÏà½áºÏ
 {
@@ -130,8 +131,8 @@ bool CVoiceprintRecognitionDlg::OnButton1_record(char* fileName)             //¿
 
 bool CVoiceprintRecognitionDlg::OnButton1_cancel()                           //½áÊøÂ¼Òô
 {
-	waveRecorder.Stop();
-	waveRecorder.Reset();
+	::waveRecorder.Stop();
+	::waveRecorder.Reset();
 	pthread_cancel(this->thread_recordID);
 	return true;
 }
@@ -166,8 +167,8 @@ bool CVoiceprintRecognitionDlg::OnButton5_refresh()                          //Ä
 
 void* record(void* args)                                                     //Â¼ÒôÏß³Ì
 {
-	waveRecorder.set_FileName((char*)fileName);
-	waveRecorder.Start();
+	::waveRecorder.set_FileName((char*)fileName);
+	::waveRecorder.Start();
 	delete fileName;
 	return NULL;
 }
@@ -229,12 +230,12 @@ void writeList(ofstream& out, vector<FILESTRUCT>& list)                      //½
 	}
 }
 
-CharaParameter* extractParameter(string wavfilePath)                         //ÑµÁ·Ä¿±êÂ·¾¶µÄÓïÒôÎÄ¼şµÄÌØÕ÷²ÎÊı
+bool extractParameter(string wavfilePath)                                    //ÑµÁ·Ä¿±êÂ·¾¶µÄÓïÒôÎÄ¼şµÄÌØÕ÷²ÎÊı
 {
 	FILE *fp;
 	if ((fp = fopen(wavfilePath.data(), "rb")) == NULL) {                    //´ò¿ªÓïÒôÎÄ¼ş
 		cout << "ERROR : File open failed !" << endl;
-		return NULL;
+		return false;
 	}
 
 	//Todo ³õÊ¼»¯ÓïÒôÎÄ¼şÀà ¶ÁÈ¡ÓïÒôÎÄ¼şÊı¾İ
@@ -262,27 +263,28 @@ CharaParameter* extractParameter(string wavfilePath)                         //Ñ
 	charaParameter->MFCC_CharaParameter(sampleRate);                         //¼ÆËãMFCCÌØÕ÷²ÎÊı
 
 	//Todo ³õÊ¼»¯KmeansÊı¾İ
-	mfccData = new double[charaParameter->Get_frameNumber() * CharaParameter::MelDegreeNumber];
+	::mfccData = new double[charaParameter->Get_frameNumber() * CharaParameter::MelDegreeNumber];
 	for (unsigned long i = 0; i < charaParameter->Get_frameNumber(); ++i) {
-		memcpy(&mfccData[i * CharaParameter::MelDegreeNumber], 
+		memcpy(&::mfccData[i * CharaParameter::MelDegreeNumber], 
 			charaParameter->Get_frameMelParameter(i), sizeof(double) * CharaParameter::MelDegreeNumber);             //¿½±´mfccÊı¾İµ½Ò»¶ÎÁ¬ĞøµÄ´æ´¢¿Õ¼äÖĞ±¸ÓÃ
 	}
 
-	return charaParameter;
+	::charaParameter = charaParameter;
+	return true;
 }
 
 bool trainingWAV(string wavfilePath, string gmmfilePath)                     //ÑµÁ·wavÎÄ¼ş
 {
-	CharaParameter *charaParameter = extractParameter(wavfilePath);
-	if (charaParameter == NULL) {
+	bool success = extractParameter(wavfilePath);
+	if (!success) {
 		return false;
 	}
 
 	//Todo ¿ªÊ¼Kmeans¾ÛÀà²Ù×÷
 	KMeans* kmeans = new KMeans(CharaParameter::MelDegreeNumber, KMeans::ClusterNumber);         //Ê¹ÓÃ½×Êı¸ú´ØÊı³õÊ¼»¯KmeansÀà
-	int* labels = new int[charaParameter->Get_frameNumber()];
+	int* labels = new int[::charaParameter->Get_frameNumber()];
 	kmeans->SetInitMode(KMeans::InitUniform);                                //ÉèÖÃÊı¾İµÄ³õÊ¼»¯·½·¨
-	kmeans->Cluster(mfccData, charaParameter->Get_frameNumber(), labels);    //¿ªÊ¼¾ÛÀà
+	kmeans->Cluster(::mfccData, ::charaParameter->Get_frameNumber(), labels);//¿ªÊ¼¾ÛÀà
 
 	//Todo  ³õÊ¼»¯GMMÊı¾İ
 	double **test_data = new double*[KMeans::ClusterNumber];
@@ -299,7 +301,7 @@ bool trainingWAV(string wavfilePath, string gmmfilePath)                     //Ñ
 
 	//Todo GMMÑµÁ·Êı¾İ
 	GMM *gmm = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
-	gmm->Train(mfccData, charaParameter->Get_frameNumber());                 //GMMÑµÁ·Êı¾İ
+	gmm->Train(::mfccData, ::charaParameter->Get_frameNumber());             //GMMÑµÁ·Êı¾İ
 
 	//Todo save GMM to file
 	ofstream gmm_file(gmmfilePath.data());
@@ -310,4 +312,48 @@ bool trainingWAV(string wavfilePath, string gmmfilePath)                     //Ñ
 	delete gmm;
 
 	return true;
+}
+
+int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //ÉùÎÆÊ¶±ğ
+{
+	char filePath[MAX_PATH];
+	GMM **gmmLib = new GMM*[voiceLib.size()];
+	ifstream *gmm_file = new ifstream[voiceLib.size()];
+	for (int i = 0; i < (int) voiceLib.size(); ++i) {
+		strcpy_s(filePath, rootPath.data());
+		strcat_s(filePath, voiceLib[i].fileName.data());
+		gmm_file[i].open(filePath);
+		assert(gmm_file[i]);
+		gmmLib[i] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
+		gmm_file[i] >> *gmmLib[i];
+		gmm_file[i].close();
+	}
+
+	//Todo Ê¶±ğ¼ÆËã
+	cout << "TIP : Begin reservation ..." << endl;
+	double *libProbability = new double[voiceLib.size()];
+	for (int i = 0; i < (int) voiceLib.size(); ++i) {
+		libProbability[i] = 0;
+		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //¼ÆËãµ±Ç°GMMÏÂ£¬Ä¿±êÌØÕ÷²ÎÊı¼¯ÔÚGMMÄ£ĞÍÏÂµÄ¸ÅÂÊÃÜ¶È
+			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(i));                   //»ñÈ¡GMMµÄÊıÖµ
+			if (tempData > 0) {                                                                                      //È¡¶ÔÊı²Ù×÷
+				tempData = log10(tempData);
+			}
+			libProbability[i] += tempData;
+		}
+	}
+
+	cout << "TIP : Probability data is ";
+	for (int i = 0; i < (int) voiceLib.size(); ++i) {
+		cout << libProbability[i] << "\t";
+	}
+	cout << endl;
+
+	int countMax = 0;
+	for (int i = 1; i < (int) voiceLib.size(); ++i) {
+		if (libProbability[i] > libProbability[countMax]) {
+			countMax = i;
+		}
+	}
+	return countMax;
 }

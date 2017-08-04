@@ -261,6 +261,11 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 	int selectIndex = this->GetItemSelect(0);
 	FILESTRUCT selectItem = this->wavLib[selectIndex];
 
+	if (strcmp(selectItem.peopleName.data(), "未知") == 0) {
+		MessageBoxA(NULL, "未知的用户语音无法训练进入语音库", "错误", MB_ICONHAND);
+		return ;
+	}
+
 	char szModuleFilePath[MAX_PATH];
 	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
 	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
@@ -284,6 +289,9 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 	strcat_s(gmmfilePath, selectItem.peopleName.data());
 	strcat_s(gmmfilePath, "-gmm(-).txt");
 
+	if (::charaParameter != NULL) {
+		delete ::charaParameter;
+	}
 	trainingWAV(wavfilePath, gmmfilePath);
 
 	char infofilePath[MAX_PATH];
@@ -306,7 +314,29 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	int selectIndex = this->GetItemSelect(1);
+	char szModuleFilePath[MAX_PATH];
+	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
+	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
+	
+	int index = 0;
+	char filePath[MAX_PATH];
+	for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {               //补全//
+		filePath[index++] = szModuleFilePath[i];
+		if (szModuleFilePath[i] == '\\') {
+			filePath[index++] = '\\';
+		}
+	}
+	filePath[index++] = 0;
+	char gmmfilePath[MAX_PATH];
+	strcpy_s(gmmfilePath, filePath);
+	strcat_s(gmmfilePath, "voiceLib\\\\");
+
+	this->OnBnClickedButton2();                                              //先训练目标数据                                                 //末尾归零
+	int countMax = voiceprintRecognition(gmmfilePath, this->voiceLib);
+
+	char VPR_result[256] = "系统识别结果-说话人为：";
+	strcat_s(VPR_result, this->voiceLib[countMax].peopleName.data());
+	MessageBoxA(NULL, VPR_result, "信息", MB_ICONASTERISK);
 }
 
 
@@ -324,3 +354,4 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton5()
 	this->CompoundFile(this->voiceLib, 1);
 	this->OnButton5_refresh();
 }
+
