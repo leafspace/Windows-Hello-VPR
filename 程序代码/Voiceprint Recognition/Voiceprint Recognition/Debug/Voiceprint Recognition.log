@@ -1,14 +1,12 @@
-﻿生成启动时间为 2017/8/3 22:07:39。
+﻿生成启动时间为 2017/8/4 9:56:26。
      1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Voiceprint Recognition\Voiceprint Recognition.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
-         正在对“Debug\Voiceprint Recognition.unsuccessfulbuild”执行 Touch 任务。
+         正在创建“Debug\Voiceprint Recognition.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
          所有输出均为最新。
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Voiceprint Recognition.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "Voiceprint RecognitionDlg.cpp"
+         Voiceprint RecognitionDlg.cpp
          所有输出均为最新。
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"../StdAfx.h" /Fp"Debug\Voiceprint Recognition.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt VPR\Model_GMM.cpp VPR\Model_KMeans.cpp
-         Model_KMeans.cpp
-         Model_GMM.cpp
-         正在生成代码...
        ResourceCompile:
          所有输出均为最新。
        ManifestResourceCompile:
@@ -42,4 +40,4 @@
 
 生成成功。
 
-已用时间 00:00:03.93
+已用时间 00:00:01.93

@@ -1,4 +1,5 @@
-﻿#include "WavFile_Initial.h"
+﻿#pragma once
+#include "WavFile_Initial.h"
 
 class CharaParameter
 {

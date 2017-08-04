@@ -7,6 +7,7 @@
 WaveRecorder waveRecorder;
 char* fileName;
 string fileName_t;
+double* mfccData;
 
 void CVoiceprintRecognitionDlg::CompoundFile(vector<FILESTRUCT>& fileLib, int flag)    //ÓÃÓÚ½«txtĞÅÏ¢Óëµ±Ç°ÎÄ¼ş¼ĞÏÂÄÚÈİÏà½áºÏ
 {
@@ -228,9 +229,85 @@ void writeList(ofstream& out, vector<FILESTRUCT>& list)                      //½
 	}
 }
 
-bool trainingWAV(string wavfilePath, string gmmfilePath, string peopleName)  //ÑµÁ·wavÎÄ¼ş
+CharaParameter* extractParameter(string wavfilePath)                         //ÑµÁ·Ä¿±êÂ·¾¶µÄÓïÒôÎÄ¼şµÄÌØÕ÷²ÎÊı
 {
+	FILE *fp;
+	if ((fp = fopen(wavfilePath.data(), "rb")) == NULL) {                    //´ò¿ªÓïÒôÎÄ¼ş
+		cout << "ERROR : File open failed !" << endl;
+		return NULL;
+	}
 
+	//Todo ³õÊ¼»¯ÓïÒôÎÄ¼şÀà ¶ÁÈ¡ÓïÒôÎÄ¼şÊı¾İ
+	WavFile_Initial *wavFile = new WavFile_Initial(fp);                      //¶ÁÈ¡ÓïÒôÎÄ¼şÊı¾İ
+	fclose(fp);
+	for (unsigned long i = 0; i < wavFile->Get_voiceNumber(); ++i) {
+		wavFile->Pre_emphasis(wavFile->Get_dataVoicePoint(i), wavFile->Get_WavFileData());       //¶Ô¿ÉÓÃ·¶Î§ÄÚµÄÊı¾İ½øĞĞÔ¤¼ÓÖØ
+	}
+
+	//Todo ³õÊ¼»¯ÌØÕ÷²ÎÊıÀà ¼ÆËãÓïÒôÊı¾İÌØÕ÷²ÎÊı
+	double *dataSpace = NULL;
+	
+	CharaParameter *charaParameter = new CharaParameter(wavFile->Get_frameNumber());             //³õÊ¼»¯ÌØÕï²ÎÊıÀà
+	for (unsigned long i = 1; i <= wavFile->Get_frameNumber(); ++i) {        //ÖğÖ¡±éÀú
+		dataSpace = new double[WavFile_Initial::N];                          //ĞÂ½¨Ö¡Êı¾İ¿Õ¼ä
+		memset(dataSpace, 0, sizeof(double) * WavFile_Initial::N);
+		wavFile->Frame_Data(wavFile->Get_WavFileData(), i, dataSpace, WavFile_Initial::N);       //·ÖÖ¡²¢¼Ó´°
+		charaParameter->Push_data(i, dataSpace);                             //½«·ÖÖ¡Íê³ÉµÄÊı¾İ±£´æ½øÌØÕ÷²ÎÊı±¸ÓÃ
+	}
+	
+	unsigned long sampleRate = wavFile->Get_SampleRate();
+	delete wavFile;
+
+	//Todo ¼ÆËãMFCC²ÎÊı
+	charaParameter->MFCC_CharaParameter(sampleRate);                         //¼ÆËãMFCCÌØÕ÷²ÎÊı
+
+	//Todo ³õÊ¼»¯KmeansÊı¾İ
+	mfccData = new double[charaParameter->Get_frameNumber() * CharaParameter::MelDegreeNumber];
+	for (unsigned long i = 0; i < charaParameter->Get_frameNumber(); ++i) {
+		memcpy(&mfccData[i * CharaParameter::MelDegreeNumber], 
+			charaParameter->Get_frameMelParameter(i), sizeof(double) * CharaParameter::MelDegreeNumber);             //¿½±´mfccÊı¾İµ½Ò»¶ÎÁ¬ĞøµÄ´æ´¢¿Õ¼äÖĞ±¸ÓÃ
+	}
+
+	return charaParameter;
+}
+
+bool trainingWAV(string wavfilePath, string gmmfilePath)                     //ÑµÁ·wavÎÄ¼ş
+{
+	CharaParameter *charaParameter = extractParameter(wavfilePath);
+	if (charaParameter == NULL) {
+		return false;
+	}
+
+	//Todo ¿ªÊ¼Kmeans¾ÛÀà²Ù×÷
+	KMeans* kmeans = new KMeans(CharaParameter::MelDegreeNumber, KMeans::ClusterNumber);         //Ê¹ÓÃ½×Êı¸ú´ØÊı³õÊ¼»¯KmeansÀà
+	int* labels = new int[charaParameter->Get_frameNumber()];
+	kmeans->SetInitMode(KMeans::InitUniform);                                //ÉèÖÃÊı¾İµÄ³õÊ¼»¯·½·¨
+	kmeans->Cluster(mfccData, charaParameter->Get_frameNumber(), labels);    //¿ªÊ¼¾ÛÀà
+
+	//Todo  ³õÊ¼»¯GMMÊı¾İ
+	double **test_data = new double*[KMeans::ClusterNumber];
+	for (int i = 0; i < KMeans::ClusterNumber; ++i) {
+		test_data[i] = new double[CharaParameter::MelDegreeNumber];
+		double *tempSpace = kmeans->GetMean(i);
+		for (int j = 0; j < CharaParameter::MelDegreeNumber; ++j) {
+			test_data[i][j] = tempSpace[j];
+		}
+	}
+
+	delete[]labels;
+	delete kmeans;
+
+	//Todo GMMÑµÁ·Êı¾İ
+	GMM *gmm = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
+	gmm->Train(mfccData, charaParameter->Get_frameNumber());                 //GMMÑµÁ·Êı¾İ
+
+	//Todo save GMM to file
+	ofstream gmm_file(gmmfilePath.data());
+	assert(gmm_file);
+	gmm_file << *gmm;
+	gmm_file.close();
+
+	delete gmm;
 
 	return true;
 }

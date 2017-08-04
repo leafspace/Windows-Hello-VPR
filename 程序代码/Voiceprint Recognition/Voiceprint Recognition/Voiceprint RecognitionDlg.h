@@ -12,6 +12,7 @@
 #include "CChineseCode.h"
 #include "WaveRecorder.h"
 #include "Shockwaveflash.h"
+#include "VPR/WavData_CharaParameter.h"
 
 struct FILESTRUCT;
 
@@ -84,10 +85,13 @@ typedef struct FILESTRUCT
 extern WaveRecorder waveRecorder;
 extern char* fileName;
 extern string fileName_t;
+extern double* mfccData;
 
 void* record(void* args);                                                    //录音线程
 string getFileName(string path);                                             //将某个路径转换为某个文件名
 void getFiles(string path, vector<string>& files);                           //获取path文件夹下的所有文件名
 void readList(ifstream& in, vector<FILESTRUCT>& list);                       //读取文件的内容到list中
 void writeList(ofstream& out, vector<FILESTRUCT>& list);                     //将list文件内容写入数据流
-bool trainingWAV(string wavfilePath, string gmmfilePath, string peopleName); //训练wav文件
+
+CharaParameter* extractParameter(string wavfilePath);                        //训练目标路径的语音文件的特征参数
+bool trainingWAV(string wavfilePath, string gmmfilePath);                    //训练wav文件

@@ -282,9 +282,24 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 	strcat_s(gmmfilePath, "voiceLib\\\\");
 	strcat_s(wavfilePath, selectItem.fileName.data());
 	strcat_s(gmmfilePath, selectItem.peopleName.data());
-	strcat_s(gmmfilePath, "-gmm(?).txt");
+	strcat_s(gmmfilePath, "-gmm(-).txt");
 
-	trainingWAV(wavfilePath, gmmfilePath, selectItem.peopleName);
+	trainingWAV(wavfilePath, gmmfilePath);
+
+	char infofilePath[MAX_PATH];
+	strcpy_s(infofilePath, filePath);
+	strcat_s(infofilePath, "voiceLib\\\\");
+	strcat_s(infofilePath, "info.list");
+	ofstream out(infofilePath, ios::app);
+	if (out.is_open()) {
+		string str_f, str_p;
+		CChineseCode::GB2312ToUTF_8(str_f, (char*) getFileName(gmmfilePath).data(), getFileName(gmmfilePath).length());
+		CChineseCode::GB2312ToUTF_8(str_p, (char*) selectItem.peopleName.data(), selectItem.peopleName.length());
+		out << str_f.data() << "\t" << str_p.data() << endl;
+	}
+	out.close();
+
+	this->OnBnClickedButton5();
 }
 
 
