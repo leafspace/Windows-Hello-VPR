@@ -199,12 +199,12 @@ void getFiles(string path, vector<string>& files)                            //»
 
 void readList(ifstream& in, vector<FILESTRUCT>& list)                        //¶ÁÈ¡ÎÄ¼şµÄÄÚÈİµ½listÖĞ
 {
-	char buffer[256];
+	char buffer[512];
 	string str_f, str_p;
 	char fileName[256], peopleName[256];
 	if (in.is_open()) {
 		while (!in.eof()) {
-			in.getline(buffer, 256);
+			in.getline(buffer, 512);
 			if (strlen(buffer) == 0) {                                       //·ÀÖ¹µ½ÁË×îºóÒ»ĞĞÖ»ÊÇÒ»¸ö»»ĞĞ»¹ÖØ¸´¶ÁÈ¡
 				continue;
 			}
@@ -213,7 +213,7 @@ void readList(ifstream& in, vector<FILESTRUCT>& list)                        //¶
 			CChineseCode::UTF_8ToGB2312(str_p, peopleName, strlen(peopleName));
 			FILESTRUCT item(str_f, str_p);
 			list.push_back(item);
-			memset(buffer, 0, 256);
+			memset(buffer, 0, 512);
 		}
 	}
 }

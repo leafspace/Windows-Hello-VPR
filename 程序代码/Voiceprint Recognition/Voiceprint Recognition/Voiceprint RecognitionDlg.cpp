@@ -145,8 +145,9 @@ BOOL CVoiceprintRecognitionDlg::OnInitDialog()
 	listCtrl_2.InsertColumn(0, _T("文件名"), LVCFMT_CENTER, rect.Width() / 2, 0);
 	listCtrl_2.InsertColumn(1, _T("所属人"), LVCFMT_CENTER, rect.Width() / 2, 1);
 
-
 	this->flagRecord = false;
+	this->OnBnClickedButton4();
+	this->OnBnClickedButton5();
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

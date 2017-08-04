@@ -89,24 +89,29 @@ int main()
 	/******************************识别示例******************************/
 
 	//Todo 初始化已有库的GMM模型
-	GMM **gmmLib = new GMM*[2];
+	GMM **gmmLib = new GMM*[3];
 	gmmLib[0] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
 	gmmLib[1] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
+	gmmLib[2] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
 
 	ifstream gmm_file_ms("voiceLib\\ms-gmm(180123456).txt");
 	ifstream gmm_file_xf("voiceLib\\xf-gmm(180123456).txt");
+	ifstream gmm_file_lf("voiceLib\\张立飞-gmm(-).txt");
 	assert(gmm_file_ms);
 	assert(gmm_file_xf);
+	assert(gmm_file_lf);
 
 	gmm_file_ms >> *gmmLib[0];
 	gmm_file_xf >> *gmmLib[1];
+	gmm_file_lf >> *gmmLib[2];
 	gmm_file_ms.close();
 	gmm_file_xf.close();
+	gmm_file_lf.close();
 
 	//Todo 识别计算
 	cout << "TIP : Begin reservation ..." << endl;
-	double *libProbability = new double[2];
-	for (int i = 0; i < 2; ++i) {
+	double *libProbability = new double[3];
+	for (int i = 0; i < 3; ++i) {
 		libProbability[i] = 0;
 		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //计算当前GMM下，目标特征参数集在GMM模型下的概率密度
 			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(i));                   //获取GMM的数值
@@ -117,11 +122,13 @@ int main()
 		}
 	}
 
-	cout << "TIP : Probability data is " << libProbability[0] << "\t" << libProbability[1] << endl;
-	if (libProbability[0] > libProbability[1]) {
+	cout << "TIP : Probability data is " << libProbability[0] << "\t" << libProbability[1] << "\t" << libProbability[2] << endl;
+	if (libProbability[0] > libProbability[1] && libProbability[0] > libProbability[2]) {
 		cout << "INFO : This voice is Microsoft voice !" << endl;
-	} else {
+	} else if (libProbability[1] > libProbability[0] && libProbability[1] > libProbability[2]){
 		cout << "INFO : This voice is iflytek voice !" << endl;
+	} else if (libProbability[2] > libProbability[0] && libProbability[2] > libProbability[2]){
+		cout << "INFO : This voice is leafspace voice !" << endl;
 	}
 
 	return 0;
