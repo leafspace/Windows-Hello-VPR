@@ -87,49 +87,76 @@ int main()
 	delete gmm;
 
 	/******************************识别示例******************************/
-
+	
 	//Todo 初始化已有库的GMM模型
-	GMM **gmmLib = new GMM*[3];
-	gmmLib[0] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
-	gmmLib[1] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
-	gmmLib[2] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
+	int gmmNumber = 5;
+	GMM **gmmLib = new GMM*[gmmNumber];
+	for (int i = 0; i < gmmNumber; ++i) {
+		gmmLib[i] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
+	}
 
-	ifstream gmm_file_ms("voiceLib\\ms-gmm(180123456).txt");
-	ifstream gmm_file_xf("voiceLib\\xf-gmm(180123456).txt");
-	ifstream gmm_file_lf("voiceLib\\张立飞-gmm(-).txt");
-	assert(gmm_file_ms);
-	assert(gmm_file_xf);
-	assert(gmm_file_lf);
+	ifstream gmm_file_1("voiceLib\\男-wangzhe(我们需要帮助).txt");
+	ifstream gmm_file_2("voiceLib\\男-zhanglifei(我们需要帮助).txt");
+	ifstream gmm_file_3("voiceLib\\男-zhaozuoxiang(我们需要帮助).txt");
+	ifstream gmm_file_4("voiceLib\\女-liuchang(我们需要帮助).txt");
+	ifstream gmm_file_5("voiceLib\\女-zhaoquanyin(我们需要帮助).txt");
+	assert(gmm_file_1);
+	assert(gmm_file_2);
+	assert(gmm_file_3);
+	assert(gmm_file_4);
+	assert(gmm_file_5);
 
-	gmm_file_ms >> *gmmLib[0];
-	gmm_file_xf >> *gmmLib[1];
-	gmm_file_lf >> *gmmLib[2];
-	gmm_file_ms.close();
-	gmm_file_xf.close();
-	gmm_file_lf.close();
+	gmm_file_1 >> *gmmLib[0];
+	gmm_file_2 >> *gmmLib[1];
+	gmm_file_3 >> *gmmLib[2];
+	gmm_file_4 >> *gmmLib[3];
+	gmm_file_5 >> *gmmLib[4];
+	gmm_file_1.close();
+	gmm_file_2.close();
+	gmm_file_3.close();
+	gmm_file_4.close();
+	gmm_file_5.close();
 
 	//Todo 识别计算
 	cout << "TIP : Begin reservation ..." << endl;
-	double *libProbability = new double[3];
-	for (int i = 0; i < 3; ++i) {
+	double *libProbability = new double[gmmNumber];
+	cout << charaParameter->Get_frameNumber() << endl;
+	for (int i = 0; i < gmmNumber; ++i) {
 		libProbability[i] = 0;
 		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //计算当前GMM下，目标特征参数集在GMM模型下的概率密度
 			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(i));                   //获取GMM的数值
 			if (tempData > 0) {                                                                                      //取对数操作
 				tempData = log10(tempData);
 			}
+			if (j == 0) {
+				cout << tempData << " ";
+				if (tempData < 0) {
+					cout << log10(fabs(tempData));
+				}
+			}
 			libProbability[i] += tempData;
 		}
+		cout << endl << endl;
 	}
 
-	cout << "TIP : Probability data is " << libProbability[0] << "\t" << libProbability[1] << "\t" << libProbability[2] << endl;
-	if (libProbability[0] > libProbability[1] && libProbability[0] > libProbability[2]) {
-		cout << "INFO : This voice is Microsoft voice !" << endl;
-	} else if (libProbability[1] > libProbability[0] && libProbability[1] > libProbability[2]){
-		cout << "INFO : This voice is iflytek voice !" << endl;
-	} else if (libProbability[2] > libProbability[0] && libProbability[2] > libProbability[2]){
-		cout << "INFO : This voice is leafspace voice !" << endl;
+	int countMax = 0;
+	cout << "TIP : Probability data is ";
+	for (int i = 0; i < gmmNumber; ++i) {
+		cout << libProbability[i] << "\t";
+		if (libProbability[i] > libProbability[countMax]) {
+			countMax = i;
+		}
 	}
+	cout << endl;
 
+	switch (countMax)
+	{
+	case 0 : cout << "Reservation is wangzhe." << endl;      break;
+	case 1 : cout << "Reservation is zhanglifei." << endl;   break;
+	case 2 : cout << "Reservation is zhaozuoxiang." << endl; break;
+	case 3 : cout << "Reservation is liuchang." << endl;     break;
+	case 4 : cout << "Reservation is zhaoquanyin." << endl;  break;
+	default: break;
+	}
 	return 0;
 }

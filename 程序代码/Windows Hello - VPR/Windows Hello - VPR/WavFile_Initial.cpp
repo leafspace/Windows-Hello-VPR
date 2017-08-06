@@ -463,6 +463,7 @@ bool WavFile_Initial::Endpoint_Detection(void)                               //�
 			break;
 		case OVERPARAGRAPH:
 			voiceParagraph.push_back(VoiceParagraph(begin, end, voiceLength));         //保存语音段落信息
+			voiceLength = 0;
 			voiceNumber++;                                                   //语音段落+1
 			statusFlag = MUTEPARAGRAPH;
 			break;

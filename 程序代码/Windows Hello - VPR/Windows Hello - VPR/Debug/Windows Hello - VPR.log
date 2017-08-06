@@ -1,10 +1,10 @@
-﻿生成启动时间为 2017/8/4 12:41:42。
+﻿生成启动时间为 2017/8/6 21:22:34。
      1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello - VPR\Windows Hello - VPR\Windows Hello - VPR.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\Windows Hello - VPR.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Main_Source.cpp
-         Main_Source.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt WavFile_Initial.cpp
+         WavFile_Initial.cpp
        ManifestResourceCompile:
          所有输出均为最新。
        Link:
@@ -29,4 +29,4 @@
 
 生成成功。
 
-已用时间 00:00:01.27
+已用时间 00:00:02.19
