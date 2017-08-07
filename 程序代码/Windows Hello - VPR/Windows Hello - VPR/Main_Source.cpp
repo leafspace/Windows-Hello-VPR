@@ -91,9 +91,15 @@ int main()
 	//Todo 初始化已有库的GMM模型
 	int gmmNumber = 5;
 	GMM **gmmLib = new GMM*[gmmNumber];
+	double *gmmWeight = new double[gmmNumber];
 	for (int i = 0; i < gmmNumber; ++i) {
 		gmmLib[i] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
 	}
+	gmmWeight[0] = 165;
+	gmmWeight[1] = 380;
+	gmmWeight[2] = 171;
+	gmmWeight[3] = 187;
+	gmmWeight[4] = 177;
 
 	ifstream gmm_file_1("voiceLib\\男-wangzhe(我们需要帮助).txt");
 	ifstream gmm_file_2("voiceLib\\男-zhanglifei(我们需要帮助).txt");
@@ -120,28 +126,89 @@ int main()
 	//Todo 识别计算
 	cout << "TIP : Begin reservation ..." << endl;
 	double *libProbability = new double[gmmNumber];
-	cout << charaParameter->Get_frameNumber() << endl;
+	cout << "Frame number is " << charaParameter->Get_frameNumber() << endl;
 	for (int i = 0; i < gmmNumber; ++i) {
 		libProbability[i] = 0;
 		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //计算当前GMM下，目标特征参数集在GMM模型下的概率密度
-			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(i));                   //获取GMM的数值
+			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(j));                   //获取GMM的数值
 			if (tempData > 0) {                                                                                      //取对数操作
 				tempData = log10(tempData);
 			}
+			/*
 			if (j == 0) {
 				cout << tempData << " ";
 				if (tempData < 0) {
 					cout << log10(fabs(tempData));
 				}
 			}
+			*/
 			libProbability[i] += tempData;
 		}
-		cout << endl << endl;
+		//cout << endl;
 	}
 
-	int countMax = 0;
-	cout << "TIP : Probability data is ";
+	//Todo 对数据长度进行权值计算
+	/*
+	double sumFrameNumber = 0;
 	for (int i = 0; i < gmmNumber; ++i) {
+		sumFrameNumber +=gmmWeight[i];
+	}
+	for (int i = 0; i < gmmNumber; ++i) {                                                                            //求解数据量的比值
+		gmmWeight[i] /= sumFrameNumber;
+	}
+	
+	int probabilityMax = 0, probabilityMin = 0;
+	for (int i = 0; i < gmmNumber; ++i) {                                                                            //寻找最大最小概率
+		if (libProbability[i] > libProbability[probabilityMax]) {
+			probabilityMax = i;
+		}
+
+		if (libProbability[i] < libProbability[probabilityMin]) {
+			probabilityMin = i;
+		}
+	}
+
+	double probabilityDValue = libProbability[probabilityMax] - libProbability[probabilityMin];
+	for (int i = 0; i < gmmNumber; ++i) {
+		gmmWeight[i] *= probabilityDValue;                                                                           //计算补充值
+		libProbability[i] += gmmWeight[i];                                                                           //填充补充值
+	}
+	*/
+
+
+	//Todo 男女分开识别
+	int countMax = 0;
+	/*
+	int beginScope = 0, endScope = 4;
+	while (beginScope < gmmNumber && libProbability[beginScope] == 0) { beginScope++; }                              //找到第一个有用的男生模板
+	while (endScope > -1 && libProbability[endScope] == 0) { endScope--; }                                           //找到第一个有用的女生模板
+
+	if (beginScope >= endScope) {
+		cout << "Can't find useful model !" << endl;
+		return 0;
+	}
+
+	if (libProbability[beginScope] > libProbability[endScope]) {
+		beginScope = 0;
+		endScope   = 3;
+		cout << "This is a man." << endl;
+	} else {
+		beginScope = 3;
+		endScope   = 5;
+		cout << "This is a women." << endl;
+	}
+	*/
+	cout << "TIP : Probability data is ";
+	/*
+	while (beginScope < gmmNumber && libProbability[beginScope] == 0) { beginScope++; }
+	for (int i = beginScope, countMax = beginScope; i < endScope; ++i) {
+		cout << libProbability[i] << "\t";
+		if (libProbability[i] > libProbability[countMax] && libProbability[i] != 0) {
+			countMax = i;
+		}
+	}
+	*/
+	for (int i = 0; i < 5; ++i) {
 		cout << libProbability[i] << "\t";
 		if (libProbability[i] > libProbability[countMax]) {
 			countMax = i;
@@ -156,7 +223,7 @@ int main()
 	case 2 : cout << "Reservation is zhaozuoxiang." << endl; break;
 	case 3 : cout << "Reservation is liuchang." << endl;     break;
 	case 4 : cout << "Reservation is zhaoquanyin." << endl;  break;
-	default: break;
+	default: cout << "Can't find result." << endl; break;
 	}
 	return 0;
 }

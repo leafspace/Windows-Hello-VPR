@@ -335,7 +335,7 @@ int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //É
 	for (int i = 0; i < (int) voiceLib.size(); ++i) {
 		libProbability[i] = 0;
 		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //¼ÆËãµ±Ç°GMMÏÂ£¬Ä¿±êÌØÕ÷²ÎÊý¼¯ÔÚGMMÄ£ÐÍÏÂµÄ¸ÅÂÊÃÜ¶È
-			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(i));                   //»ñÈ¡GMMµÄÊýÖµ
+			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(j));                   //»ñÈ¡GMMµÄÊýÖµ
 			if (tempData > 0) {                                                                                      //È¡¶ÔÊý²Ù×÷
 				tempData = log10(tempData);
 			}
