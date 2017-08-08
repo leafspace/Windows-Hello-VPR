@@ -25,6 +25,11 @@ int main()
 	AttachThreadInput(ForeThreadId, SelfThreadId, true);                                                             //附加线程
 	wnd = GetFocus();                                                                                                //获取具有输入焦点的窗口句柄
 	AttachThreadInput(ForeThreadId, SelfThreadId, false);                                                            //取消附加的线程
-	SendMessage(wnd, WM_CHAR,WPARAM('a'), 0);                                                                        //发送一个字消息
+
+	char password[256] = "sandaozhishu429";
+	for (int i = 0; i < (int) strlen(password); ++i) {
+		SendMessage(wnd, WM_CHAR, WPARAM(password[i]), 0);                                                           //发送一个字消息
+	}
+	SendMessage(wnd, WM_KEYDOWN, VK_RETURN, 0);
 	return 0;
 }

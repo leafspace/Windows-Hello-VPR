@@ -1,4 +1,4 @@
-﻿生成启动时间为 2017/8/8 10:51:42。
+﻿生成启动时间为 2017/8/8 14:10:21。
      1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\WritetoBackground\WritetoBackground\WritetoBackground.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\WritetoBackground.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
@@ -24,4 +24,4 @@
 
 生成成功。
 
-已用时间 00:00:02.30
+已用时间 00:00:02.23
