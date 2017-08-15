@@ -127,7 +127,7 @@ int main()
 		writePassword("sandaozhishu429");
 	} else {
 		cout << "识别人: 未知！" << endl;
-		MessageBoxA(NULL, "Sorry!", "ERROR", MB_ICONHAND);
+		MessageBoxA(NULL, "对不起，您没有权限登陆 !", "错误", MB_ICONHAND);
 	}
 
 	return 0;

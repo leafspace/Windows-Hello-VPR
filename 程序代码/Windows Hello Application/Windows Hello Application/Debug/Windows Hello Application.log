@@ -1,12 +1,20 @@
-﻿生成启动时间为 2017/8/8 14:27:47。
+﻿生成启动时间为 2017/8/15 13:44:47。
      1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Windows Hello Application\Windows Hello Application.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\Windows Hello Application.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SourceMain.cpp
+         所有输出均为最新。
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CChineseCode.cpp Model_GMM.cpp Model_KMeans.cpp SourceMain.cpp WavData_CharaParameter.cpp WavData_SupportFunction.cpp WaveRecorder.cpp WavFile_Initial.cpp WavFile_Struct.cpp
+         WavFile_Struct.cpp
+         WavFile_Initial.cpp
+         WaveRecorder.cpp
+         WavData_SupportFunction.cpp
+         WavData_CharaParameter.cpp
          SourceMain.cpp
-     1>f:\project engineering\windows-hello-vpr\程序代码\windows hello application\windows hello application\sourcemain.cpp(27): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+         Model_KMeans.cpp
+         Model_GMM.cpp
+         CChineseCode.cpp
+         正在生成代码...
        ManifestResourceCompile:
          所有输出均为最新。
        Link:
@@ -33,4 +41,4 @@
 
 生成成功。
 
-已用时间 00:00:01.98
+已用时间 00:00:07.58

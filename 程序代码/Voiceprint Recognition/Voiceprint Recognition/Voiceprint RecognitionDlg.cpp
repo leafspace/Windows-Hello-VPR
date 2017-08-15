@@ -72,6 +72,7 @@ BEGIN_MESSAGE_MAP(CVoiceprintRecognitionDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON3, &CVoiceprintRecognitionDlg::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON4, &CVoiceprintRecognitionDlg::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON5, &CVoiceprintRecognitionDlg::OnBnClickedButton5)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST1, &CVoiceprintRecognitionDlg::OnNMDblclkList1)
 END_MESSAGE_MAP()
 
 
@@ -366,3 +367,42 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton5()
 	this->OnButton5_refresh();
 }
 
+
+
+void CVoiceprintRecognitionDlg::OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	int selectIndex = this->GetItemSelect(0);
+	if (selectIndex != -1) {
+		FILESTRUCT selectItem = this->wavLib[selectIndex];
+		char szModuleFilePath[MAX_PATH];
+		int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
+		szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
+	
+		int index = 0;
+		char filePath[MAX_PATH];
+		for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {               //补全//
+			filePath[index++] = szModuleFilePath[i];
+			if (szModuleFilePath[i] == '\\') {
+				filePath[index++] = '\\';
+			}
+		}
+		filePath[index++] = 0;
+		char gmmfilePath[MAX_PATH];
+		strcpy_s(gmmfilePath, filePath);
+		strcat_s(gmmfilePath, "wavLib\\\\");
+		strcat_s(gmmfilePath, selectItem.fileName.data());
+		::playpath = gmmfilePath;
+
+		pthread_attr_t attr;                                                     //线程属性结构体，创建线程时加入的参数  
+		pthread_attr_init(&attr);                                                //初始化
+		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);             //是设置你想要指定线程属性参数
+		int ret = pthread_create(&thread_playerID, &attr, player, (void*)&fileName);  
+		if(ret != 0) {
+			MessageBoxA(NULL, "ERROR : Can't create thread !", "ERROR", MB_ICONHAND);
+		}
+	}
+
+	*pResult = 0;
+}

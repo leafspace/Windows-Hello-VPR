@@ -7,6 +7,7 @@
 WaveRecorder waveRecorder;                                                   //È«¾ÖÂ¼Òô¶ÔÏó
 char* fileName;                                                              //ÎÄ¼ş¶Ô±ÈÖ®ÓÃ
 string fileName_t;                                                           //ÎÄ¼ş¶Ô±ÈÖ®ÓÃ
+string playpath;                                                             //±£´æĞèÒª²¥·ÅµÄÓïÒôµÄÂ·¾¶
 double* mfccData;                                                            //ÓÃÓÚ±£´æµ±Ç°ÓïÒôÑµÁ·³öµÄÊı¾İ
 CharaParameter* charaParameter;                                              //ÓÃÓÚ±£´æµ±Ç°ÓïÒôÑµÁ·³öµÄ²ÎÊı
 
@@ -170,6 +171,12 @@ void* record(void* args)                                                     //Â
 	::waveRecorder.set_FileName((char*)fileName);
 	::waveRecorder.Start();
 	delete fileName;
+	return NULL;
+}
+
+void* player(void* args)                                                     //Â¼ÒôÏß³Ì
+{
+	PlaySound((CString)(::playpath.data()), NULL, SND_FILENAME | SND_ASYNC);
 	return NULL;
 }
 

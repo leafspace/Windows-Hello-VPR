@@ -48,6 +48,7 @@ private:
 	CButton buttonCtrl_1;
 
 	pthread_t thread_recordID;                                               //录音线程ID
+	pthread_t thread_playerID;                                               //播放线程ID
 
 	vector<FILESTRUCT> voiceLib;
 	vector<FILESTRUCT> wavLib;
@@ -69,6 +70,7 @@ public:
 	afx_msg void OnBnClickedButton3();                                       //识别
 	afx_msg void OnBnClickedButton4();                                       //刷新
 	afx_msg void OnBnClickedButton5();                                       //刷新
+	afx_msg void OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 typedef struct FILESTRUCT
@@ -85,10 +87,12 @@ typedef struct FILESTRUCT
 extern WaveRecorder waveRecorder;                                            //全局录音对象
 extern char* fileName;                                                       //文件对比之用
 extern string fileName_t;                                                    //文件对比之用
+extern string playpath;                                                      //保存需要播放的语音的路径
 extern double* mfccData;                                                     //用于保存当前语音训练出的数据
 extern CharaParameter* charaParameter;                                       //用于保存当前语音训练出的参数
 
 void* record(void* args);                                                    //录音线程
+void* player(void* args);                                                    //录音线程
 string getFileName(string path);                                             //将某个路径转换为某个文件名
 void getFiles(string path, vector<string>& files);                           //获取path文件夹下的所有文件名
 void readList(ifstream& in, vector<FILESTRUCT>& list);                       //读取文件的内容到list中
