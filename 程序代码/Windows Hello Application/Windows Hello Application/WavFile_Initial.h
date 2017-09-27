@@ -51,9 +51,11 @@ public:
 			}
 			dataDouble = (double*)malloc(sizeof(double)*WavFile::Get_dataNumber());    //为Double型数据申请内存空间
 			if (dataDouble == NULL) {                                        //分配空间未成功
+				cout << "ERROR : Memory failure !" << endl;
 				throw invalid_argument("ERROR : Memory failure !");
 			}
 			if (Conversion_Double() == false) {                              //将新字节数据转换为Double数据
+				cout << "ERROR : Data change failure !" << endl;
 				throw invalid_argument("ERROR : Data change failure !");
 			}
 			this->Endpoint_Detection();                                      //开始端点检测

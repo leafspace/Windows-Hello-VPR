@@ -26,7 +26,7 @@ void WaveRecorder::set_FileName(string Target)
 	errno_t err = fopen_s(&fp, dest_path.c_str(), "wb");
 	if (err > 0) {
 #if _DEBUG
-		cout << "文件创建失败：" << err << " 检查文件名和占用" << endl;
+		cout << "ERROR : File create failed：" << err << endl;
 #endif
 		bSaveFile = false;
 	}
@@ -96,10 +96,10 @@ void WaveRecorder::WaveInitFormat(LPWAVEFORMATEX WaveFormat, WORD Ch, DWORD Samp
 	WaveFormat->wBitsPerSample = BitsPerSample;
 	WaveFormat->cbSize = 0;
 #if _DEBUG
-	cout << "  采样参数：" << endl;
-	cout << "    声道数" << Ch << endl;
-	cout << "    每秒采样率" << SampleRate << "Hz" << endl;
-	cout << "    位深" << BitsPerSample << endl;
+	cout << "   采样参数：" << endl;
+	cout << "   声道数" << Ch << endl;
+	cout << "   每秒采样率" << SampleRate << "Hz" << endl;
+	cout << "   位深" << BitsPerSample << endl;
 #endif
 }
 
@@ -211,7 +211,7 @@ WaveRecorder::WaveRecorder()
 	// 如果没有输入设备则析构
 	if (!waveInGetNumDevs()) {
 #if _DEBUG
-		cout << "Windows没有找到音频输入设备" << endl;
+		cout << "ERROR : Windows can't find audio drive." << endl;
 #endif
 	}
 

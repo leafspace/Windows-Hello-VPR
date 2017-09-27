@@ -18,13 +18,14 @@ int main()
 	WaveRecorder waveRecorder;
 	waveRecorder.set_FileName("tempRecord.wav");
 	waveRecorder.Start();
+	cout << "TIP : System begin to start recorder. ";
 	Sleep(5500);
 	waveRecorder.Stop();
 	waveRecorder.Reset();
 	
 
 	FILE *fp;
-	if ((fp = fopen("tempRecord.wav", "rb")) == NULL) {                                                                 //打开语音文件
+	if ((fp = fopen("tempRecord.wav", "rb")) == NULL) {                                                              //打开语音文件
 		cout << "ERROR : File open failed !" << endl;
 		exit(-1);
 	}
@@ -114,7 +115,7 @@ int main()
 	cout << endl;
 
 	if (strcmp(getFileName(files[countMax]).data(), "me.txt") == 0) {
-		cout << "识别成功！- 登陆..." << endl;
+		cout << "TIP : Recognition successfully ! - Login..." << endl;
 
 		char password[512];
 		ifstream passwordFile("my.key");
@@ -126,7 +127,7 @@ int main()
 		//CChineseCode::GB2312ToUTF_8(str, password, strlen(password));
 		writePassword("sandaozhishu429");
 	} else {
-		cout << "识别人: 未知！" << endl;
+		cout << "ERROR : User Unknow !" << endl;
 		MessageBoxA(NULL, "对不起，您没有权限登陆 !", "错误", MB_ICONHAND);
 	}
 
