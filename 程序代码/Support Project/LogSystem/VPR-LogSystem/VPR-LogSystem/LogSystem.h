@@ -1,7 +1,10 @@
 #pragma once
 
+#include <io.h>
+#include <time.h>
 #include <cstdlib>
 #include <fstream>
+#include <direct.h>
 #include <iostream>
 #include <windows.h>
 #include "SocketClient.h"
@@ -93,5 +96,28 @@ public:
         } else {
             messageQueue.pushMessage(message);
         }
+    }
+
+    bool writeMessage(string message) {
+        if(_access(".//logs", 0) == -1) {
+            if (mkdir(".//logs") == -1) {
+                return false;
+            }
+        }
+
+        time_t date = time(0);
+        char nowTime[64];
+        strftime(nowTime, sizeof(nowTime), "%Y%m%d", localtime(&date));
+        strcat(nowTime, ".txt");
+
+        ofstream out;
+        out.open(nowTime, ios::app);
+        if (!out.is_open()) {
+            return false;
+        }
+        out.seekp(0, ios::beg);
+        out << message.data() << endl;
+        out.close();
+        return true;
     }
 };
