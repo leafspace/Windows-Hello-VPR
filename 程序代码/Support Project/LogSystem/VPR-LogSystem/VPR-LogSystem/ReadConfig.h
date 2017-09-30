@@ -1,6 +1,8 @@
-#include <iostream>  
-#include <fstream>
+#pragma once
+
 #include <string>
+#include <fstream>
+#include <iostream>
 using namespace std;
 
 class ReadConfig

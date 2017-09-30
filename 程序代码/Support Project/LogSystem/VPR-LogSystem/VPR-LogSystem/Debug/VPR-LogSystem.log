@@ -1,26 +1,30 @@
-﻿生成启动时间为 2017/9/27 17:38:06。
-     1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\VPR-LogSystem\VPR-LogSystem.vcxproj”在节点 2 上(build 个目标)。
-     1>InitializeBuildStatus:
+﻿生成启动时间为 2017/9/30 16:43:24。
+     1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\VPR-LogSystem\VPR-LogSystem.vcxproj”在节点 2 上(rebuild 个目标)。
+     1>_PrepareForClean:
+         正在删除文件“Debug\VPR-LogSystem.lastbuildstate”。
+       InitializeBuildStatus:
          正在创建“Debug\VPR-LogSystem.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SourseMain.cpp
          SourseMain.cpp
        ManifestResourceCompile:
-         所有输出均为最新。
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\VPR-LogSystem.exe.embed.manifest.res" Debug\VPR-LogSystem_manifest.rc 
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\Debug\VPR-LogSystem.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\VPR-LogSystem.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\Debug\VPR-LogSystem.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\Debug\VPR-LogSystem.lib" /MACHINE:X86 "Debug\VPR-LogSystem.exe.embed.manifest.res"
          Debug\SourseMain.obj
        Manifest:
+         正在删除文件“Debug\VPR-LogSystem.exe.embed.manifest”。
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\VPR-LogSystem.exe.embed.manifest" /manifest "Debug\VPR-LogSystem.exe.intermediate.manifest"
-         所有输出均为最新。
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\VPR-LogSystem.exe.embed.manifest.res" Debug\VPR-LogSystem_manifest.rc 
        LinkEmbedManifest:
-         所有输出均为最新。
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\Debug\VPR-LogSystem.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\VPR-LogSystem.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\Debug\VPR-LogSystem.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\Debug\VPR-LogSystem.lib" /MACHINE:X86 "Debug\VPR-LogSystem.exe.embed.manifest.res"
+         Debug\SourseMain.obj
          VPR-LogSystem.vcxproj -> F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\Debug\VPR-LogSystem.exe
        FinalizeBuildStatus:
          正在删除文件“Debug\VPR-LogSystem.unsuccessfulbuild”。
          正在对“Debug\VPR-LogSystem.lastbuildstate”执行 Touch 任务。
-     1>已完成生成项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\VPR-LogSystem\VPR-LogSystem.vcxproj”(build 个目标)的操作。
+     1>已完成生成项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\VPR-LogSystem\VPR-LogSystem.vcxproj”(rebuild 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:00.96
+已用时间 00:00:01.42

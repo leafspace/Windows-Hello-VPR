@@ -1,5 +1,7 @@
-#include <iostream>
+#pragma once
+
 #include <string>
+#include <iostream>
 using namespace std;
 
 class MessageQueue
@@ -40,6 +42,10 @@ public:
 	}
 
 	int getListSize() {
+		return 20;
+	}
+
+	int getLength() {
 		return this->messageSize;
 	}
 };

@@ -1,10 +1,10 @@
+#pragma once
 #pragma  comment(lib, "ws2_32.lib")
 
+#include <string>
 #include <fstream>
 #include <iostream>
 #include <winsock.h>
-#include <stdio.h>
-
 using namespace std;
 
 class SocketClient
@@ -26,7 +26,20 @@ public:
         this->bufferPool = new char[this->bufferSize];
     }
 
-    bool pingTest(string targetIP) {
+    void setServerIP(string serverIP) {
+        this->serverIP = serverIP;
+    }
+
+    void setPORT(int PORT) {
+        this->PORT = PORT;
+    }
+
+    int getBufferSize() {
+        return this->bufferSize;
+    }
+
+    bool pingTest() {
+        string targetIP = this->serverIP;
         char fileName[256] = "temp//";
         char cmdstr[256] = "";
         strcat_s(fileName, targetIP.data());

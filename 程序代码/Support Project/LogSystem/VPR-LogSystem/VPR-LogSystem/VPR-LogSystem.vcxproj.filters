@@ -24,6 +24,9 @@
     <ClInclude Include="SocketClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="LogSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourseMain.cpp">

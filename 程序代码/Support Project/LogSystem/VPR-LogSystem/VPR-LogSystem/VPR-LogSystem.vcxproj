@@ -74,6 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="LogSystem.h" />
     <ClInclude Include="MessageQueue.h" />
     <ClInclude Include="ReadConfig.h" />
     <ClInclude Include="SocketClient.h" />
