@@ -147,8 +147,17 @@
                                                             <td><%=messageItems.get(i).getID()%></td>
                                                             <td>Adminto Frontend v1</td>
                                                             <td><%=messageItems.get(i).getIssueTime()%></td>
-                                                            <% if (messageItems.get(i).getInfoType()) { %><td><span class="label label-success">成功</span></td><% } else %>
-                                                            <% { %> <td><span class="label label-pink">失败</span></td> <% } %>
+															<%
+																if (messageItems.get(i).getInfoType()) {
+															%>
+																	<td><span class="label label-success">成功</span></td>
+															<%
+																} else {
+															%>
+																	<td><span class="label label-pink">失败</span></td>
+															<%
+																}
+															%>
                                                             <td><%=messageItems.get(i).getClientIP()%></td>
                                                         </tr>
                                                 <%

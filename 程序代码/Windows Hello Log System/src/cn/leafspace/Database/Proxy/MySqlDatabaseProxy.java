@@ -25,7 +25,7 @@ public class MySqlDatabaseProxy implements DatabaseProxyInterface {
         try {
             while(resultSet.next()) {
                 int ID = Integer.parseInt(resultSet.getString(1));
-                boolean infoType = Boolean.parseBoolean(resultSet.getString(2));
+                boolean infoType = resultSet.getBoolean(2);
                 String clientType = resultSet.getString(3);
                 String issueTime = resultSet.getString(4);
                 String information = resultSet.getString(5);

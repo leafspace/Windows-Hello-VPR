@@ -1,4 +1,4 @@
-﻿生成启动时间为 2017/10/1 16:41:43。
+﻿生成启动时间为 2017/10/1 21:12:39。
      1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\VPR-LogSystem\VPR-LogSystem.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\VPR-LogSystem.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
@@ -9,7 +9,9 @@
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\direct.h(124) : 参见“mkdir”的声明
      1>f:\project engineering\windows-hello-vpr\程序代码\support project\logsystem\vpr-logsystem\vpr-logsystem\logsystem.h(90): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\time.inl(112) : 参见“localtime”的声明
-     1>f:\project engineering\windows-hello-vpr\程序代码\support project\logsystem\vpr-logsystem\vpr-logsystem\logsystem.h(114): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+     1>f:\project engineering\windows-hello-vpr\程序代码\support project\logsystem\vpr-logsystem\vpr-logsystem\logsystem.h(100): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : 参见“sprintf”的声明
+     1>f:\project engineering\windows-hello-vpr\程序代码\support project\logsystem\vpr-logsystem\vpr-logsystem\logsystem.h(117): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
        ManifestResourceCompile:
          所有输出均为最新。
        Link:
@@ -29,4 +31,4 @@
 
 生成成功。
 
-已用时间 00:00:01.24
+已用时间 00:00:01.57

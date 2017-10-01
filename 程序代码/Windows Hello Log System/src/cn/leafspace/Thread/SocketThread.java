@@ -32,6 +32,7 @@ public class SocketThread extends Thread {
                 for(int i = 0; i < this.threadNumber; ++i) {
                     Socket socket = this.serverSocket.accept();
                     InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream(), "UTF-8");
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
                     System.out.println("InetAddress : " + socket.getInetAddress());
                     System.out.println("LocalAddress : " + socket.getLocalAddress());
@@ -46,10 +47,11 @@ public class SocketThread extends Thread {
                     String clientIP = socket.getRemoteSocketAddress().toString().substring(1);
                     String filePath = "";
 
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                     while (true) {
                         String targetFlag = bufferedReader.readLine();
-                        System.out.println(targetFlag);
+                        if (targetFlag == null) {
+                            break;
+                        }
                         if (targetFlag.equals("<Message>")) {
                             String tempStr = bufferedReader.readLine();
                                 if (tempStr.indexOf("ERROR") >= 0) {
@@ -62,10 +64,11 @@ public class SocketThread extends Thread {
                             SimpleDateFormat tempDataFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                             String tempNowTime = tempDataFormat.format(new Date());
 
-                            filePath = "wavLib//" + tempNowTime + ".wav";
+                            filePath = ".//wavLib//" + tempNowTime + ".wav";
                             char[] bufferPool = new char[1024];
                             File file = new File(filePath);
                             if (!file.exists()) {
+                                file.getParentFile().mkdirs();
                                 file.createNewFile();
                             }
 
@@ -75,7 +78,6 @@ public class SocketThread extends Thread {
                                 bufferedWriter.write(bufferPool);
                             }
                             bufferedWriter.close();
-                            delete bufferPool;
                         } else if (targetFlag.equals("<Finish>")) {
                             break;
                         }

@@ -3,6 +3,7 @@ LogSystem *p_logSystem;
 
 int main()
 {
+	/*
 	LogSystem logSystem;
 	if (logSystem.initSocket()) {
 		cout << "Info : Socket begin linked !" << endl;
@@ -21,5 +22,46 @@ int main()
 	//logSystem.sendFile("mary.wav");
 
 	logSystem.sendMessage("<Finish>");
+	*/
+
+	/*
+	SocketClient socketClient;
+	socketClient.setServerIP("10.16.16.114");
+	if (socketClient.pingTest()) {
+		if (socketClient.initSocket()) {
+			if(socketClient.linkTest()) {
+				socketClient.sendMessage("<Type>\n");
+				socketClient.sendMessage("Windows Hello Client\n");
+				for (int i = 0; i < 25; i++) {
+					socketClient.sendMessage("<Message>\n");
+					socketClient.sendMessage("information\n");
+				}
+				socketClient.sendMessage("<Message>\n");
+				socketClient.sendMessage("ERROR\n");
+				socketClient.sendMessage("<Finish>\n");
+			}
+		}
+	}
+	socketClient.freeResourse();
+	*/
+
+	LogSystem logSystem;
+	if (!logSystem.initSocket()) {
+		return -1;
+	}
+	p_logSystem = &logSystem;
+	logSystem.beginSystem();
+	logSystem.sendMessage("<Type>\n");
+	logSystem.sendMessage("Windows Hello Client\n");
+	for (int i = 0; i < 25; i++) {
+		logSystem.sendMessage("<Message>\n");
+		logSystem.sendMessage("information\n");
+		logSystem.writeMessage("information\n");
+	}
+	logSystem.sendMessage("<File>\n");
+	logSystem.sendFile("mary.wav\n");
+	logSystem.sendMessage("<Finish>\n");
+	Sleep(3000);
+	while(true){}
 	return 0;
 }

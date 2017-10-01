@@ -65,10 +65,6 @@ bool SocketClient::initSocket()
         cout << "ERROR : Winsock load failed !" << endl;
         return false;
     }
-		
-	int nNetTimeout = 500;
-	setsockopt(this->client, SOL_SOCKET, SO_SNDTIMEO, (char *)&nNetTimeout, sizeof(int));
-	setsockopt(this->client, SOL_SOCKET, SO_RCVTIMEO, (char *)&nNetTimeout, sizeof(int));
 
     this->server.sin_family = AF_INET;                                       //需要连接的服务器的地址信息
     this->server.sin_addr.s_addr = inet_addr(this->serverIP.data());         //将命令行的IP地址转换为二进制表示的网络字节顺序IP地址

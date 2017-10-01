@@ -96,7 +96,9 @@ public:
             return false;
         }
         out.seekp(0, ios::beg);                                              //移动到文件首
-        out << message.data() << endl;                                       //从文件头写入
+		sprintf(nowTime, "[%d:%d:%d] ", localtime(&date)->tm_hour, 
+			localtime(&date)->tm_min, localtime(&date)->tm_sec);
+        out << nowTime << message.data();                                    //从文件头写入
         out.close();
         return true;
     }
@@ -106,6 +108,7 @@ extern LogSystem *p_logSystem;
 
 void* threadRun(void* arg)
 {
+	bool isQuit = false;
 	while (true) {
         if (p_logSystem->sendFileFlag) {                                     //当前发送的是文件
             ifstream in;
@@ -133,11 +136,19 @@ void* threadRun(void* arg)
 
             p_logSystem->sendFileFlag = false;
         } else {                                                             //当前发送的是单行信息
-            while (p_logSystem->messageQueue.getListSize() > 0) {            //只要消息列表中还存在消息，就一直发送
+            while (p_logSystem->messageQueue.getLength() > 0) {              //只要消息列表中还存在消息，就一直发送
                 string message = p_logSystem->messageQueue.popMessage();     //消息列表弹出消息
                 p_logSystem->socketClient.sendMessage(message);              //利用socket发送消息
+				if (message == "<Finish>\n") {
+					isQuit = true;
+				}
             }
         }
+
+		if (isQuit) {
+			break;
+		}
     }
+	//p_logSystem->stopSocket();
 	return 0;
 }
