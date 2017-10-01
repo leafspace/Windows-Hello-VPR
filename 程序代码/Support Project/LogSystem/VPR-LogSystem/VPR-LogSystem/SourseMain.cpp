@@ -59,9 +59,9 @@ int main()
 		logSystem.writeMessage("information\n");
 	}
 	logSystem.sendMessage("<File>\n");
-	logSystem.sendFile("mary.wav\n");
+	logSystem.sendFile("mary.wav");
 	logSystem.sendMessage("<Finish>\n");
-	Sleep(3000);
-	while(true){}
+	while(true) {
+	}
 	return 0;
 }

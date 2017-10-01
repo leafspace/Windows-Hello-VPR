@@ -79,19 +79,24 @@ public:
     }
 
     bool writeMessage(string message) {
-        if(_access(".//logs", 0) == -1) {                                    //判断logs文件夹是否存在
-            if (mkdir(".//logs") == -1) {                                    //创建logs文件夹
+        if(_access("logs", 0) == -1) {                                    //判断logs文件夹是否存在
+            if (mkdir("logs") == -1) {                                    //创建logs文件夹
                 return false;
             }
         }
 
         time_t date = time(0);
-        char nowTime[64];
+		char nowTime[64];
+        char filePath[256];
+
+		getcwd(filePath, 256);
+		strcat_s(filePath, "\\logs\\");
         strftime(nowTime, sizeof(nowTime), "%Y%m%d", localtime(&date));      //获取当前时间
         strcat_s(nowTime, ".txt");
+		strcat_s(filePath, nowTime);
 
         ofstream out;
-        out.open(nowTime, ios::app);                                         //追加写入到文件
+        out.open(filePath, ios::app);                                         //追加写入到文件
         if (!out.is_open()) {
             return false;
         }
@@ -111,29 +116,37 @@ void* threadRun(void* arg)
 	bool isQuit = false;
 	while (true) {
         if (p_logSystem->sendFileFlag) {                                     //当前发送的是文件
+			if ((_access(p_logSystem->filePath.data(), 0)) == -1) {
+				cout << "ERROR : File not exist !" << endl;
+			}
+
             ifstream in;
             in.open(p_logSystem->filePath.data(), ios::binary);              //以二进制形式打开文件
             p_logSystem->pFilebuf = in.rdbuf();                              //获取文件缓冲的区
             int fileSize = p_logSystem->pFilebuf->pubseekoff(0, ios::end, ios::in);    //获取发送文件的大小
             p_logSystem->pFilebuf->pubseekpos(0, ios::in);                   //移动指针到文件开头
-                
+
+			ofstream out("asfasfasfas.wav", ios::binary | ios::app);
+
+			cout << "File size is " << fileSize << endl;
             int bufferSize = p_logSystem->socketClient.getBufferSize();      //获取socket缓冲区的大小
             char *bufferPool = new char[bufferSize];                         //新建文件缓冲区
             while (fileSize > 0) {                                           //只要文件大小还在，就一直发送
                 if (fileSize >= bufferSize) {
                     p_logSystem->pFilebuf->sgetn(bufferPool, bufferSize);    //获取缓冲数据
+					out.write(bufferPool, sizeof(char) * bufferSize);
                     fileSize -= bufferSize;
                 } else {                                                     //假如有不满足缓冲区大小的部分
                     p_logSystem->pFilebuf->sgetn(bufferPool, fileSize);
+					out.write(bufferPool, sizeof(char) * fileSize);
                     fileSize -= fileSize;
                 }
-                    
                 p_logSystem->socketClient.sendMessage(bufferPool);           //发送缓冲区的数据
             }
 
+			out.close();
             in.close();                                                      //关闭文件流
             delete bufferPool;                                               //清除缓冲区
-
             p_logSystem->sendFileFlag = false;
         } else {                                                             //当前发送的是单行信息
             while (p_logSystem->messageQueue.getLength() > 0) {              //只要消息列表中还存在消息，就一直发送
@@ -149,6 +162,6 @@ void* threadRun(void* arg)
 			break;
 		}
     }
-	//p_logSystem->stopSocket();
+	p_logSystem->stopSocket();
 	return 0;
 }
