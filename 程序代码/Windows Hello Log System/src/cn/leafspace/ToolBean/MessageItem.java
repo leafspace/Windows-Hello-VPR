@@ -3,20 +3,33 @@ package cn.leafspace.ToolBean;
 public class MessageItem {
     private int ID;
     private boolean infoType;
+    private String clientType;
     private String issueTime;
     private String information;
+    private String clientIP;
     private String filePath;
 
-    public MessageItem(boolean infoType, String issueTime, String information, String filePath) {
+    public MessageItem(boolean infoType, String clientType, String issueTime, String information, String filePath) {
         this.infoType = infoType;
+        this.clientType = clientType;
         this.issueTime = issueTime;
         this.information = information;
         this.filePath = filePath;
     }
 
-    public MessageItem(int ID, boolean infoType, String issueTime, String information, String filePath) {
-        this(infoType, issueTime, information, filePath);
+    public MessageItem(boolean infoType, String clientType, String issueTime, String information, String clientIP, String filePath) {
+        this(infoType, clientType, issueTime, information, filePath);
+        this.clientIP = clientIP;
+    }
+
+    public MessageItem(int ID, boolean infoType, String clientType, String issueTime, String information, String filePath) {
+        this(infoType, clientType, issueTime, information, filePath);
         this.ID = ID;
+    }
+
+    public MessageItem(int ID, boolean infoType, String clientType, String issueTime, String information, String clientIP, String filePath) {
+        this(ID, infoType, clientType, issueTime, information, filePath);
+        this.clientIP = clientIP;
     }
 
     public int getID() {
@@ -27,12 +40,20 @@ public class MessageItem {
         return this.infoType;
     }
 
+    public String getClientType() {
+        return this.clientType;
+    }
+
     public String getIssueTime() {
         return this.issueTime;
     }
 
     public String getInformation() {
         return this.information;
+    }
+
+    public String getClientIP() {
+        return this.clientIP;
     }
 
     public String getFilePath() {
@@ -47,12 +68,20 @@ public class MessageItem {
         this.infoType = infoType;
     }
 
+    public void setClientType(String clientType) {
+        this.clientType = clientType;
+    }
+
     public void setIssueTime(String issueTime) {
         this.issueTime = issueTime;
     }
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public void setClientIP(String clientIP) {
+        this.clientIP = clientIP;
     }
 
     public void setFilePath(String filePath) {

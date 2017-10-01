@@ -26,10 +26,12 @@ public class MySqlDatabaseProxy implements DatabaseProxyInterface {
             while(resultSet.next()) {
                 int ID = Integer.parseInt(resultSet.getString(1));
                 boolean infoType = Boolean.parseBoolean(resultSet.getString(2));
-                String issueTime = resultSet.getString(3);
-                String information = resultSet.getString(4);
-                String filePath = resultSet.getString(5);
-                messageItems.add(new MessageItem(ID, infoType, issueTime, information, filePath));
+                String clientType = resultSet.getString(3);
+                String issueTime = resultSet.getString(4);
+                String information = resultSet.getString(5);
+                String clientIP = resultSet.getString(6);
+                String filePath = resultSet.getString(7);
+                messageItems.add(new MessageItem(ID, infoType, clientType, issueTime, information, clientIP, filePath));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,9 +42,9 @@ public class MySqlDatabaseProxy implements DatabaseProxyInterface {
 
     public void insertInfoItem(MessageItem messageItem) {
         Connection connection = this.databaseConnection.getConnection();
-        String sqlStr = "INSERT INTO infolist(InfoType, IssueTime, Information, FilePath) VALUES("+
-                messageItem.getInfoType() +", '"+ messageItem.getIssueTime() +"', '"+ messageItem.getInformation() +"', '"+
-                messageItem.getFilePath() +"');";
+        String sqlStr = "INSERT INTO infolist(InfoType, ClientType, IssueTime, Information, ClientIP, FilePath) VALUES("+
+                messageItem.getInfoType() +", '"+ messageItem.getClientType() +"', '"+ messageItem.getIssueTime() +"', '"+
+                messageItem.getInformation() +"', '"+ messageItem.getClientIP() +"', '"+ messageItem.getFilePath() +"');";
         this.databaseConnection.update(sqlStr);
         this.databaseConnection.allClose();
     }

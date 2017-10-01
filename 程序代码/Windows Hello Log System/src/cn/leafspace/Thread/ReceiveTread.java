@@ -1,5 +1,9 @@
 package cn.leafspace.Thread;
 
+import cn.leafspace.Database.Factory.DatabaseProxyFactory;
+import cn.leafspace.Database.Interface.DatabaseProxyInterface;
+import cn.leafspace.ToolBean.MessageItem;
+
 import java.io.*;
 import java.util.Date;
 import java.net.Socket;
@@ -9,6 +13,7 @@ public class ReceiveTread extends Thread {
     private Socket socket;
     private InputStreamReader inputStreamReader;
     private boolean infoType = true;
+    private String clientType = "Windows Hello";
     public boolean threadState = true;
 
     public ReceiveTread(Socket socket, InputStreamReader inputStreamReader) {
@@ -18,13 +23,14 @@ public class ReceiveTread extends Thread {
 
     public void run() {
         String information = "";
-        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String nowTime = dataFormat.format(new Date());
         String filePath = "";
         try {
             BufferedReader bufferedReader = new BufferedReader(this.inputStreamReader);
             while (true) {
                 String targetFlag = bufferedReader.readLine();
+                System.out.println(targetFlag);
                 if (targetFlag.equals("<Message>")) {
                     String tempStr = bufferedReader.readLine();
                     if (this.threadState) {
@@ -33,8 +39,13 @@ public class ReceiveTread extends Thread {
                         }
                     }
                     information = information + tempStr + "\n";
+                } else if (targetFlag.equals("<type>")) {
+                    this.clientType = bufferedReader.readLine();
                 } else if (targetFlag.equals("<File>")) {
-                    filePath = "wavLib//" + nowTime + ".wav";
+                    SimpleDateFormat tempDataFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                    String tempNowTime = tempDataFormat.format(new Date());
+
+                    filePath = "wavLib//" + tempNowTime + ".wav";
                     char[] bufferPool = new char[1024];
                     File file = new File(filePath);
                     if (!file.exists()) {
@@ -55,8 +66,11 @@ public class ReceiveTread extends Thread {
             exception.printStackTrace();
         }
 
-        //Todo Write to database
-
+        MessageItem messageItem = new MessageItem(this.infoType, this.clientType, nowTime, information,
+                this.socket.getRemoteSocketAddress().toString().substring(1), filePath);
+        DatabaseProxyFactory databaseProxyFactory = new DatabaseProxyFactory();
+        DatabaseProxyInterface databaseProxyInterface = databaseProxyFactory.getDatabaseProxy("MySQL");
+        databaseProxyInterface.insertInfoItem(messageItem);
         this.threadState = false;
     }
 

@@ -19,7 +19,7 @@ public:
 
 	bool ReadFile() {
 		ifstream file;
-		file.open("info.conf", ios::in);
+		file.open("info.conf", ios::in);                                     //读取文件信息
 		
 		if(!file.is_open()) {
 			return false;

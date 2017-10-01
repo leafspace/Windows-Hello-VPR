@@ -39,6 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Voiceprint Recognition\pthreads-w32-2-9-1-release\Pre-built.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Project Engineering\Windows-Hello-VPR\程序代码\Voiceprint Recognition\Voiceprint Recognition\pthreads-w32-2-9-1-release\Pre-built.2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -80,6 +82,7 @@
     <ClInclude Include="SocketClient.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SocketClient.cpp" />
     <ClCompile Include="SourseMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

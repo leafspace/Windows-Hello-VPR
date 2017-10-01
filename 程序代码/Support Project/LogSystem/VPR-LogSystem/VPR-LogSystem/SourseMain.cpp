@@ -1,14 +1,25 @@
-#include "ReadConfig.h"
+#include "LogSystem.h"
+LogSystem *p_logSystem;
 
 int main()
 {
-	ReadConfig *readConfig = new ReadConfig;
-	bool isSuccess = readConfig->ReadFile();
-	if (isSuccess) {
-		cout << readConfig->getServerIP() << endl;
-		cout << readConfig->getPassword() << endl;
+	LogSystem logSystem;
+	if (logSystem.initSocket()) {
+		cout << "Info : Socket begin linked !" << endl;
 	}
 
-	delete readConfig;
+	p_logSystem = &logSystem;
+	logSystem.beginSystem();
+	logSystem.sendMessage("<Type>");
+	logSystem.sendMessage("Windows Hello");
+	for (int i = 0; i < 25; i++) {
+		logSystem.sendMessage("<Message>");
+		logSystem.sendMessage("information");
+		logSystem.writeMessage("information");
+	}
+	//logSystem.sendMessage("<File>");
+	//logSystem.sendFile("mary.wav");
+
+	logSystem.sendMessage("<Finish>");
 	return 0;
 }
