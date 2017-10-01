@@ -9,7 +9,7 @@ public class SocketListener implements HttpSessionListener {
 
     public void sessionCreated (HttpSessionEvent sessionEvent) {
         System.out.println("Server contextInitialized over!");
-        if (this.socketThread == null && SocketThread.userNumber > 0)
+        if (this.socketThread == null)
         {
             this.socketThread = new SocketThread();
             this.socketThread.start();

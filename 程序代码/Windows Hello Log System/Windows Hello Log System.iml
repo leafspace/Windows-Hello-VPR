@@ -10,13 +10,13 @@
           <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
       </configuration>
-      <facet type="Struts2" name="Struts 2">
+      <facet type="struts" name="Struts">
         <configuration>
-          <fileset id="s2fileset" name="Default File Set " removed="false">
-            <file>file://$MODULE_DIR$/src/struts.xml</file>
-            <file>jar://$MODULE_DIR$/lib/struts2-core.jar!/struts-default.xml</file>
-          </fileset>
-          <propertiesKeys disabled="false" />
+          <option name="myStrutsValidationEnabled" value="true" />
+          <option name="myTilesValidationEnabled" value="true" />
+          <option name="myValidatorValidationEnabled" value="true" />
+          <option name="myReportErrorsAsWarnings" value="true" />
+          <option name="mySuppressPropertiesValidation" value="false" />
         </configuration>
       </facet>
     </facet>
@@ -29,6 +29,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.0.M13" level="application_server_libraries" />
-    <orderEntry type="library" name="Struts 2-2.5.13" level="project" />
+    <orderEntry type="library" name="struts-1.3.x" level="project" />
   </component>
 </module>
