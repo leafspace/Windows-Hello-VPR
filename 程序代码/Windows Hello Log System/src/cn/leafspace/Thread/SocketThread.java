@@ -7,7 +7,10 @@ import cn.leafspace.ToolBean.MessageItem;
 import java.io.*;
 import java.util.Date;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.net.ServerSocket;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 
 /**
@@ -31,7 +34,8 @@ public class SocketThread extends Thread {
             while (!this.isInterrupted() & this.serverSocket != null) {
                 for(int i = 0; i < this.threadNumber; ++i) {
                     Socket socket = this.serverSocket.accept();
-                    InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream(), "UTF-8");
+                    InputStream inputStream = socket.getInputStream();
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
                     System.out.println("InetAddress : " + socket.getInetAddress());
@@ -53,31 +57,34 @@ public class SocketThread extends Thread {
                             break;
                         }
                         if (targetFlag.equals("<Message>")) {
-                            String tempStr = bufferedReader.readLine();
-                                if (tempStr.indexOf("ERROR") >= 0) {
-                                    infoType = false;
-                                }
+                            String tempStr = new String(bufferedReader.readLine().getBytes("GBK"), "UTF-8");
+                            if (tempStr.indexOf("ERROR") >= 0) {
+                                infoType = false;
+                            }
                             information = information + tempStr + "\n";
                         } else if (targetFlag.equals("<type>")) {
-                            clientType = bufferedReader.readLine();
+                            clientType = new String(bufferedReader.readLine().getBytes("GBK"), "UTF-8");
                         } else if (targetFlag.equals("<File>")) {
                             SimpleDateFormat tempDataFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                             String tempNowTime = tempDataFormat.format(new Date());
 
                             filePath = ".//wavLib//" + tempNowTime + ".wav";
-                            char[] bufferPool = new char[1024];
                             File file = new File(filePath);
                             if (!file.exists()) {
                                 file.getParentFile().mkdirs();
                                 file.createNewFile();
                             }
 
-                            FileWriter fileWriter = new FileWriter(file.getName(), true);
-                            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                            while (inputStreamReader.read(bufferPool) != -1) {
-                                bufferedWriter.write(bufferPool);
+                            int fileSize = -1;
+                            try {
+                                fileSize = Integer.parseInt(bufferedReader.readLine());
+                            } catch (NumberFormatException exception) {
+                                exception.printStackTrace();
                             }
-                            bufferedWriter.close();
+
+                            ReceiveThread receiveThread = new ReceiveThread(fileSize, file, socket);
+                            receiveThread.start();
+                            break;
                         } else if (targetFlag.equals("<Finish>")) {
                             break;
                         }
@@ -92,6 +99,14 @@ public class SocketThread extends Thread {
         } catch (IOException exception){
             exception.printStackTrace();
         }
+    }
+
+    private byte[] getBytes(char[] charStr) {
+        Charset charset = Charset.forName ("UTF-8");
+        CharBuffer charBuffer = CharBuffer.allocate(charStr.length);
+        charBuffer.flip ();
+        ByteBuffer byteBuffer = charset.encode(charBuffer);
+        return byteBuffer.array();
     }
 
     public void closeServerSocket() {

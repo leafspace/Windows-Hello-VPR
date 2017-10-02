@@ -55,13 +55,13 @@ int main()
 	logSystem.sendMessage("Windows Hello Client\n");
 	for (int i = 0; i < 25; i++) {
 		logSystem.sendMessage("<Message>\n");
-		logSystem.sendMessage("information\n");
-		logSystem.writeMessage("information\n");
+		logSystem.sendMessage("消息\n");
+		logSystem.writeMessage("消息\n");
 	}
 	logSystem.sendMessage("<File>\n");
+	
 	logSystem.sendFile("mary.wav");
-	logSystem.sendMessage("<Finish>\n");
-	while(true) {
-	}
+	//logSystem.sendMessage("<Finish>\n");
+	Sleep(5000);
 	return 0;
 }
