@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-09-30 21:27:46
+Date: 2017-10-03 12:01:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,13 +21,12 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `infolist`;
 CREATE TABLE `infolist` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `InfoType` varchar(255) NOT NULL,
+  `InfoType` bit(1) NOT NULL,
+  `ClientType` varchar(255) NOT NULL,
   `IssueTime` datetime NOT NULL,
   `Information` varchar(500) NOT NULL,
+  `Result` varchar(900) DEFAULT NULL,
+  `ClientIP` varchar(36) DEFAULT NULL,
   `FilePath` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of infolist
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;

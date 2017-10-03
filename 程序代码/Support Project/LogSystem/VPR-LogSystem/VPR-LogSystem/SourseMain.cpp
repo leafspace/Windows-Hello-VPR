@@ -58,8 +58,12 @@ int main()
 		logSystem.sendMessage("消息\n");
 		logSystem.writeMessage("消息\n");
 	}
+
+	logSystem.sendMessage("<Result>\n");
+	logSystem.sendMessage("limei|hanmeimei|wangzhe\n");
+	logSystem.sendMessage("4700|1234|560\n");
+
 	logSystem.sendMessage("<File>\n");
-	
 	logSystem.sendFile("mary.wav");
 	//logSystem.sendMessage("<Finish>\n");
 	Sleep(5000);

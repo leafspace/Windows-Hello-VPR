@@ -1,10 +1,10 @@
-﻿生成启动时间为 2017/10/2 16:40:07。
+﻿生成启动时间为 2017/10/3 11:55:47。
      1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Support Project\LogSystem\VPR-LogSystem\VPR-LogSystem\VPR-LogSystem.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\VPR-LogSystem.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SocketClient.cpp
-         SocketClient.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SourseMain.cpp
+         SourseMain.cpp
        ManifestResourceCompile:
          所有输出均为最新。
        Link:
@@ -24,4 +24,4 @@
 
 生成成功。
 
-已用时间 00:00:03.81
+已用时间 00:00:01.77

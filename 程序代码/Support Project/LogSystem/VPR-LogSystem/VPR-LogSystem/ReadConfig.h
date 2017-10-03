@@ -8,6 +8,7 @@ using namespace std;
 class ReadConfig
 {
 private:
+	string path;
 	string serverIP;
 	string password;
 
@@ -47,7 +48,13 @@ public:
 			this->serverIP = info;
 		} else if (label == "password") {
 			this->password = info;
+		} else if (label == "path") {
+			this->path = info;
 		}
+	}
+
+	string getPath() {
+		return this->path;
 	}
 
 	string getServerIP() {

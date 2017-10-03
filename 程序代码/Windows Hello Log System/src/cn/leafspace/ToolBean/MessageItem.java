@@ -6,6 +6,7 @@ public class MessageItem {
     private String clientType;
     private String issueTime;
     private String information;
+    private String result;
     private String clientIP;
     private String filePath;
 
@@ -22,13 +23,19 @@ public class MessageItem {
         this.clientIP = clientIP;
     }
 
+    public MessageItem(boolean infoType, String clientType, String issueTime, String information, String result, String clientIP, String filePath) {
+        this(infoType, clientType, issueTime, information, clientIP, filePath);
+        this.result = result;
+    }
+
     public MessageItem(int ID, boolean infoType, String clientType, String issueTime, String information, String filePath) {
         this(infoType, clientType, issueTime, information, filePath);
         this.ID = ID;
     }
 
-    public MessageItem(int ID, boolean infoType, String clientType, String issueTime, String information, String clientIP, String filePath) {
+    public MessageItem(int ID, boolean infoType, String clientType, String issueTime, String information, String result, String clientIP, String filePath) {
         this(ID, infoType, clientType, issueTime, information, filePath);
+        this.result = result;
         this.clientIP = clientIP;
     }
 
@@ -50,6 +57,10 @@ public class MessageItem {
 
     public String getInformation() {
         return this.information;
+    }
+
+    public String getResult() {
+        return this.result;
     }
 
     public String getClientIP() {
@@ -78,6 +89,10 @@ public class MessageItem {
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public void setClientIP(String clientIP) {

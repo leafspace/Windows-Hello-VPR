@@ -48,6 +48,7 @@ public class SocketThread extends Thread {
                     String clientType = "Windows Hello";
                     String issueTime = dataFormat.format(new Date());
                     String information = "";
+                    String result = "";
                     String clientIP = socket.getRemoteSocketAddress().toString().substring(1);
                     String filePath = "";
 
@@ -57,14 +58,18 @@ public class SocketThread extends Thread {
                             break;
                         }
                         if (targetFlag.equals("<Message>")) {
-                            String tempStr = new String(bufferedReader.readLine().getBytes("GBK"), "UTF-8");
+                            //String tempStr = new String(bufferedReader.readLine().getBytes("GBK"), "UTF-8");
+                            String tempStr = bufferedReader.readLine();
                             if (tempStr.indexOf("ERROR") >= 0) {
                                 infoType = false;
                             }
-                            information = information + tempStr + "\n";
+                            information = information + tempStr + "|";
                         } else if (targetFlag.equals("<type>")) {
-                            clientType = new String(bufferedReader.readLine().getBytes("GBK"), "UTF-8");
+                            clientType = bufferedReader.readLine();
                         } else if (targetFlag.equals("<File>")) {
+                            filePath = bufferedReader.readLine();
+                            /*
+                            //Socket 接受文件方法（未成功）
                             SimpleDateFormat tempDataFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                             String tempNowTime = tempDataFormat.format(new Date());
 
@@ -82,15 +87,53 @@ public class SocketThread extends Thread {
                                 exception.printStackTrace();
                             }
 
-                            ReceiveThread receiveThread = new ReceiveThread(fileSize, file, socket);
-                            receiveThread.start();
+                            //ReceiveThread receiveThread = new ReceiveThread(fileSize, file, socket);
+                            //receiveThread.start();
+
+                            ChangeCharset changeCharset = new ChangeCharset();
+                            DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(file));
+
+                            char[] bufferPool = new char[1024];
+                            while (fileSize != 0) {
+                                int readSize = bufferedReader.read(bufferPool);
+                                String tempStr = bufferPool.toString();
+                                if (fileSize >= 1024) {
+                                    dataOutputStream.write(tempStr.getBytes());
+                                    fileSize -= 1024;
+                                } else {
+                                    dataOutputStream.write(tempStr.getBytes());
+                                    fileSize -= fileSize;
+                                }
+                                System.out.println(bufferPool);
+                            }
+                            dataOutputStream.close();
+                            bufferedReader.close();
+                            inputStreamReader.close();
+                            inputStream.close();
+                            socket.close();
+                            System.out.println("======== 文件接收成功 ========");
+                            */
                             break;
+                        } else if (targetFlag.equals("<Result>")) {
+                            String tableHead = bufferedReader.readLine();
+                            String tableBody = bufferedReader.readLine();
+                            result = tableHead + " " + tableBody;
                         } else if (targetFlag.equals("<Finish>")) {
                             break;
                         }
                     }
 
-                    MessageItem messageItem = new MessageItem(infoType, clientType, issueTime, information, clientIP, filePath);
+                    System.out.println(information);
+                    System.out.println(filePath);
+                    bufferedReader.close();
+                    inputStreamReader.close();
+                    inputStream.close();
+                    socket.close();
+
+                    if (clientType.equals("Windows Hello") && result.length() == 0) {
+                        infoType = false;
+                    }
+                    MessageItem messageItem = new MessageItem(infoType, clientType, issueTime, information, result, clientIP, filePath);
                     DatabaseProxyFactory databaseProxyFactory = new DatabaseProxyFactory();
                     DatabaseProxyInterface databaseProxyInterface = databaseProxyFactory.getDatabaseProxy("MySQL");
                     databaseProxyInterface.insertInfoItem(messageItem);

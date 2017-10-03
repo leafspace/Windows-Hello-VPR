@@ -89,6 +89,19 @@ bool SocketClient::sendMessage(string message)                               //À
 	return true;
 }
 
+bool SocketClient::sendMessage(string message, int messageLen)               //ÀûÓÃsocket·¢ËÍÐÅÏ¢
+{
+    int msgLen;
+	if ((msgLen = send(this->client, message.data(), messageLen, 0)) == SOCKET_ERROR) {
+        cout << "ERROR : Socket send message error !" << endl;
+        return false;
+	} else if (msgLen != messageLen) {
+		cout << "ERROR : Socket send message has failure byte (" << msgLen << ") !" << endl;
+		return false;
+	}
+	return true;
+}
+
 void SocketClient::freeResourse() 
 {
     closesocket(this->client);
