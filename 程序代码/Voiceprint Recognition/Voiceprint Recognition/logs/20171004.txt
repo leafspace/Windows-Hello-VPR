@@ -1,0 +1,90 @@
+[17:28:25] Info : Begin record ! 
+[17:28:52] Info : Stop record ! 
+[17:29:3] Info : Begin traning user voice ! 
+[17:29:3] Info : Read voice file data ! 
+[17:29:4] Info : Initial characteristic parameters are calculated ! 
+[17:29:4] Info : Initial MFCC parameters are calculated ! 
+[17:29:4] Info : Initial K-means data ! 
+[17:29:7] Info : Begin traning user voice ! 
+[17:29:7] Info : Read voice file data ! 
+[17:29:8] Info : Initial characteristic parameters are calculated ! 
+[17:29:8] Info : Initial MFCC parameters are calculated ! 
+[17:29:8] Info : Initial K-means data ! 
+[17:29:8] Info : Begin recognition ! 
+[17:29:48] Info : Begin traning user voice ! 
+[17:29:48] Info : Read voice file data ! 
+[17:29:49] Info : Initial characteristic parameters are calculated ! 
+[17:29:49] Info : Initial MFCC parameters are calculated ! 
+[17:29:49] Info : Initial K-means data ! 
+[17:29:50] Info : Begin recognition ! 
+[17:35:31] ==============================================[17:35:36] Info : Begin traning user voice ! 
+[17:35:36] Info : Read voice file data ! 
+[17:35:37] Info : Initial characteristic parameters are calculated ! 
+[17:35:37] Info : Initial MFCC parameters are calculated ! 
+[17:35:37] Info : Initial K-means data ! 
+[17:35:37] Info : Begin recognition ! 
+[17:35:54] ==============================================
+[17:35:56] Info : Begin traning user voice ! 
+[17:35:56] Info : Read voice file data ! 
+[17:35:57] Info : Initial characteristic parameters are calculated ! 
+[17:35:57] Info : Initial MFCC parameters are calculated ! 
+[17:35:57] Info : Initial K-means data ! 
+[17:35:57] Info : Begin recognition ! 
+[17:37:22] ==============================================
+[17:37:27] Info : Begin traning user voice ! 
+[17:37:27] Info : Read voice file data ! 
+[17:37:28] Info : Initial characteristic parameters are calculated ! 
+[17:37:28] Info : Initial MFCC parameters are calculated ! 
+[17:37:28] Info : Initial K-means data ! 
+[17:37:28] Info : Begin recognition ! 
+[17:38:59] ==============================================
+[17:39:1] Info : Begin traning user voice ! 
+[17:39:1] Info : Read voice file data ! 
+[17:39:2] Info : Initial characteristic parameters are calculated ! 
+[17:39:2] Info : Initial MFCC parameters are calculated ! 
+[17:39:2] Info : Initial K-means data ! 
+[17:39:2] Info : Begin recognition ! 
+[17:39:3] 系统识别结果-说话人为：zhanglifei
+[17:39:27] ==============================================
+[17:39:30] Info : Begin traning user voice ! 
+[17:39:30] Info : Read voice file data ! 
+[17:39:31] Info : Initial characteristic parameters are calculated ! 
+[17:39:31] Info : Initial MFCC parameters are calculated ! 
+[17:39:31] Info : Initial K-means data ! 
+[17:39:32] Info : Begin recognition ! 
+[17:40:49] ==============================================
+[17:40:51] Info : Begin traning user voice ! 
+[17:40:51] Info : Read voice file data ! 
+[17:40:51] Info : Initial characteristic parameters are calculated ! 
+[17:40:51] Info : Initial MFCC parameters are calculated ! 
+[17:40:52] Info : Initial K-means data ! 
+[17:40:52] Info : Begin recognition ! 
+[17:41:48] ==============================================
+[17:41:50] Info : Begin traning user voice ! 
+[17:41:50] Info : Read voice file data ! 
+[17:41:51] Info : Initial characteristic parameters are calculated ! 
+[17:41:51] Info : Initial MFCC parameters are calculated ! 
+[17:41:51] Info : Initial K-means data ! 
+[17:41:51] Info : Begin recognition ! 
+[17:41:51] -422302339|768362924|920207262
+[17:41:52] 系统识别结果-说话人为：zhanglifei
+[17:42:57] ==============================================
+[17:43:1] Info : Begin traning user voice ! 
+[17:43:1] Info : Read voice file data ! 
+[17:43:2] Info : Initial characteristic parameters are calculated ! 
+[17:43:2] Info : Initial MFCC parameters are calculated ! 
+[17:43:2] Info : Initial K-means data ! 
+[17:43:2] Info : Begin recognition ! 
+[17:43:2] microsoft|xunfei|zhanglifei
+[17:43:2] -422302339|768362924|920207262
+[17:43:3] 系统识别结果-说话人为：zhanglifei
+[17:45:13] ==============================================
+[17:45:21] Info : Begin traning user voice ! 
+[17:45:21] Info : Read voice file data ! 
+[17:45:21] Info : Initial characteristic parameters are calculated ! 
+[17:45:21] Info : Initial MFCC parameters are calculated ! 
+[17:45:22] Info : Initial K-means data ! 
+[17:45:22] Info : Begin recognition ! 
+[17:45:22] microsoft|xunfei|zhanglifei
+[17:45:22] -422302339|768362924|920207262
+[17:45:23] 系统识别结果-说话人为：zhanglifei

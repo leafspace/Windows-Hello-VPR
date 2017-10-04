@@ -1,0 +1,18 @@
+[17:36:49] ==============================================
+[17:36:54] Info : Begin traning user voice ! 
+[17:36:54] Info : Read voice file data ! 
+[17:36:55] Info : Initial characteristic parameters are calculated ! 
+[17:36:55] Info : Initial MFCC parameters are calculated ! 
+[17:36:55] Info : Initial K-means data ! 
+[17:36:56] Info : Begin recognition ! 
+[17:47:48] ==============================================
+[17:47:49] ==============================================
+[17:47:50] Info : Begin traning user voice ! 
+[17:47:50] Info : Read voice file data ! 
+[17:47:51] Info : Initial characteristic parameters are calculated ! 
+[17:47:51] Info : Initial MFCC parameters are calculated ! 
+[17:47:51] Info : Initial K-means data ! 
+[17:47:51] Info : Begin recognition ! 
+[17:47:51] microsoft|qinlihao|xunfei|zhanglifei
+[17:47:51] 1224636149|-916266266|-1488133366|-756062481
+[17:47:53] 系统识别结果-说话人为：qinlihao

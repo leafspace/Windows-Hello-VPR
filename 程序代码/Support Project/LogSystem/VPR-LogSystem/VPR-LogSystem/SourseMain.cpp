@@ -55,8 +55,8 @@ int main()
 	logSystem.sendMessage("Windows Hello Client\n");
 	for (int i = 0; i < 25; i++) {
 		logSystem.sendMessage("<Message>\n");
-		logSystem.sendMessage("消息\n");
-		logSystem.writeMessage("消息\n");
+		logSystem.sendMessage("娑堟伅\n");
+		logSystem.writeMessage("娑堟伅\n");
 	}
 
 	logSystem.sendMessage("<Result>\n");

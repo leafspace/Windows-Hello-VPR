@@ -174,7 +174,7 @@ void* record(void* args)                                                     //Â
 	return NULL;
 }
 
-void* player(void* args)                                                     //Â¼ÒôÏß³Ì
+void* player(void* args)                                                     //·ÅÒôÏß³Ì
 {
 	PlaySound((CString)(::playpath.data()), NULL, SND_FILENAME | SND_ASYNC);
 	return NULL;
@@ -241,11 +241,23 @@ bool extractParameter(string wavfilePath)                                    //Ñ
 {
 	FILE *fp;
 	if ((fp = fopen(wavfilePath.data(), "rb")) == NULL) {                    //´ò¿ªÓïÒôÎÄ¼ş
-		cout << "ERROR : File open failed !" << endl;
+		//LogSystem send message
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("ERROR : Voice file open failed ! \n");
+		}
+		p_logSystem->writeMessage("ERROR : Voice file open failed ! \n");
 		return false;
 	}
 
 	//Todo ³õÊ¼»¯ÓïÒôÎÄ¼şÀà ¶ÁÈ¡ÓïÒôÎÄ¼şÊı¾İ
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("Info : Read voice file data ! \n");
+	}
+	p_logSystem->writeMessage("Info : Read voice file data ! \n");
+
 	WavFile_Initial *wavFile = new WavFile_Initial(fp);                      //¶ÁÈ¡ÓïÒôÎÄ¼şÊı¾İ
 	fclose(fp);
 	for (unsigned long i = 0; i < wavFile->Get_voiceNumber(); ++i) {
@@ -253,6 +265,13 @@ bool extractParameter(string wavfilePath)                                    //Ñ
 	}
 
 	//Todo ³õÊ¼»¯ÌØÕ÷²ÎÊıÀà ¼ÆËãÓïÒôÊı¾İÌØÕ÷²ÎÊı
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("Info : Initial characteristic parameters are calculated ! \n");
+	}
+	p_logSystem->writeMessage("Info : Initial characteristic parameters are calculated ! \n");
+
 	double *dataSpace = NULL;
 	
 	CharaParameter *charaParameter = new CharaParameter(wavFile->Get_frameNumber());             //³õÊ¼»¯ÌØÕï²ÎÊıÀà
@@ -267,9 +286,23 @@ bool extractParameter(string wavfilePath)                                    //Ñ
 	delete wavFile;
 
 	//Todo ¼ÆËãMFCC²ÎÊı
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("Info : Initial MFCC parameters are calculated ! \n");
+	}
+	p_logSystem->writeMessage("Info : Initial MFCC parameters are calculated ! \n");
+
 	charaParameter->MFCC_CharaParameter(sampleRate);                         //¼ÆËãMFCCÌØÕ÷²ÎÊı
 
 	//Todo ³õÊ¼»¯KmeansÊı¾İ
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("Info : Initial K-means data ! \n");
+	}
+	p_logSystem->writeMessage("Info : Initial K-means data ! \n");
+
 	::mfccData = new double[charaParameter->Get_frameNumber() * CharaParameter::MelDegreeNumber];
 	for (unsigned long i = 0; i < charaParameter->Get_frameNumber(); ++i) {
 		memcpy(&::mfccData[i * CharaParameter::MelDegreeNumber], 
@@ -350,11 +383,35 @@ int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //É
 		}
 	}
 
+	char tempData[24];
+	char resultName[1024] = {}, resultData[1024] = {};
 	cout << "TIP : Probability data is ";
 	for (int i = 0; i < (int) voiceLib.size(); ++i) {
 		cout << libProbability[i] << "\t";
+		if (i != voiceLib.size() - 1) {
+			strcat_s(resultName, voiceLib[i].peopleName.data());
+			strcat_s(resultName, "|");
+			sprintf(tempData, "%d", libProbability[i]);
+			strcat_s(resultData, tempData);
+			strcat_s(resultData, "|");
+		} else {
+			strcat_s(resultName, voiceLib[i].peopleName.data());
+			sprintf(tempData, "%d", libProbability[i]);
+			strcat_s(resultData, tempData);
+			strcat_s(resultName, "\n");
+			strcat_s(resultData, "\n");
+		}
 	}
 	cout << endl;
+	
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Result>\n");
+		p_logSystem->sendMessage(resultName);
+		p_logSystem->sendMessage(resultData);
+	}
+	p_logSystem->writeMessage(resultName);
+	p_logSystem->writeMessage(resultData);
 
 	int countMax = 0;
 	for (int i = 1; i < (int) voiceLib.size(); ++i) {

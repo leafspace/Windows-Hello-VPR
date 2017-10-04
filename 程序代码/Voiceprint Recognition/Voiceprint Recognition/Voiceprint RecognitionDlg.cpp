@@ -11,6 +11,7 @@
 #define new DEBUG_NEW
 #endif
 
+LogSystem *p_logSystem;                                                      //用于处理Log相关
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -150,6 +151,13 @@ BOOL CVoiceprintRecognitionDlg::OnInitDialog()
 	this->OnBnClickedButton4();
 	this->OnBnClickedButton5();
 
+	p_logSystem = new LogSystem();                                           //初始化日志系统
+	p_logSystem->linkState = p_logSystem->initSocket();
+	p_logSystem->beginSystem();                                              //开启线程发送消息
+
+	p_logSystem->sendMessage("<Type>\n");                                    //发送类型消息
+	p_logSystem->sendMessage("Windows Hello Client\n");
+	p_logSystem->writeMessage("==============================================\n");
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -206,6 +214,13 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	if (flagRecord) {
+		//LogSystem send message
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("Info : Stop record ! \n");
+		}
+		p_logSystem->writeMessage("Info : Stop record ! \n");
+
 		this->OnButton1_cancel();
 		this->flashshow.Stop();
 		this->flagRecord = false;
@@ -214,6 +229,13 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton1()
 		SetDlgItemText(IDC_BUTTON1, (CString)"录音");
 		SetDlgItemText(IDC_EDIT1, (CString)"");
 	} else {
+		//LogSystem send message
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("Info : Begin record ! \n");
+		}
+		p_logSystem->writeMessage("Info : Begin record ! \n");
+
 		bool success = false;
 		//弹出窗口并显示
 		CFileDialog opendlg(FALSE, _T("*.wav"), _T("*.wav"), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("所有文件(*.wav*;)|*.wav*||"), NULL);   //打开文件选择框
@@ -260,12 +282,25 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton1()
 void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("Info : Begin traning user voice ! \n");
+	}
+	p_logSystem->writeMessage("Info : Begin traning user voice ! \n");
+
 	int selectIndex = this->GetItemSelect(0);
 	FILESTRUCT selectItem = this->wavLib[selectIndex];
 
 	if (strcmp(selectItem.peopleName.data(), "未知") == 0 ||
 		strcmp(selectItem.peopleName.data(), "unknow") == 0) {
 		MessageBoxA(NULL, "未知的用户语音无法训练进入语音库", "错误", MB_ICONHAND);
+		//LogSystem send message
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("ERROR : Unknow person voice can't into the libraly ! \n");
+		}
+		p_logSystem->writeMessage("ERROR : Unknow person voice can't into the libraly ! \n");
 		return ;
 	}
 
@@ -344,11 +379,26 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 		return ;
 	}
 
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("Info : Begin recognition ! \n");
+	}
+	p_logSystem->writeMessage("Info : Begin recognition ! \n");
+	
 	int countMax = voiceprintRecognition(gmmfilePath, this->voiceLib);
 
 	char VPR_result[256] = "系统识别结果-说话人为：";
 	strcat_s(VPR_result, this->voiceLib[countMax].peopleName.data());
 	MessageBoxA(NULL, VPR_result, "信息", MB_ICONASTERISK);
+
+	strcat_s(VPR_result, "\n");
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage(VPR_result);
+	}
+	p_logSystem->writeMessage(VPR_result);
 }
 
 

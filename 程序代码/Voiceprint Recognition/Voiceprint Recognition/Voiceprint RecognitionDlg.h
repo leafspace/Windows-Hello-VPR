@@ -11,6 +11,7 @@
 #include "resource.h"
 #include "CChineseCode.h"
 #include "WaveRecorder.h"
+#include "LOG/LogSystem.h"
 #include "Shockwaveflash.h"
 #include "VPR/WavData_CharaParameter.h"
 
@@ -92,7 +93,7 @@ extern double* mfccData;                                                     //�
 extern CharaParameter* charaParameter;                                       //用于保存当前语音训练出的参数
 
 void* record(void* args);                                                    //录音线程
-void* player(void* args);                                                    //录音线程
+void* player(void* args);                                                    //放音线程
 string getFileName(string path);                                             //将某个路径转换为某个文件名
 void getFiles(string path, vector<string>& files);                           //获取path文件夹下的所有文件名
 void readList(ifstream& in, vector<FILESTRUCT>& list);                       //读取文件的内容到list中

@@ -32,42 +32,46 @@ public class SocketThread extends Thread {
     public void run() {
         try {
             while (!this.isInterrupted() & this.serverSocket != null) {
-                for(int i = 0; i < this.threadNumber; ++i) {
-                    Socket socket = this.serverSocket.accept();
-                    InputStream inputStream = socket.getInputStream();
-                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                boolean infoType = true;
+                String clientType = "Windows Hello";
+                String issueTime = dataFormat.format(new Date());
+                String information = "";
+                String result = "";
+                String clientIP = "Unknow";
+                String filePath = "";
+                try {
+                    for(int i = 0; i < this.threadNumber; ++i) {
+                        Socket socket = this.serverSocket.accept();
+                        InputStream inputStream = socket.getInputStream();
+                        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-                    System.out.println("InetAddress : " + socket.getInetAddress());
-                    System.out.println("LocalAddress : " + socket.getLocalAddress());
-                    System.out.println("LocalSocketAddress : " + socket.getLocalSocketAddress());
-                    System.out.println("RemoteSocketAddress : " + socket.getRemoteSocketAddress() + " 接入系统...");
-                    
-                    SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    boolean infoType = true;
-                    String clientType = "Windows Hello";
-                    String issueTime = dataFormat.format(new Date());
-                    String information = "";
-                    String result = "";
-                    String clientIP = socket.getRemoteSocketAddress().toString().substring(1);
-                    String filePath = "";
+                        System.out.println("InetAddress : " + socket.getInetAddress());
+                        System.out.println("LocalAddress : " + socket.getLocalAddress());
+                        System.out.println("LocalSocketAddress : " + socket.getLocalSocketAddress());
+                        System.out.println("RemoteSocketAddress : " + socket.getRemoteSocketAddress() + " 接入系统...");
 
-                    while (true) {
-                        String targetFlag = bufferedReader.readLine();
-                        if (targetFlag == null) {
-                            break;
-                        }
-                        if (targetFlag.equals("<Message>")) {
-                            //String tempStr = new String(bufferedReader.readLine().getBytes("GBK"), "UTF-8");
-                            String tempStr = bufferedReader.readLine();
-                            if (tempStr.indexOf("ERROR") >= 0) {
-                                infoType = false;
+                        dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        issueTime = dataFormat.format(new Date());
+                        clientIP = socket.getRemoteSocketAddress().toString().substring(1);
+
+                        while (true) {
+                            String targetFlag = bufferedReader.readLine();
+                            if (targetFlag == null) {
+                                break;
                             }
-                            information = information + tempStr + "|";
-                        } else if (targetFlag.equals("<type>")) {
-                            clientType = bufferedReader.readLine();
-                        } else if (targetFlag.equals("<File>")) {
-                            filePath = bufferedReader.readLine();
+                            if (targetFlag.equals("<Message>")) {
+                                //String tempStr = new String(bufferedReader.readLine().getBytes("GBK"), "UTF-8");
+                                String tempStr = bufferedReader.readLine();
+                                if (tempStr.indexOf("ERROR") >= 0) {
+                                    infoType = false;
+                                }
+                                information = information + tempStr + "|";
+                            } else if (targetFlag.equals("<type>")) {
+                                clientType = bufferedReader.readLine();
+                            } else if (targetFlag.equals("<File>")) {
+                                filePath = bufferedReader.readLine();
                             /*
                             //Socket 接受文件方法（未成功）
                             SimpleDateFormat tempDataFormat = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -113,23 +117,26 @@ public class SocketThread extends Thread {
                             socket.close();
                             System.out.println("======== 文件接收成功 ========");
                             */
-                            break;
-                        } else if (targetFlag.equals("<Result>")) {
-                            String tableHead = bufferedReader.readLine();
-                            String tableBody = bufferedReader.readLine();
-                            result = tableHead + " " + tableBody;
-                        } else if (targetFlag.equals("<Finish>")) {
-                            break;
+                                break;
+                            } else if (targetFlag.equals("<Result>")) {
+                                String tableHead = bufferedReader.readLine();
+                                String tableBody = bufferedReader.readLine();
+                                result = tableHead + " " + tableBody;
+                            } else if (targetFlag.equals("<Finish>")) {
+                                break;
+                            }
                         }
+
+                        System.out.println(information);
+                        System.out.println(filePath);
+                        bufferedReader.close();
+                        inputStreamReader.close();
+                        inputStream.close();
+                        socket.close();
                     }
-
-                    System.out.println(information);
-                    System.out.println(filePath);
-                    bufferedReader.close();
-                    inputStreamReader.close();
-                    inputStream.close();
-                    socket.close();
-
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                } finally {
                     if (clientType.equals("Windows Hello") && result.length() == 0) {
                         infoType = false;
                     }
@@ -139,8 +146,10 @@ public class SocketThread extends Thread {
                     databaseProxyInterface.insertInfoItem(messageItem);
                 }
             }
-        } catch (IOException exception){
+        } catch (Exception exception){
             exception.printStackTrace();
+        } finally {
+
         }
     }
 

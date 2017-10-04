@@ -19,6 +19,12 @@
     <Filter Include="源文件\VPR">
       <UniqueIdentifier>{e3494377-200b-4198-9bf7-74006ac3610b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\LOG">
+      <UniqueIdentifier>{57550ed7-23bb-4645-a906-c0da4b79010d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LOG">
+      <UniqueIdentifier>{83688260-68fd-40f6-8a39-07f04d7f2a56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -72,6 +78,18 @@
     <ClInclude Include="VPR\Model_KMeans.h">
       <Filter>头文件\VPR</Filter>
     </ClInclude>
+    <ClInclude Include="LOG\LogSystem.h">
+      <Filter>头文件\LOG</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG\MessageQueue.h">
+      <Filter>头文件\LOG</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG\ReadConfig.h">
+      <Filter>头文件\LOG</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG\SocketClient.h">
+      <Filter>头文件\LOG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Voiceprint Recognition.cpp">
@@ -112,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="VPR\WavFile_Struct.cpp">
       <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="LOG\SocketClient.cpp">
+      <Filter>源文件\LOG</Filter>
+    </ClCompile>
+    <ClCompile Include="LOG\LogSystem.cpp">
+      <Filter>源文件\LOG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

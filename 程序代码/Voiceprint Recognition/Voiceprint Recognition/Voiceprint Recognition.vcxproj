@@ -104,6 +104,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CChineseCode.h" />
+    <ClInclude Include="LOG\LogSystem.h" />
+    <ClInclude Include="LOG\MessageQueue.h" />
+    <ClInclude Include="LOG\ReadConfig.h" />
+    <ClInclude Include="LOG\SocketClient.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Shockwaveflash.h" />
     <ClInclude Include="stdafx.h" />
@@ -119,6 +123,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CChineseCode.cpp" />
+    <ClCompile Include="LOG\LogSystem.cpp" />
+    <ClCompile Include="LOG\SocketClient.cpp" />
     <ClCompile Include="Shockwaveflash.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
