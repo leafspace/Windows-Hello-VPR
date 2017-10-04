@@ -6,7 +6,8 @@ double* CharaParameter::DistributionSpace(unsigned long col)                 //�
 	if (tempspace == NULL) {
 		throw invalid_argument("ERROR : Memory failure !");
 		return false;
-	} else {
+	}
+	else {
 		for (unsigned long i = 0; i < col; ++i) {
 			tempspace[i] = 0;
 		}
@@ -16,7 +17,7 @@ double* CharaParameter::DistributionSpace(unsigned long col)                 //�
 
 double** CharaParameter::DistributionSpace(unsigned long row, unsigned long col)       //分配二维数组空间
 {
-	double **tempspace = new double* [row];
+	double **tempspace = new double*[row];
 	if (tempspace == NULL) {
 		throw invalid_argument("ERROR : Memory failure !");
 		return false;
@@ -46,7 +47,7 @@ void CharaParameter::DestorySpace(double **space, unsigned long row)         //�
 
 void CharaParameter::ShowDataValue(bool showOnTerminal)                      //显示求值过程中的数据并保存在文件中
 {
-	
+
 	cout << "TIP : This is orgin data :" << endl;
 	for (unsigned long i = 0; i < this->frameNumber; ++i) {
 		for (int j = 0; j < WavFile_Initial::N; ++j) {
@@ -64,7 +65,7 @@ void CharaParameter::ShowDataValue(bool showOnTerminal)                      //�
 		cout << endl;
 	}
 	cout << endl;
-	
+
 
 	cout << "TIP : This is Mel data :" << endl;
 	for (unsigned long i = 0; i < this->frameNumber; ++i) {
@@ -192,7 +193,7 @@ double* CharaParameter::Get_frameMelParameter(unsigned long row)             //�
 double CharaParameter::Get_frameMelParameter(unsigned long row, unsigned long col)     //获取Mel特征参数中的[row][col]
 {
 	if (row < 0 || row >= this->frameNumber ||
-		col < 0 || col >= (unsigned long) CharaParameter::MelDegreeNumber) {
+		col < 0 || col >= (unsigned long)CharaParameter::MelDegreeNumber) {
 		return NULL;
 	}
 

@@ -169,7 +169,7 @@ void WavFile::ShowData(void)
 void WavFile::SaveNewWav(unsigned long voiceNumber, vector<VoiceParagraph> voiceParagraph)       //保存去掉空白处的语音文件，参数1为段落的个数，参数2为各个语音段落的开始点与结束点信息
 {
 	unsigned long endPointLength = 0;
-	for (unsigned long i = 0; i < voiceNumber; ++i){
+	for (unsigned long i = 0; i < voiceNumber; ++i) {
 		VoiceParagraph temp = voiceParagraph[i];
 		endPointLength += temp.voiceLength;
 	}
@@ -210,9 +210,9 @@ void WavFile::SaveNewWav(unsigned long voiceNumber, vector<VoiceParagraph> voice
 		fwrite(&tempLength, sizeof(unsigned long), 1, fp);                   //写入数据大小
 
 		unsigned long n = 0;
-		for (unsigned long i = 0; i < voiceNumber; ++i){
+		for (unsigned long i = 0; i < voiceNumber; ++i) {
 			VoiceParagraph tempParagraph = voiceParagraph[i];
-			for (unsigned long j = tempParagraph.begin; j < tempParagraph.end; ++j, n += 2){
+			for (unsigned long j = tempParagraph.begin; j < tempParagraph.end; ++j, n += 2) {
 				fwrite(&data[j * 2], sizeof(char), 1, fp);
 				fwrite(&data[j * 2 + 1], sizeof(char), 1, fp);
 			}

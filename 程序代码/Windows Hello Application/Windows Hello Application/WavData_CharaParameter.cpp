@@ -8,25 +8,25 @@ double**  CharaParameter::MFCC_CharaParameter(unsigned long sampleRate)       //
 {
 	cout << "TIP : Calculate MFCC parameter ..." << endl;
 	//1.拷贝数据，保存原先分帧后的数据
-	this->frameFFTParameter = 
+	this->frameFFTParameter =
 		this->DistributionSpace(this->frameNumber, WavFile_Initial::N);      //分配FFT保存的内存
 
-    for (unsigned long i = 0; i < this->frameNumber; ++i) {
-		memcpy(this->frameFFTParameter[i], this->frameData[i], 
+	for (unsigned long i = 0; i < this->frameNumber; ++i) {
+		memcpy(this->frameFFTParameter[i], this->frameData[i],
 			sizeof(double) * WavFile_Initial::N);                            //拷贝帧数据，预备后期计算FFT
-    }
+	}
 
-    //2.帧内求解快速傅里叶变换数据
-    for (unsigned long i = 0; i < this->frameNumber; ++i) {
-        double *space = 
+	//2.帧内求解快速傅里叶变换数据
+	for (unsigned long i = 0; i < this->frameNumber; ++i) {
+		double *space =
 			this->FFT(this->frameFFTParameter[i], WavFile_Initial::N);       //保存下返回的地址，因为这有可能是新数据的地址
 		if (space != NULL) {
 			this->frameFFTParameter[i] = space;
 		}
-    }
+	}
 
 	//3.求频谱的平方，得到谱线的能量
-	double** spectrumEnergy = 
+	double** spectrumEnergy =
 		this->DistributionSpace(this->frameNumber, WavFile_Initial::N);      //为能量谱新建地址，但不需保存
 	for (unsigned long i = 0; i < this->frameNumber; ++i) {
 		for (int j = 0; j < WavFile_Initial::N; ++j) {
@@ -36,25 +36,25 @@ double**  CharaParameter::MFCC_CharaParameter(unsigned long sampleRate)       //
 
 	//4.将数据通过Mel滤波器组
 	//  1)求最大/最小mel频率，及滤波器的中心间距
-	double melFreMax = CharaParameter::MelCoefficient * 
+	double melFreMax = CharaParameter::MelCoefficient *
 		log((long double)1 + (sampleRate / 2) / 700);                        //求最大mel频率
-	double melFreMin = CharaParameter::MelCoefficient * 
+	double melFreMin = CharaParameter::MelCoefficient *
 		log((long double)1);                                                 //求最小mel频率
-	double centerSpace = (melFreMax - melFreMin) / 
+	double centerSpace = (melFreMax - melFreMin) /
 		(CharaParameter::MelFilterNumber + 1);                               //求姐mel滤波器组中每个滤波器的中心距离
 
 	//  2)求mel滤波器中每个滤波器的实际频率值
-	double * melFrequency = 
+	double * melFrequency =
 		this->DistributionSpace(CharaParameter::MelFilterNumber + 2);        //为mel滤波器组的实际频率创建内存空间,但不需要保存
 	for (int i = 0; i < CharaParameter::MelFilterNumber + 2; ++i) {
-		melFrequency[i] = 
-			floor(((WavFile_Initial::N + 1) * 700 * 
-			(exp((melFreMin + i * centerSpace) / CharaParameter::MelCoefficient) - 1)) 
-			/ sampleRate);                                                   //求解每个滤波器的实际频率
+		melFrequency[i] =
+			floor(((WavFile_Initial::N + 1) * 700 *
+			(exp((melFreMin + i * centerSpace) / CharaParameter::MelCoefficient) - 1))
+				/ sampleRate);                                                   //求解每个滤波器的实际频率
 	}
 
 	//  3)将线谱能量通过mel滤波器组
-	double** melEnergy = 
+	double** melEnergy =
 		this->DistributionSpace(this->frameNumber, CharaParameter::MelFilterNumber);   //分配保存Mel特诊参数的内存
 	double tempCoefficient = 0;
 	for (unsigned long i = 0; i < this->frameNumber; ++i) {
@@ -63,10 +63,11 @@ double**  CharaParameter::MFCC_CharaParameter(unsigned long sampleRate)       //
 			for (int k = 0; k < WavFile_Initial::N; ++k) {                   //将数据频率与实际频率对应起来
 				if (k >= melFrequency[j - 1] && k <= melFrequency[j]) {
 					tempCoefficient = (k - melFrequency[j - 1]) * (melFrequency[j] - melFrequency[j - 1]);
-				} else if (k >= melFrequency[j] && k <= melFrequency[j + 1]) {
+				}
+				else if (k >= melFrequency[j] && k <= melFrequency[j + 1]) {
 					tempCoefficient = (melFrequency[j + 1] - k) * (melFrequency[j + 1] - melFrequency[j]);
 				}
-				melEnergy[i][j - 1] += this->frameFFTParameter[i][k]* tempCoefficient;
+				melEnergy[i][j - 1] += this->frameFFTParameter[i][k] * tempCoefficient;
 			}
 		}
 	}
@@ -76,7 +77,8 @@ double**  CharaParameter::MFCC_CharaParameter(unsigned long sampleRate)       //
 		for (int j = 0; j < CharaParameter::MelFilterNumber; ++j) {
 			if (melEnergy[i][j] < 0) {                                       //处理数据为负数的情况，以免出现无效数据
 				melEnergy[i][j] = log(fabs(melEnergy[i][j])) * -1;
-			} else {
+			}
+			else {
 				melEnergy[i][j] = log(melEnergy[i][j]);
 			}
 		}
@@ -84,7 +86,7 @@ double**  CharaParameter::MFCC_CharaParameter(unsigned long sampleRate)       //
 
 	//6.进行离散余弦变换
 	this->frameMelParameter = this->DistributionSpace(this->frameNumber, CharaParameter::MelDegreeNumber);
-	this->DCT(melEnergy, this->frameMelParameter, this->frameNumber, 
+	this->DCT(melEnergy, this->frameMelParameter, this->frameNumber,
 		CharaParameter::MelFilterNumber, CharaParameter::MelDegreeNumber);
 
 	//销毁内存

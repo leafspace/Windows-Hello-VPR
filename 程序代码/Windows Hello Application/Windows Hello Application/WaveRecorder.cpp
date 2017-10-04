@@ -63,12 +63,12 @@ void WaveRecorder::Stop()
 	waveInStop(hwi);
 	waveInReset(hwi);
 	// 释放缓冲区
-	for (int layer = 0; layer<BUFFER_LAYER; layer++) {
+	for (int layer = 0; layer < BUFFER_LAYER; layer++) {
 		waveInUnprepareHeader(hwi, &pwh[layer], sizeof(WAVEHDR));
 		delete pwh[layer].lpData;
 	}
 	// 保存Header+RawData
-	if(bSaveFile) {
+	if (bSaveFile) {
 		WaveFileWrite();
 	}
 }
@@ -166,8 +166,8 @@ WaveRecorder::WaveRecorder()
 	this->fp = NULL;
 	/*
 	this->WavHeader = {
-		{ 'R', 'I', 'F', 'F' },	
-		0,						
+		{ 'R', 'I', 'F', 'F' },
+		0,
 		{ 'W', 'A', 'V', 'E' },
 		{ 'f', 'm', 't', ' ' },
 		sizeof(PCMWAVEFORMAT) ,
@@ -218,7 +218,7 @@ WaveRecorder::WaveRecorder()
 #if _DEBUG
 	WAVEINCAPS WaveInCaps;
 	MMRESULT mmResult = waveInGetDevCaps(0, &WaveInCaps, sizeof(WAVEINCAPS));
-	cout << "默认设备描述：(" << WaveInCaps.szPname<<")" << endl;
+	cout << "默认设备描述：(" << WaveInCaps.szPname << ")" << endl;
 #endif
 	WAVEFORMATEX pwfx;
 	WaveInitFormat(&pwfx, CHANNEL_MUM, SAMPLE_RATE, SAMPLE_BITS);
@@ -226,7 +226,7 @@ WaveRecorder::WaveRecorder()
 }
 
 WaveRecorder::~WaveRecorder()
-{	
+{
 	// 关闭设备并发出WIM_CLOSE
 	waveInClose(hwi);
 }

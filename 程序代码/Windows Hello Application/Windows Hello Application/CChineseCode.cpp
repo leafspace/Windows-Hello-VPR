@@ -1,4 +1,4 @@
-#include "CChineseCode.h"
+ï»¿#include "CChineseCode.h"
 
 void CChineseCode::UTF_8ToUnicode(wchar_t* pOut, char *pText)
 {
@@ -12,7 +12,7 @@ void CChineseCode::UTF_8ToUnicode(wchar_t* pOut, char *pText)
 
 void CChineseCode::UnicodeToUTF_8(char* pOut, wchar_t* pText)
 {
-	// ×¢Òâ WCHAR¸ßµÍ×ÖµÄË³Ðò,µÍ×Ö½ÚÔÚÇ°£¬¸ß×Ö½ÚÔÚºó
+	// æ³¨æ„ WCHARé«˜ä½Žå­—çš„é¡ºåº,ä½Žå­—èŠ‚åœ¨å‰ï¼Œé«˜å­—èŠ‚åœ¨åŽ
 	char* pchar = (char *)pText;
 
 	pOut[0] = (0xE0 | ((pchar[1] & 0xF0) >> 4));
@@ -47,7 +47,7 @@ void CChineseCode::GB2312ToUTF_8(string& pOut, char *pText, int pLen)
 	int j = 0;
 	while (i < pLen)
 	{
-		//Èç¹ûÊÇÓ¢ÎÄÖ±½Ó¸´ÖÆ¾Í¿ÉÒÔ
+		//å¦‚æžœæ˜¯è‹±æ–‡ç›´æŽ¥å¤åˆ¶å°±å¯ä»¥
 		if (*(pText + i) >= 0)
 		{
 			rst[j++] = pText[i++];
@@ -70,7 +70,7 @@ void CChineseCode::GB2312ToUTF_8(string& pOut, char *pText, int pLen)
 	}
 	rst[j] = '\0';
 
-	//·µ»Ø½á¹û
+	//è¿”å›žç»“æžœ
 	pOut = rst;
 	delete[] rst;
 

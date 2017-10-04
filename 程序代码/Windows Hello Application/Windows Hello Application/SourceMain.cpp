@@ -1,4 +1,4 @@
-#include <io.h>
+ï»¿#include <io.h>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -9,23 +9,23 @@
 #include "WaveRecorder.h"
 #include "WavData_CharaParameter.h"
 
-string getFileName(string path);                                                                                     //½«Ä³¸öÂ·¾¶×ª»»ÎªÄ³¸öÎÄ¼şÃû
+string getFileName(string path);                                                                                     //å°†æŸä¸ªè·¯å¾„è½¬æ¢ä¸ºæŸä¸ªæ–‡ä»¶å
 void writePassword(const char* password);
-void getFiles(string path, vector<string>& files);                                                                   //»ñÈ¡pathÎÄ¼ş¼ĞÏÂµÄËùÓĞÎÄ¼şÃû
+void getFiles(string path, vector<string>& files);                                                                   //è·å–pathæ–‡ä»¶å¤¹ä¸‹çš„æ‰€æœ‰æ–‡ä»¶å
 
-LogSystem *p_logSystem;                                                                                              //ÓÃÓÚ´¦ÀíLogÏà¹Ø
+LogSystem *p_logSystem;                                                                                              //ç”¨äºå¤„ç†Logç›¸å…³
 
 int main()
 {
-	p_logSystem = new LogSystem();                                                                                   //³õÊ¼»¯ÈÕÖ¾ÏµÍ³
+	p_logSystem = new LogSystem();                                                                                   //åˆå§‹åŒ–æ—¥å¿—ç³»ç»Ÿ
 	p_logSystem->linkState = p_logSystem->initSocket();
-	p_logSystem->beginSystem();                                                                                      //¿ªÆôÏß³Ì·¢ËÍÏûÏ¢
+	p_logSystem->beginSystem();                                                                                      //å¼€å¯çº¿ç¨‹å‘é€æ¶ˆæ¯
 
-	p_logSystem->sendMessage("<Type>\n");                                                                            //·¢ËÍÀàĞÍÏûÏ¢
+	p_logSystem->sendMessage("<Type>\n");                                                                            //å‘é€ç±»å‹æ¶ˆæ¯
 	p_logSystem->sendMessage("Windows Hello\n");
 	p_logSystem->writeMessage("==============================================\n");
 
-	//Todo Â¼Òô
+	//Todo å½•éŸ³
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -40,10 +40,10 @@ int main()
 	Sleep(5500);
 	waveRecorder.Stop();
 	waveRecorder.Reset();
-	
+
 
 	FILE *fp;
-	if ((fp = fopen("tempRecord.wav", "rb")) == NULL) {                                                              //´ò¿ªÓïÒôÎÄ¼ş
+	if ((fp = fopen("tempRecord.wav", "rb")) == NULL) {                                                              //æ‰“å¼€è¯­éŸ³æ–‡ä»¶
 		cout << "ERROR : File open failed !" << endl;
 		//LogSystem send message
 		if (p_logSystem->linkState) {
@@ -54,7 +54,7 @@ int main()
 		exit(-1);
 	}
 
-	//Todo ³õÊ¼»¯ÓïÒôÎÄ¼şÀà ¶ÁÈ¡ÓïÒôÎÄ¼şÊı¾İ
+	//Todo åˆå§‹åŒ–è¯­éŸ³æ–‡ä»¶ç±» è¯»å–è¯­éŸ³æ–‡ä»¶æ•°æ®
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -62,13 +62,13 @@ int main()
 	}
 	p_logSystem->writeMessage("TIP : Init voice file, read voice data !\n");
 
-	WavFile_Initial *wavFile = new WavFile_Initial(fp);                                                              //¶ÁÈ¡ÓïÒôÎÄ¼şÊı¾İ
+	WavFile_Initial *wavFile = new WavFile_Initial(fp);                                                              //è¯»å–è¯­éŸ³æ–‡ä»¶æ•°æ®
 	fclose(fp);
 	for (unsigned long i = 0; i < wavFile->Get_voiceNumber(); ++i) {
-		wavFile->Pre_emphasis(wavFile->Get_dataVoicePoint(i), wavFile->Get_WavFileData());                           //¶Ô¿ÉÓÃ·¶Î§ÄÚµÄÊı¾İ½øĞĞÔ¤¼ÓÖØ
+		wavFile->Pre_emphasis(wavFile->Get_dataVoicePoint(i), wavFile->Get_WavFileData());                           //å¯¹å¯ç”¨èŒƒå›´å†…çš„æ•°æ®è¿›è¡Œé¢„åŠ é‡
 	}
 
-	//Todo ³õÊ¼»¯ÌØÕ÷²ÎÊıÀà ¼ÆËãÓïÒôÊı¾İÌØÕ÷²ÎÊı
+	//Todo åˆå§‹åŒ–ç‰¹å¾å‚æ•°ç±» è®¡ç®—è¯­éŸ³æ•°æ®ç‰¹å¾å‚æ•°
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -77,19 +77,19 @@ int main()
 	p_logSystem->writeMessage("TIP : Init charaparameter !\n");
 
 	double *dataSpace = NULL;
-	
-	CharaParameter *charaParameter = new CharaParameter(wavFile->Get_frameNumber());                                 //³õÊ¼»¯ÌØÕï²ÎÊıÀà
-	for (unsigned long i = 1; i <= wavFile->Get_frameNumber(); ++i) {                                                //ÖğÖ¡±éÀú
-		dataSpace = new double[WavFile_Initial::N];                                                                  //ĞÂ½¨Ö¡Êı¾İ¿Õ¼ä
+
+	CharaParameter *charaParameter = new CharaParameter(wavFile->Get_frameNumber());                                 //åˆå§‹åŒ–ç‰¹è¯Šå‚æ•°ç±»
+	for (unsigned long i = 1; i <= wavFile->Get_frameNumber(); ++i) {                                                //é€å¸§éå†
+		dataSpace = new double[WavFile_Initial::N];                                                                  //æ–°å»ºå¸§æ•°æ®ç©ºé—´
 		memset(dataSpace, 0, sizeof(double) * WavFile_Initial::N);
-		wavFile->Frame_Data(wavFile->Get_WavFileData(), i, dataSpace, WavFile_Initial::N);                           //·ÖÖ¡²¢¼Ó´°
-		charaParameter->Push_data(i, dataSpace);                                                                     //½«·ÖÖ¡Íê³ÉµÄÊı¾İ±£´æ½øÌØÕ÷²ÎÊı±¸ÓÃ
+		wavFile->Frame_Data(wavFile->Get_WavFileData(), i, dataSpace, WavFile_Initial::N);                           //åˆ†å¸§å¹¶åŠ çª—
+		charaParameter->Push_data(i, dataSpace);                                                                     //å°†åˆ†å¸§å®Œæˆçš„æ•°æ®ä¿å­˜è¿›ç‰¹å¾å‚æ•°å¤‡ç”¨
 	}
-	
+
 	unsigned long sampleRate = wavFile->Get_SampleRate();
 	delete wavFile;
 
-	//Todo ¼ÆËãMFCC²ÎÊı
+	//Todo è®¡ç®—MFCCå‚æ•°
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -97,9 +97,9 @@ int main()
 	}
 	p_logSystem->writeMessage("TIP : Caculater MFCC parameter !\n");
 
-	charaParameter->MFCC_CharaParameter(sampleRate);                                                                 //¼ÆËãMFCCÌØÕ÷²ÎÊı
+	charaParameter->MFCC_CharaParameter(sampleRate);                                                                 //è®¡ç®—MFCCç‰¹å¾å‚æ•°
 
-	/******************************Ê¶±ğÊ¾Àı******************************/
+	/******************************è¯†åˆ«ç¤ºä¾‹******************************/
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -108,28 +108,28 @@ int main()
 	p_logSystem->writeMessage("TIP : Begin recognition !\n");
 
 	char szModuleFilePath[MAX_PATH];
-	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //»ñµÃµ±Ç°Ö´ĞĞÎÄ¼şµÄÂ·¾¶
-	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //½«×îºóÒ»¸ö"\\"ºóµÄ×Ö·ûÖÃÎª0
-	
+	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //è·å¾—å½“å‰æ‰§è¡Œæ–‡ä»¶çš„è·¯å¾„
+	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //å°†æœ€åä¸€ä¸ª"\\"åçš„å­—ç¬¦ç½®ä¸º0
+
 	int index = 0;
 	char filePath[MAX_PATH];
-	for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {               //²¹È«//
+	for (int i = 0; i < (int)strlen(szModuleFilePath); ++i) {               //è¡¥å…¨//
 		filePath[index++] = szModuleFilePath[i];
 		if (szModuleFilePath[i] == '\\') {
 			filePath[index++] = '\\';
 		}
 	}
-	filePath[index++] = 0;                                                   //Ä©Î²¹éÁã
+	filePath[index++] = 0;                                                   //æœ«å°¾å½’é›¶
 
 	char path[MAX_PATH];
 	strcpy_s(path, filePath);
 	strcat_s(path, "voiceLib");
 
 	vector<string> files;
-	getFiles(path, files);                                                   //»ñÈ¡ÎÄ¼ş¼ĞÄÚµÄËùÓĞÎÄ¼şÃû£¨Â·¾¶Ãû£©
+	getFiles(path, files);                                                   //è·å–æ–‡ä»¶å¤¹å†…çš„æ‰€æœ‰æ–‡ä»¶åï¼ˆè·¯å¾„åï¼‰
 
 
-	//Todo ³õÊ¼»¯ÒÑÓĞ¿âµÄGMMÄ£ĞÍ
+	//Todo åˆå§‹åŒ–å·²æœ‰åº“çš„GMMæ¨¡å‹
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -148,7 +148,7 @@ int main()
 		gmmFiles[i].close();
 	}
 
-	//Todo Ê¶±ğ¼ÆËã
+	//Todo è¯†åˆ«è®¡ç®—
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -161,9 +161,9 @@ int main()
 	cout << "Frame number is " << charaParameter->Get_frameNumber() << endl;
 	for (int i = 0; i < gmmNumber; ++i) {
 		libProbability[i] = 0;
-		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //¼ÆËãµ±Ç°GMMÏÂ£¬Ä¿±êÌØÕ÷²ÎÊı¼¯ÔÚGMMÄ£ĞÍÏÂµÄ¸ÅÂÊÃÜ¶È
-			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(j));                   //»ñÈ¡GMMµÄÊıÖµ
-			if (tempData > 0) {                                                                                      //È¡¶ÔÊı²Ù×÷
+		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //è®¡ç®—å½“å‰GMMä¸‹ï¼Œç›®æ ‡ç‰¹å¾å‚æ•°é›†åœ¨GMMæ¨¡å‹ä¸‹çš„æ¦‚ç‡å¯†åº¦
+			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(j));                   //è·å–GMMçš„æ•°å€¼
+			if (tempData > 0) {                                                                                      //å–å¯¹æ•°æ“ä½œ
 				tempData = log10(tempData);
 			}
 			libProbability[i] += tempData;
@@ -186,7 +186,8 @@ int main()
 			sprintf(tempData, "%d", libProbability[i]);
 			strcat_s(resultData, tempData);
 			strcat_s(resultData, "|");
-		} else {
+		}
+		else {
 			strcat_s(resultName, getFileName(files[i]).data());
 			sprintf(tempData, "%d", libProbability[i]);
 			strcat_s(resultData, tempData);
@@ -216,8 +217,8 @@ int main()
 		}
 		p_logSystem->writeMessage("TIP : Recognition successfully ! - Login...!\n");
 
-		ReadConfig *readConfig = new ReadConfig;                                                                     //´ò¿ªÎÄ¼ş¶ÁÈ¡
-		bool isSuccess = readConfig->ReadFile();                                                                     //¶ÁÈ¡ÎÄ¼ş
+		ReadConfig *readConfig = new ReadConfig;                                                                     //æ‰“å¼€æ–‡ä»¶è¯»å–
+		bool isSuccess = readConfig->ReadFile();                                                                     //è¯»å–æ–‡ä»¶
 		if (isSuccess) {
 			writePassword(readConfig->getPassword().data());
 		}
@@ -226,62 +227,64 @@ int main()
 		string str;
 		//CChineseCode::GB2312ToUTF_8(str, password, strlen(password));
 		p_logSystem->sendMessage("<Finish>\n");
-	} else {
+	}
+	else {
 		cout << "ERROR : User Unknow !" << endl;
 		//LogSystem send message
 		if (p_logSystem->linkState) {
 			p_logSystem->sendMessage("<Message>\n");
 			p_logSystem->sendMessage("ERROR : User Unknow ! \n");
 			p_logSystem->sendMessage("<Message>\n");
-			p_logSystem->sendMessage("ERROR : ¶Ô²»Æğ£¬ÄúÃ»ÓĞÈ¨ÏŞµÇÂ½ ! ! \n");
+			p_logSystem->sendMessage("ERROR : å¯¹ä¸èµ·ï¼Œæ‚¨æ²¡æœ‰æƒé™ç™»é™† ! ! \n");
 		}
 		p_logSystem->writeMessage("ERROR : User Unknow ! \n");
-		p_logSystem->writeMessage("ERROR : ¶Ô²»Æğ£¬ÄúÃ»ÓĞÈ¨ÏŞµÇÂ½ ! \n");
+		p_logSystem->writeMessage("ERROR : å¯¹ä¸èµ·ï¼Œæ‚¨æ²¡æœ‰æƒé™ç™»é™† ! \n");
 
 		p_logSystem->sendMessage("<File>\n");
 		p_logSystem->sendFile("tempRecord.wav");
 
-		MessageBoxA(NULL, "¶Ô²»Æğ£¬ÄúÃ»ÓĞÈ¨ÏŞµÇÂ½ !", "´íÎó", MB_ICONHAND);
+		MessageBoxA(NULL, "å¯¹ä¸èµ·ï¼Œæ‚¨æ²¡æœ‰æƒé™ç™»é™† !", "é”™è¯¯", MB_ICONHAND);
 	}
 
 	return 0;
 }
 
-string getFileName(string path)                                              //½«Ä³¸öÂ·¾¶×ª»»ÎªÄ³¸öÎÄ¼şÃû
+string getFileName(string path)                                              //å°†æŸä¸ªè·¯å¾„è½¬æ¢ä¸ºæŸä¸ªæ–‡ä»¶å
 {
 	return path.substr(path.rfind('\\') + 1, path.size() - path.rfind('\\') - 1);
 }
 
-void writePassword(const char* password) 
+void writePassword(const char* password)
 {
 	//Sleep(5000);
-	HWND hWnd = GetForegroundWindow();                                                                               //»ñµÃµ±Ç°¼¤»îµÄ´°¿Ú¾ä±ú
-	DWORD SelfThreadId = GetCurrentThreadId();                                                                       //»ñÈ¡±¾ÉíµÄÏß³ÌID
-	DWORD ForeThreadId = GetWindowThreadProcessId(hWnd, NULL);                                                       //¸ù¾İ´°¿Ú¾ä±ú»ñÈ¡Ïß³ÌID
-	AttachThreadInput(ForeThreadId, SelfThreadId, true);                                                             //¸½¼ÓÏß³Ì
-	hWnd = GetFocus();                                                                                               //»ñÈ¡¾ßÓĞÊäÈë½¹µãµÄ´°¿Ú¾ä±ú
-	AttachThreadInput(ForeThreadId, SelfThreadId, false);                                                            //È¡Ïû¸½¼ÓµÄÏß³Ì
-	for (int i = 0; i < (int) strlen(password); ++i) {
-		SendMessage(hWnd, WM_CHAR, WPARAM(password[i]), 0);                                                          //·¢ËÍÒ»¸ö×ÖÏûÏ¢
+	HWND hWnd = GetForegroundWindow();                                                                               //è·å¾—å½“å‰æ¿€æ´»çš„çª—å£å¥æŸ„
+	DWORD SelfThreadId = GetCurrentThreadId();                                                                       //è·å–æœ¬èº«çš„çº¿ç¨‹ID
+	DWORD ForeThreadId = GetWindowThreadProcessId(hWnd, NULL);                                                       //æ ¹æ®çª—å£å¥æŸ„è·å–çº¿ç¨‹ID
+	AttachThreadInput(ForeThreadId, SelfThreadId, true);                                                             //é™„åŠ çº¿ç¨‹
+	hWnd = GetFocus();                                                                                               //è·å–å…·æœ‰è¾“å…¥ç„¦ç‚¹çš„çª—å£å¥æŸ„
+	AttachThreadInput(ForeThreadId, SelfThreadId, false);                                                            //å–æ¶ˆé™„åŠ çš„çº¿ç¨‹
+	for (int i = 0; i < (int)strlen(password); ++i) {
+		SendMessage(hWnd, WM_CHAR, WPARAM(password[i]), 0);                                                          //å‘é€ä¸€ä¸ªå­—æ¶ˆæ¯
 	}
 	SendMessage(hWnd, WM_KEYDOWN, VK_RETURN, 0);
 }
 
-void getFiles(string path, vector<string>& files)                            //»ñÈ¡pathÎÄ¼ş¼ĞÏÂµÄËùÓĞÎÄ¼şÃû
+void getFiles(string path, vector<string>& files)                            //è·å–pathæ–‡ä»¶å¤¹ä¸‹çš„æ‰€æœ‰æ–‡ä»¶å
 {
-    long hFile = 0;
-    struct _finddata_t fileinfo;
-    string p;
-    if((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1) {
+	long hFile = 0;
+	struct _finddata_t fileinfo;
+	string p;
+	if ((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1) {
 		do {
-            if((fileinfo.attrib & _A_SUBDIR)) {                              //ÅĞ¶ÏÊÇ·ñÎªÎÄ¼ş¼Ğ
-				if(strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0) {
-					getFiles(p.assign(path).append("\\").append(fileinfo.name), files);  
+			if ((fileinfo.attrib & _A_SUBDIR)) {                              //åˆ¤æ–­æ˜¯å¦ä¸ºæ–‡ä»¶å¤¹
+				if (strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0) {
+					getFiles(p.assign(path).append("\\").append(fileinfo.name), files);
 				}
-            } else {
+			}
+			else {
 				files.push_back(p.assign(path).append("\\\\").append(fileinfo.name));
 			}
-        } while(_findnext(hFile, &fileinfo) == 0);  
+		} while (_findnext(hFile, &fileinfo) == 0);
 		_findclose(hFile);
 	}
 }

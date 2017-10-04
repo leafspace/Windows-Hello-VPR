@@ -22,7 +22,8 @@ public:
 	bool pushMessage(string message) {
 		if (this->messageSize >= this->getListSize()) {                      //判断下一个文件尾巴是否是跟文件头相同，相同则满
 			return false;
-		} else {
+		}
+		else {
 			this->messageList[this->tail] = message;
 			this->tail = (this->tail + 1) % 20;                              //判断下一个文件头的位置
 			this->messageSize++;
@@ -33,7 +34,8 @@ public:
 	string popMessage() {
 		if (this->messageSize == 0) {                                        //没有文件
 			return "";
-		} else {
+		}
+		else {
 			int ret = this->head;
 			this->head = (this->head + 1) % 20;
 			this->messageSize--;

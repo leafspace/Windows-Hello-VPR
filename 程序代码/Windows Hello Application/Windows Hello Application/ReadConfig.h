@@ -21,14 +21,14 @@ public:
 	bool ReadFile() {
 		ifstream file;
 		file.open("info.conf", ios::in);                                     //读取文件信息
-		
-		if(!file.is_open()) {
+
+		if (!file.is_open()) {
 			return false;
 		}
-		
-		string strLine;  
-		while(getline(file, strLine)) {
-			if(strLine.empty()) {
+
+		string strLine;
+		while (getline(file, strLine)) {
+			if (strLine.empty()) {
 				continue;
 			}
 			this->resolution(strLine);
@@ -46,9 +46,11 @@ public:
 
 		if (label == "server") {
 			this->serverIP = info;
-		} else if (label == "password") {
+		}
+		else if (label == "password") {
 			this->password = info;
-		} else if (label == "path") {
+		}
+		else if (label == "path") {
 			this->path = info;
 		}
 	}

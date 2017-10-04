@@ -170,7 +170,7 @@ void KMeans::Cluster(double *data, int N, int *Label)
 	assert(size >= m_clusterNum);
 
 	// Initialize model
-	Init(data,N);
+	Init(data, N);
 
 	// Recursion
 	double* x = new double[m_dimNum];	                                     // Sample data
@@ -201,8 +201,8 @@ void KMeans::Cluster(double *data, int N, int *Label)
 		// Classification
 		for (int i = 0; i < size; i++)
 		{
-			for(int j = 0; j < m_dimNum; j++)
-				x[j] = data[i*m_dimNum+j];
+			for (int j = 0; j < m_dimNum; j++)
+				x[j] = data[i*m_dimNum + j];
 
 			currCost += GetLabel(x, &label);
 
@@ -242,9 +242,9 @@ void KMeans::Cluster(double *data, int N, int *Label)
 	// Output the label file
 	for (int i = 0; i < size; i++)
 	{
-		for(int j = 0; j < m_dimNum; j++)
+		for (int j = 0; j < m_dimNum; j++)
 		{
-			x[j] = data[i*m_dimNum+j];
+			x[j] = data[i*m_dimNum + j];
 		}
 		GetLabel(x, &label);
 		Label[i] = label;
@@ -264,7 +264,7 @@ void KMeans::Init(ifstream& sampleFile)
 	sampleFile.seekg(0, ios_base::beg);                                      //移动文件流到最顶端
 	sampleFile.read((char*)&size, sizeof(int));
 
-	if (m_initMode ==  InitRandom)
+	if (m_initMode == InitRandom)
 	{
 		int inteval = size / m_clusterNum;
 		double* sample = new double[m_dimNum];
@@ -310,7 +310,7 @@ void KMeans::Init(double *data, int N)
 {
 	int size = N;
 
-	if (m_initMode ==  InitRandom)
+	if (m_initMode == InitRandom)
 	{
 		int inteval = size / m_clusterNum;
 		double* sample = new double[m_dimNum];
@@ -321,7 +321,7 @@ void KMeans::Init(double *data, int N)
 		for (int i = 0; i < m_clusterNum; i++)
 		{
 			int select = inteval * i + (inteval - 1) * rand() / RAND_MAX;    //定位要保存的目标数据区
-			for(int j = 0; j < m_dimNum; j++)
+			for (int j = 0; j < m_dimNum; j++)
 			{
 				sample[j] = data[select * m_dimNum + j];
 			}
@@ -337,7 +337,7 @@ void KMeans::Init(double *data, int N)
 		for (int i = 0; i < m_clusterNum; i++)
 		{
 			int select = i * size / m_clusterNum;                            //定位要保存的目标数据区
-			for(int j = 0; j < m_dimNum; j++)
+			for (int j = 0; j < m_dimNum; j++)
 			{
 				sample[j] = data[select * m_dimNum + j];
 			}

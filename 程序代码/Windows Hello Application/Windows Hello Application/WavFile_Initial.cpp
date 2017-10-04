@@ -18,7 +18,7 @@ bool WavFile_Initial::Conversion_Double(void)                                //�
 			dataDouble[i] = (double)WavFile::Get_Data(i) / Flag;             //控制每个数据在[-1,1]之间
 		}
 	}
-	catch (invalid_argument &e){
+	catch (invalid_argument &e) {
 		cerr << e.what() << endl;
 		MessageBoxA(NULL, e.what(), "ERROR", MB_ICONHAND);
 		return false;
@@ -52,7 +52,7 @@ bool WavFile_Initial::Frame_Energy(void)                                     //�
 	maxEnergy = 0;                                                           //最大短时帧能量置0
 	minEnergy = 1000000;                                                     //最小短时帧能量置1000000
 	double sum = 0;
-	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift){ //这是所有短时帧能量数据的个数
+	for (unsigned long i = 0; i < this->Get_dataNumber() - N; i += WavFile_Initial::FrameShift) { //这是所有短时帧能量数据的个数
 		for (unsigned long j = i; j < i + N; ++j) {                          //遍历窗中的每一个数据
 			sum += pow(dataDouble[j] * Hamming_window(i + N - 1 - j), 2);    //求每一个数据的能量
 		}
@@ -276,7 +276,7 @@ void WavFile_Initial::ShowData(void)                                         //�
 	cout << endl;
 	cout << "Max " << dataDouble[max] << endl;
 	cout << "Min " << dataDouble[min] << endl;
-	
+
 	cout << "TIP : Parameter " << endl;
 	cout << "Max energy " << Get_maxEnergy() << endl;
 	cout << "Min energy " << Get_minEnergy() << endl;
@@ -296,7 +296,7 @@ void WavFile_Initial::ShowData(void)                                         //�
 	}
 	cout << endl;
 	*/
-	
+
 	for (int i = 0; i < (WavFile_Initial::Get_dataNumber() - N); ++i) {
 		cout << Get_DataEnergy(i) << endl;
 	}
@@ -304,7 +304,7 @@ void WavFile_Initial::ShowData(void)                                         //�
 	for (int i = 0; i < (WavFile_Initial::Get_dataNumber() - N); ++i) {
 		cout << Get_DataZCR(i) << endl;
 	}
-	
+
 }
 
 void WavFile_Initial::SaveNewWav(void)                                       //保存去掉空白处的语音文件
@@ -316,7 +316,7 @@ void WavFile_Initial::Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDo
 {
 	for (unsigned long i = 0; i < voiceParagraph.voiceLength; ++i) {
 		unsigned long dataIndex = voiceParagraph.begin + i;
-		if(dataIndex == 0 || dataIndex == this->Get_dataNumber()) {
+		if (dataIndex == 0 || dataIndex == this->Get_dataNumber()) {
 			continue;
 		}
 		dataDouble[dataIndex] = dataDouble[dataIndex] - WavFile_Initial::preCoefficient * dataDouble[dataIndex - 1]; //加一阶数字滤波器
@@ -343,7 +343,7 @@ bool WavFile_Initial::Frame_Data(double *data, unsigned long index, double* data
 	}
 
 	unsigned long begin = voiceParagraph.begin + (index - 1) * WavFile_Initial::FrameShift;
-	unsigned long end   = begin + WavFile_Initial::N - 1;
+	unsigned long end = begin + WavFile_Initial::N - 1;
 	unsigned long voiceLength = WavFile_Initial::N;
 
 	if (end >= voiceParagraph.end) {
@@ -374,12 +374,13 @@ bool WavFile_Initial::Frame_Data(double *data, double dataSize, unsigned long in
 	}
 
 	unsigned long begin = (index - 1) * WavFile_Initial::FrameShift;
-	unsigned long end   = begin + WavFile_Initial::N - 1;
+	unsigned long end = begin + WavFile_Initial::N - 1;
 	unsigned long voiceLength = WavFile_Initial::N;
 
 	if (index == frameNumber && end != dataSize) {                           //如果长度不为整帧
 		if (end < dataSize) {                                                //全部数据多余
-		} else if (end > dataSize) {                                         //全部数据缺少
+		}
+		else if (end > dataSize) {                                         //全部数据缺少
 			end = (unsigned long)(dataSize - 1);
 			voiceLength = (unsigned long)(dataSize - begin);
 		}
@@ -417,7 +418,7 @@ bool WavFile_Initial::Endpoint_Detection(void)                               //�
 
 	for (unsigned long i = 0, frame = 0; i < this->Get_dataNumber() - N; ++i) { //遍历每一帧
 		frame = (i - N) / WavFile_Initial::FrameShift + 1;
-		if (i <= 256){
+		if (i <= 256) {
 			frame = 0;
 		}
 		switch (statusFlag)
@@ -425,7 +426,7 @@ bool WavFile_Initial::Endpoint_Detection(void)                               //�
 		case MUTEPARAGRAPH:
 		case INTERIMPARAGRAPH:
 			if (Get_DataEnergy(frame) > energyHigh) {                        //帧能量大于能量高门限,进入语音段
-				begin = (unsigned long) max((int)(i - voiceLength - 1), 0);
+				begin = (unsigned long)max((int)(i - voiceLength - 1), 0);
 				statusFlag = VOICEPARAGRAPH;
 				voiceLength++;
 				silence = 0;

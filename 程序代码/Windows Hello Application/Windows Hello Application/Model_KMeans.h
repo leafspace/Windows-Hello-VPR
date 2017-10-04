@@ -1,4 +1,4 @@
-/***************************************************************************
+ï»¿/***************************************************************************
 Module Name:
 	KMeans
 
@@ -20,46 +20,46 @@ History:
 class KMeans
 {
 public:
-	static const int ClusterNumber;                                          //¾ÛÀàÖĞ´ØµÄ¸öÊı
+	static const int ClusterNumber;                                          //èšç±»ä¸­ç°‡çš„ä¸ªæ•°
 
-	enum InitMode                                                            //¶¨ÒåµÄÄ£ĞÍ³õÊ¼»¯·½·¨±êÇ©ÀàĞÍ£¬´ú±í×ÅÈıÖÖÊı¾İ³õÊ¼»¯µÄ·½·¨£¬Óë±¾ÀàÄÚm_initModeÏà¹ØÁª
+	enum InitMode                                                            //å®šä¹‰çš„æ¨¡å‹åˆå§‹åŒ–æ–¹æ³•æ ‡ç­¾ç±»å‹ï¼Œä»£è¡¨ç€ä¸‰ç§æ•°æ®åˆå§‹åŒ–çš„æ–¹æ³•ï¼Œä¸æœ¬ç±»å†…m_initModeç›¸å…³è”
 	{
 		InitRandom,
 		InitManual,
 		InitUniform,
 	};
 
-	KMeans(int dimNum = 1, int clusterNum = 1);                              //|Paragram1 : Êı¾İ½×Êı |Paragram2 : ´Ø¸öÊı| ³õÊ¼»¯KmeansÀà
+	KMeans(int dimNum = 1, int clusterNum = 1);                              //|Paragram1 : æ•°æ®é˜¶æ•° |Paragram2 : ç°‡ä¸ªæ•°| åˆå§‹åŒ–Kmeansç±»
 	~KMeans();
 
-	void SetMeans(double **means)      { m_means = means; }                  //ÉèÖÃÊı¾İ
-	void SetInitMode(int initMode)     { m_initMode = initMode; }            //ÉèÖÃ³õÊ¼»¯·½Ê½
-	void SetMaxIterNum(int iterNum)    { m_maxIterNum = iterNum; }           //ÉèÖÃ×î¸ßµü´ú´ÎÊı
-	void SetEndError(double endError)  { m_endError = endError; }            //ÉèÖÃÎó²îµÄÍ£Ö¹ÅĞ¶Ï
+	void SetMeans(double **means)      { m_means = means; }                  //è®¾ç½®æ•°æ®
+	void SetInitMode(int initMode)     { m_initMode = initMode; }            //è®¾ç½®åˆå§‹åŒ–æ–¹å¼
+	void SetMaxIterNum(int iterNum)    { m_maxIterNum = iterNum; }           //è®¾ç½®æœ€é«˜è¿­ä»£æ¬¡æ•°
+	void SetEndError(double endError)  { m_endError = endError; }            //è®¾ç½®è¯¯å·®çš„åœæ­¢åˆ¤æ–­
 
-	double** GetMean()                 { return m_means; }                   //»ñÈ¡Êı¾İ
-	double* GetMean(int i)	           { return m_means[i]; }                //»ñÈ¡Ä³ĞĞÊı¾İ
-	int GetInitMode()		           { return m_initMode; }                //»ñÈ¡³õÊ¼»¯µÄ·½·¨
-	int GetMaxIterNum()		           { return m_maxIterNum; }              //»ñÈ¡×î¸ßµü´ú´ÎÊı
-	double GetEndError()	           { return m_endError; }                //»ñÈ¡Îó²îµÄÍ£Ö¹ÅĞ¶Ï
+	double** GetMean()                 { return m_means; }                   //è·å–æ•°æ®
+	double* GetMean(int i)	           { return m_means[i]; }                //è·å–æŸè¡Œæ•°æ®
+	int GetInitMode()		           { return m_initMode; }                //è·å–åˆå§‹åŒ–çš„æ–¹æ³•
+	int GetMaxIterNum()		           { return m_maxIterNum; }              //è·å–æœ€é«˜è¿­ä»£æ¬¡æ•°
+	double GetEndError()	           { return m_endError; }                //è·å–è¯¯å·®çš„åœæ­¢åˆ¤æ–­
 
 
 	/*	
 		SampleFile: <size><dim><data>...
 		LabelFile:	<size><label>...
 	*/
-	void Cluster(const char* sampleFileName, const char* labelFileName);     //»®·Ö´Ø£¬¼´GMMÖĞµÄ·ÖÀà£¬·½Ê½£º´ÓÎÄ¼şÖĞµÄÊı¾İ¶ÁÈ¡
-	void Cluster(double *data, int N, int *Label);                           //»®·Ö´Ø£¬¼´GMMÖĞµÄ·ÖÀà£¬·½Ê½£ºÔ­×ÔÓÃ»§µÄÊı¾İ
+	void Cluster(const char* sampleFileName, const char* labelFileName);     //åˆ’åˆ†ç°‡ï¼Œå³GMMä¸­çš„åˆ†ç±»ï¼Œæ–¹å¼ï¼šä»æ–‡ä»¶ä¸­çš„æ•°æ®è¯»å–
+	void Cluster(double *data, int N, int *Label);                           //åˆ’åˆ†ç°‡ï¼Œå³GMMä¸­çš„åˆ†ç±»ï¼Œæ–¹å¼ï¼šåŸè‡ªç”¨æˆ·çš„æ•°æ®
 	void Init(std::ifstream& sampleFile);
 	void Init(double *data, int N);
 	friend std::ostream& operator<<(std::ostream& out, KMeans& kmeans);
 
 private:
-	int m_dimNum;                                                            //Êı¾İ½×Êı
-	int m_clusterNum;                                                        //´Ø¸öÊı
-	double** m_means;                                                        //Êı¾İ
+	int m_dimNum;                                                            //æ•°æ®é˜¶æ•°
+	int m_clusterNum;                                                        //ç°‡ä¸ªæ•°
+	double** m_means;                                                        //æ•°æ®
 
-	int m_initMode;                                                          //Êı¾İ³õÊ¼»¯·½·¨
+	int m_initMode;                                                          //æ•°æ®åˆå§‹åŒ–æ–¹æ³•
 	int m_maxIterNum;		                                                 //The stopping criterion regarding the number of iterations
 	double m_endError;		                                                 //The stopping criterion regarding the error
 
