@@ -1,9 +1,11 @@
 #pragma once
 #pragma comment(lib, "ws2_32.lib")
 
+#include <io.h>
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <direct.h>
 #include <winsock.h>
 using namespace std;
 

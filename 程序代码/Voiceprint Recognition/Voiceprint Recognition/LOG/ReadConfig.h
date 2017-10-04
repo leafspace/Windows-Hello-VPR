@@ -14,7 +14,7 @@ private:
 
 public:
 	ReadConfig() {
-		this->serverIP = "192.168.1.1";
+		this->serverIP = "127.0.0.1";
 		this->password = "123456";
 	}
 

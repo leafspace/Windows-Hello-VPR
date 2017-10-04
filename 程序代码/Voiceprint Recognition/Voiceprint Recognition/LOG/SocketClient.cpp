@@ -18,6 +18,12 @@ int SocketClient::getBufferSize()
 
 bool SocketClient::pingTest()                                                //ping目标主机，看与目标主机是否连接
 {
+	if(_access("temp", 0) == -1) {                                       //判断logs文件夹是否存在
+        if (_mkdir("temp") == -1) {                                      //创建logs文件夹
+            return false;
+        }
+    }
+
     string targetIP = this->serverIP;
     char fileName[256] = "temp//";
     char cmdstr[256] = "";
