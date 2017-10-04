@@ -42,6 +42,12 @@
     <ClCompile Include="CChineseCode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="LogSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketClient.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model_GMM.h">
@@ -63,6 +69,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CChineseCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LogSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageQueue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadConfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

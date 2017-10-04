@@ -40,6 +40,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -76,8 +78,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CChineseCode.cpp" />
+    <ClCompile Include="LogSystem.cpp" />
     <ClCompile Include="Model_GMM.cpp" />
     <ClCompile Include="Model_KMeans.cpp" />
+    <ClCompile Include="SocketClient.cpp" />
     <ClCompile Include="SourceMain.cpp" />
     <ClCompile Include="WavData_CharaParameter.cpp" />
     <ClCompile Include="WavData_SupportFunction.cpp" />
@@ -87,8 +91,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CChineseCode.h" />
+    <ClInclude Include="LogSystem.h" />
+    <ClInclude Include="MessageQueue.h" />
     <ClInclude Include="Model_GMM.h" />
     <ClInclude Include="Model_KMeans.h" />
+    <ClInclude Include="ReadConfig.h" />
+    <ClInclude Include="SocketClient.h" />
     <ClInclude Include="WavData_CharaParameter.h" />
     <ClInclude Include="WaveRecorder.h" />
     <ClInclude Include="WavFile_Initial.h" />

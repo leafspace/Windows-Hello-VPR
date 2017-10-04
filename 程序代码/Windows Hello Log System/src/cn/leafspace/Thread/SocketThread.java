@@ -68,7 +68,7 @@ public class SocketThread extends Thread {
                                     infoType = false;
                                 }
                                 information = information + tempStr + "|";
-                            } else if (targetFlag.equals("<type>")) {
+                            } else if (targetFlag.equals("<Type>")) {
                                 clientType = bufferedReader.readLine();
                             } else if (targetFlag.equals("<File>")) {
                                 filePath = bufferedReader.readLine();

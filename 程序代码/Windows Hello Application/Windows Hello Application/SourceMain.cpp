@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include "LogSystem.h"
 #include "Model_GMM.h"
 #include "Model_KMeans.h"
 #include "CChineseCode.h"
@@ -12,13 +13,30 @@ string getFileName(string path);                                                
 void writePassword(const char* password);
 void getFiles(string path, vector<string>& files);                                                                   //获取path文件夹下的所有文件名
 
+LogSystem *p_logSystem;                                                                                              //用于处理Log相关
+
 int main()
 {
+	p_logSystem = new LogSystem();                                                                                   //初始化日志系统
+	p_logSystem->linkState = p_logSystem->initSocket();
+	p_logSystem->beginSystem();                                                                                      //开启线程发送消息
+
+	p_logSystem->sendMessage("<Type>\n");                                                                            //发送类型消息
+	p_logSystem->sendMessage("Windows Hello\n");
+	p_logSystem->writeMessage("==============================================\n");
+
 	//Todo 录音
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("TIP : System begin to start recorder. \n");
+	}
+	p_logSystem->writeMessage("TIP : System begin to start recorder. \n");
+
 	WaveRecorder waveRecorder;
 	waveRecorder.set_FileName("tempRecord.wav");
 	waveRecorder.Start();
-	cout << "TIP : System begin to start recorder. ";
+	cout << "TIP : System begin to start recorder. " << endl;
 	Sleep(5500);
 	waveRecorder.Stop();
 	waveRecorder.Reset();
@@ -27,10 +45,23 @@ int main()
 	FILE *fp;
 	if ((fp = fopen("tempRecord.wav", "rb")) == NULL) {                                                              //打开语音文件
 		cout << "ERROR : File open failed !" << endl;
+		//LogSystem send message
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("ERROR : File open failed !\n");
+		}
+		p_logSystem->writeMessage("ERROR : File open failed !\n");
 		exit(-1);
 	}
 
 	//Todo 初始化语音文件类 读取语音文件数据
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("TIP : Init voice file, read voice data !\n");
+	}
+	p_logSystem->writeMessage("TIP : Init voice file, read voice data !\n");
+
 	WavFile_Initial *wavFile = new WavFile_Initial(fp);                                                              //读取语音文件数据
 	fclose(fp);
 	for (unsigned long i = 0; i < wavFile->Get_voiceNumber(); ++i) {
@@ -38,6 +69,13 @@ int main()
 	}
 
 	//Todo 初始化特征参数类 计算语音数据特征参数
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("TIP : Init charaparameter !\n");
+	}
+	p_logSystem->writeMessage("TIP : Init charaparameter !\n");
+
 	double *dataSpace = NULL;
 	
 	CharaParameter *charaParameter = new CharaParameter(wavFile->Get_frameNumber());                                 //初始化特诊参数类
@@ -52,9 +90,23 @@ int main()
 	delete wavFile;
 
 	//Todo 计算MFCC参数
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("TIP : Caculater MFCC parameter !\n");
+	}
+	p_logSystem->writeMessage("TIP : Caculater MFCC parameter !\n");
+
 	charaParameter->MFCC_CharaParameter(sampleRate);                                                                 //计算MFCC特征参数
 
 	/******************************识别示例******************************/
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("TIP : Begin recognition !\n");
+	}
+	p_logSystem->writeMessage("TIP : Begin recognition !\n");
+
 	char szModuleFilePath[MAX_PATH];
 	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
 	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
@@ -78,6 +130,13 @@ int main()
 
 
 	//Todo 初始化已有库的GMM模型
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("TIP : Init library gmm model !\n");
+	}
+	p_logSystem->writeMessage("TIP : Init library gmm model !\n");
+
 	int gmmNumber = files.size();
 	GMM **gmmLib = new GMM*[gmmNumber];
 	ifstream *gmmFiles = new ifstream[gmmNumber];
@@ -90,6 +149,13 @@ int main()
 	}
 
 	//Todo 识别计算
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("TIP : Begin reservation ... !\n");
+	}
+	p_logSystem->writeMessage("TIP : Begin reservation ... !\n");
+
 	cout << "TIP : Begin reservation ..." << endl;
 	double *libProbability = new double[gmmNumber];
 	cout << "Frame number is " << charaParameter->Get_frameNumber() << endl;
@@ -105,29 +171,76 @@ int main()
 	}
 
 	int countMax = 0;
+	char tempData[24];
+	char resultName[1024] = {}, resultData[1024] = {};
 	cout << "TIP : Probability data is ";
 	for (int i = 0; i < gmmNumber; ++i) {
 		cout << libProbability[i] << "\t";
 		if (libProbability[i] > libProbability[countMax]) {
 			countMax = i;
 		}
+
+		if (i != gmmNumber - 1) {
+			strcat_s(resultName, getFileName(files[i]).data());
+			strcat_s(resultName, "|");
+			sprintf(tempData, "%d", libProbability[i]);
+			strcat_s(resultData, tempData);
+			strcat_s(resultData, "|");
+		} else {
+			strcat_s(resultName, getFileName(files[i]).data());
+			sprintf(tempData, "%d", libProbability[i]);
+			strcat_s(resultData, tempData);
+			strcat_s(resultName, "\n");
+			strcat_s(resultData, "\n");
+		}
+
 	}
 	cout << endl;
+
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Result>\n");
+		p_logSystem->sendMessage(resultName);
+		p_logSystem->sendMessage(resultData);
+	}
+	p_logSystem->writeMessage(resultName);
+	p_logSystem->writeMessage(resultData);
 
 	if (strcmp(getFileName(files[countMax]).data(), "me.txt") == 0) {
 		cout << "TIP : Recognition successfully ! - Login..." << endl;
 
-		char password[512];
-		ifstream passwordFile("my.key");
-		if (passwordFile.is_open()) {
-			passwordFile.getline(password, 512);
+		//LogSystem send message
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("TIP : Recognition successfully ! - Login...!\n");
 		}
-		passwordFile.close();
+		p_logSystem->writeMessage("TIP : Recognition successfully ! - Login...!\n");
+
+		ReadConfig *readConfig = new ReadConfig;                                                                     //打开文件读取
+		bool isSuccess = readConfig->ReadFile();                                                                     //读取文件
+		if (isSuccess) {
+			writePassword(readConfig->getPassword().data());
+		}
+		delete readConfig;
+
 		string str;
 		//CChineseCode::GB2312ToUTF_8(str, password, strlen(password));
-		writePassword("sandaozhishu429");
+		p_logSystem->sendMessage("<Finish>\n");
 	} else {
 		cout << "ERROR : User Unknow !" << endl;
+		//LogSystem send message
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("ERROR : User Unknow ! \n");
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("ERROR : 对不起，您没有权限登陆 ! ! \n");
+		}
+		p_logSystem->writeMessage("ERROR : User Unknow ! \n");
+		p_logSystem->writeMessage("ERROR : 对不起，您没有权限登陆 ! \n");
+
+		p_logSystem->sendMessage("<File>\n");
+		p_logSystem->sendFile("tempRecord.wav");
+
 		MessageBoxA(NULL, "对不起，您没有权限登陆 !", "错误", MB_ICONHAND);
 	}
 
