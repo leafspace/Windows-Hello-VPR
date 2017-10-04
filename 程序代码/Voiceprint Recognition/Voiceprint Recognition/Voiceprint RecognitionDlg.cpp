@@ -20,10 +20,10 @@ class CAboutDlg : public CDialogEx
 public:
 	CAboutDlg();
 
-// 对话框数据
+	// 对话框数据
 	enum { IDD = IDD_ABOUTBOX };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 // 实现
@@ -107,7 +107,7 @@ BOOL CVoiceprintRecognitionDlg::OnInitDialog()
 	//  执行此操作
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
-	
+
 	// TODO: 在此添加额外的初始化代码
 	CRect rectCtrl;
 	GetDlgItem(IDC_SHOCKWAVEFLASH1)->GetWindowRect(&rectCtrl);
@@ -127,7 +127,7 @@ BOOL CVoiceprintRecognitionDlg::OnInitDialog()
 	this->flashshow.LoadMovie(0, strFileName);
 	this->flashshow.Play();
 	this->flashshow.Stop();
-	SetWindowPos(&this->flashshow,0,0,0,0, SWP_NOMOVE | SWP_NOSIZE);
+	SetWindowPos(&this->flashshow, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 
 
 	CRect rect;
@@ -228,7 +228,8 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton1()
 		this->OnBnClickedButton5();
 		SetDlgItemText(IDC_BUTTON1, (CString)"录音");
 		SetDlgItemText(IDC_EDIT1, (CString)"");
-	} else {
+	}
+	else {
 		//LogSystem send message
 		if (p_logSystem->linkState) {
 			p_logSystem->sendMessage("<Message>\n");
@@ -256,12 +257,12 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton1()
 			}
 			fileNameTemp[index] = 0;
 			if (fileNameTemp[index - 1] != 'v' || fileNameTemp[index - 2] != 'a' ||
-				fileNameTemp[index - 3] != 'w' || fileNameTemp[index - 4] != '.' ) {
-					fileNameTemp[index    ] = '.';
-					fileNameTemp[index + 1] = 'w';
-					fileNameTemp[index + 2] = 'a';
-					fileNameTemp[index + 3] = 'v';
-					fileNameTemp[index + 4] = 0;
+				fileNameTemp[index - 3] != 'w' || fileNameTemp[index - 4] != '.') {
+				fileNameTemp[index] = '.';
+				fileNameTemp[index + 1] = 'w';
+				fileNameTemp[index + 2] = 'a';
+				fileNameTemp[index + 3] = 'v';
+				fileNameTemp[index + 4] = 0;
 			}
 
 			::fileName_t = fileNameTemp;
@@ -301,16 +302,16 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 			p_logSystem->sendMessage("ERROR : Unknow person voice can't into the libraly ! \n");
 		}
 		p_logSystem->writeMessage("ERROR : Unknow person voice can't into the libraly ! \n");
-		return ;
+		return;
 	}
 
 	char szModuleFilePath[MAX_PATH];
 	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
 	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
-	
+
 	int index = 0;
 	char filePath[MAX_PATH];
-	for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {               //补全//
+	for (int i = 0; i < (int)strlen(szModuleFilePath); ++i) {               //补全//
 		filePath[index++] = szModuleFilePath[i];
 		if (szModuleFilePath[i] == '\\') {
 			filePath[index++] = '\\';
@@ -339,8 +340,8 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 	ofstream out(infofilePath, ios::app);
 	if (out.is_open()) {
 		string str_f, str_p;
-		CChineseCode::GB2312ToUTF_8(str_f, (char*) getFileName(gmmfilePath).data(), getFileName(gmmfilePath).length());
-		CChineseCode::GB2312ToUTF_8(str_p, (char*) selectItem.peopleName.data(), selectItem.peopleName.length());
+		CChineseCode::GB2312ToUTF_8(str_f, (char*)getFileName(gmmfilePath).data(), getFileName(gmmfilePath).length());
+		CChineseCode::GB2312ToUTF_8(str_p, (char*)selectItem.peopleName.data(), selectItem.peopleName.length());
 		out << str_f.data() << "\t" << str_p.data() << endl;
 	}
 	out.close();
@@ -355,10 +356,10 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 	char szModuleFilePath[MAX_PATH];
 	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
 	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
-	
+
 	int index = 0;
 	char filePath[MAX_PATH];
-	for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {               //补全//
+	for (int i = 0; i < (int)strlen(szModuleFilePath); ++i) {               //补全//
 		filePath[index++] = szModuleFilePath[i];
 		if (szModuleFilePath[i] == '\\') {
 			filePath[index++] = '\\';
@@ -376,7 +377,7 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 
 	if (strcmp(selectItem.peopleName.data(), "未知") == 0 ||
 		strcmp(selectItem.peopleName.data(), "unknow") == 0) {
-		return ;
+		return;
 	}
 
 	//LogSystem send message
@@ -385,7 +386,7 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 		p_logSystem->sendMessage("Info : Begin recognition ! \n");
 	}
 	p_logSystem->writeMessage("Info : Begin recognition ! \n");
-	
+
 	int countMax = voiceprintRecognition(gmmfilePath, this->voiceLib);
 
 	char VPR_result[256] = "系统识别结果-说话人为：";
@@ -429,10 +430,10 @@ void CVoiceprintRecognitionDlg::OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult)
 		char szModuleFilePath[MAX_PATH];
 		int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
 		szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
-	
+
 		int index = 0;
 		char filePath[MAX_PATH];
-		for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {               //补全//
+		for (int i = 0; i < (int)strlen(szModuleFilePath); ++i) {               //补全//
 			filePath[index++] = szModuleFilePath[i];
 			if (szModuleFilePath[i] == '\\') {
 				filePath[index++] = '\\';
@@ -448,8 +449,8 @@ void CVoiceprintRecognitionDlg::OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult)
 		pthread_attr_t attr;                                                     //线程属性结构体，创建线程时加入的参数  
 		pthread_attr_init(&attr);                                                //初始化
 		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);             //是设置你想要指定线程属性参数
-		int ret = pthread_create(&thread_playerID, &attr, player, (void*)&fileName);  
-		if(ret != 0) {
+		int ret = pthread_create(&thread_playerID, &attr, player, (void*)&fileName);
+		if (ret != 0) {
 			MessageBoxA(NULL, "ERROR : Can't create thread !", "ERROR", MB_ICONHAND);
 		}
 	}

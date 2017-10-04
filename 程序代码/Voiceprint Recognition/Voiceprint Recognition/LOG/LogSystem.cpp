@@ -1,19 +1,19 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "LogSystem.h"
 
 void* messageThread(void* arg)
 {
 	bool isQuit = false;
 	while (true) {
-        if (p_logSystem->sendFileFlag) {                                     //µ±Ç°·¢ËÍµÄÊÇÎÄ¼ş
-			if ((_access(p_logSystem->filePath.data(), 0)) == -1) {          //Èç¹ûÎÄ¼ş²»´æÔÚ
+		if (p_logSystem->sendFileFlag) {                                     //å½“å‰å‘é€çš„æ˜¯æ–‡ä»¶
+			if ((_access(p_logSystem->filePath.data(), 0)) == -1) {          //å¦‚æœæ–‡ä»¶ä¸å­˜åœ¨
 				p_logSystem->sendFileFlag = false;
 				break;
 			}
 
 			char* filePath = new char[256];
-			ReadConfig *readConfig = new ReadConfig;                         //´ò¿ªÎÄ¼ş¶ÁÈ¡
-			bool isSuccess = readConfig->ReadFile();                         //¶ÁÈ¡ÎÄ¼ş
+			ReadConfig *readConfig = new ReadConfig;                         //æ‰“å¼€æ–‡ä»¶è¯»å–
+			bool isSuccess = readConfig->ReadFile();                         //è¯»å–æ–‡ä»¶
 			if (isSuccess) {
 				strcpy(filePath, readConfig->getPath().data());
 			}
@@ -22,8 +22,8 @@ void* messageThread(void* arg)
 			char* fileName = new char[256];
 			time_t date = time(0);
 			sprintf(fileName, "%d%d%d%d%d%d.wav", localtime(&date)->tm_year,
-				localtime(&date)->tm_mon, localtime(&date)->tm_yday, 
-				localtime(&date)->tm_hour, localtime(&date)->tm_min, 
+				localtime(&date)->tm_mon, localtime(&date)->tm_yday,
+				localtime(&date)->tm_hour, localtime(&date)->tm_min,
 				localtime(&date)->tm_sec);
 			strcat(filePath, fileName);
 			delete fileName;
@@ -40,44 +40,45 @@ void* messageThread(void* arg)
 			tempStr[index] = 0;
 
 			CopyFileA(p_logSystem->filePath.data(), tempStr, FALSE);
-			p_logSystem->socketClient.sendMessage(filePath);                 //ÀûÓÃsocket·¢ËÍÎÄ¼şÂ·¾¶
+			p_logSystem->socketClient.sendMessage(filePath);                 //åˆ©ç”¨socketå‘é€æ–‡ä»¶è·¯å¾„
 			delete filePath;
 
 			/*
-			//Socket ·¢ËÍ·½·¨ £¨Î´³É¹¦£©
-            ifstream in;
-			in.open(p_logSystem->filePath.data(), fstream::in | ios::binary);//ÒÔ¶ş½øÖÆĞÎÊ½´ò¿ªÎÄ¼ş
-            p_logSystem->pFilebuf = in.rdbuf();                              //»ñÈ¡ÎÄ¼ş»º³åµÄÇø
-            int fileSize = p_logSystem->pFilebuf->pubseekoff(0, ios::end, ios::in);    //»ñÈ¡·¢ËÍÎÄ¼şµÄ´óĞ¡
-            p_logSystem->pFilebuf->pubseekpos(0, ios::in);                   //ÒÆ¶¯Ö¸Õëµ½ÎÄ¼ş¿ªÍ·
+			//Socket å‘é€æ–¹æ³• ï¼ˆæœªæˆåŠŸï¼‰
+			ifstream in;
+			in.open(p_logSystem->filePath.data(), fstream::in | ios::binary);//ä»¥äºŒè¿›åˆ¶å½¢å¼æ‰“å¼€æ–‡ä»¶
+			p_logSystem->pFilebuf = in.rdbuf();                              //è·å–æ–‡ä»¶ç¼“å†²çš„åŒº
+			int fileSize = p_logSystem->pFilebuf->pubseekoff(0, ios::end, ios::in);    //è·å–å‘é€æ–‡ä»¶çš„å¤§å°
+			p_logSystem->pFilebuf->pubseekpos(0, ios::in);                   //ç§»åŠ¨æŒ‡é’ˆåˆ°æ–‡ä»¶å¼€å¤´
 
-            int bufferSize = p_logSystem->socketClient.getBufferSize();      //»ñÈ¡socket»º³åÇøµÄ´óĞ¡
-            char *bufferPool = new char[bufferSize];                         //ĞÂ½¨ÎÄ¼ş»º³åÇø
+			int bufferSize = p_logSystem->socketClient.getBufferSize();      //è·å–socketç¼“å†²åŒºçš„å¤§å°
+			char *bufferPool = new char[bufferSize];                         //æ–°å»ºæ–‡ä»¶ç¼“å†²åŒº
 
 			sprintf(bufferPool, "%d\n", fileSize);
-			p_logSystem->socketClient.sendMessage(bufferPool);               //·¢ËÍÎÄ¼ş´óĞ¡
+			p_logSystem->socketClient.sendMessage(bufferPool);               //å‘é€æ–‡ä»¶å¤§å°
 
-            while (fileSize > 0) {                                           //Ö»ÒªÎÄ¼ş´óĞ¡»¹ÔÚ£¬¾ÍÒ»Ö±·¢ËÍ
+			while (fileSize > 0) {                                           //åªè¦æ–‡ä»¶å¤§å°è¿˜åœ¨ï¼Œå°±ä¸€ç›´å‘é€
 				int sendSize;
-                if (fileSize >= bufferSize) {
+				if (fileSize >= bufferSize) {
 					sendSize = bufferSize;
-                } else {                                                     //¼ÙÈçÓĞ²»Âú×ã»º³åÇø´óĞ¡µÄ²¿·Ö
+				} else {                                                     //å‡å¦‚æœ‰ä¸æ»¡è¶³ç¼“å†²åŒºå¤§å°çš„éƒ¨åˆ†
 					sendSize = fileSize;
-                }
-				p_logSystem->pFilebuf->sgetn(bufferPool, sendSize);          //»ñÈ¡»º³åÊı¾İ
-                fileSize -= sendSize;
-				p_logSystem->socketClient.sendMessage(bufferPool, sendSize); //·¢ËÍ»º³åÇøµÄÊı¾İ
-            }
+				}
+				p_logSystem->pFilebuf->sgetn(bufferPool, sendSize);          //è·å–ç¼“å†²æ•°æ®
+				fileSize -= sendSize;
+				p_logSystem->socketClient.sendMessage(bufferPool, sendSize); //å‘é€ç¼“å†²åŒºçš„æ•°æ®
+			}
 
-            in.close();                                                      //¹Ø±ÕÎÄ¼şÁ÷
-            delete bufferPool;                                               //Çå³ı»º³åÇø
+			in.close();                                                      //å…³é—­æ–‡ä»¶æµ
+			delete bufferPool;                                               //æ¸…é™¤ç¼“å†²åŒº
 			*/
-            p_logSystem->sendFileFlag = false;
-			break;                                                           //·¢ÍêÎÄ¼ş»á»°¾ÍËã½áÊø
-        } else {                                                             //µ±Ç°·¢ËÍµÄÊÇµ¥ĞĞĞÅÏ¢
-            while (p_logSystem->messageQueue.getLength() > 0) {              //Ö»ÒªÏûÏ¢ÁĞ±íÖĞ»¹´æÔÚÏûÏ¢£¬¾ÍÒ»Ö±·¢ËÍ
-                string message = p_logSystem->messageQueue.popMessage();     //ÏûÏ¢ÁĞ±íµ¯³öÏûÏ¢
-                p_logSystem->socketClient.sendMessage(message);              //ÀûÓÃsocket·¢ËÍÏûÏ¢
+			p_logSystem->sendFileFlag = false;
+			break;                                                           //å‘å®Œæ–‡ä»¶ä¼šè¯å°±ç®—ç»“æŸ
+		}
+		else {                                                               //å½“å‰å‘é€çš„æ˜¯å•è¡Œä¿¡æ¯
+			while (p_logSystem->messageQueue.getLength() > 0) {              //åªè¦æ¶ˆæ¯åˆ—è¡¨ä¸­è¿˜å­˜åœ¨æ¶ˆæ¯ï¼Œå°±ä¸€ç›´å‘é€
+				string message = p_logSystem->messageQueue.popMessage();     //æ¶ˆæ¯åˆ—è¡¨å¼¹å‡ºæ¶ˆæ¯
+				p_logSystem->socketClient.sendMessage(message);              //åˆ©ç”¨socketå‘é€æ¶ˆæ¯
 				if (message == "<File>\n") {
 					break;
 				}
@@ -85,13 +86,13 @@ void* messageThread(void* arg)
 				if (message == "<Finish>\n") {
 					isQuit = true;
 				}
-            }
-        }
+			}
+		}
 
 		if (isQuit) {
 			break;
 		}
-    }
+	}
 	p_logSystem->stopSocket();
 	return 0;
 }

@@ -30,9 +30,9 @@ public:
 
 	CharaParameter(unsigned long frameNumber) {
 		this->frameNumber = frameNumber;
-		this->frameData = new double* [this->frameNumber];                   //分配指针数组的空间
+		this->frameData = new double*[this->frameNumber];                    //分配指针数组的空间
 	}
-	
+
 	bool Push_data(unsigned long index, double *frame);                      //初始化特征参数类使用，将index帧的数据存放如类内
 	unsigned long Get_frameNumber();                                         //获取帧数量
 	double* Get_frameMelParameter(unsigned long row);                        //获取Mel特征参数中的第Row行

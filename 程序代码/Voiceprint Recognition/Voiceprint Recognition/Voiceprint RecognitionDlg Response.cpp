@@ -1,57 +1,58 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "VPR/Model_GMM.h"
 #include "VPR/Model_KMeans.h"
 #include "Voiceprint RecognitionDlg.h"
 #include "VPR/WavData_CharaParameter.h"
 
-WaveRecorder waveRecorder;                                                   //È«¾ÖÂ¼Òô¶ÔÏó
-char* fileName;                                                              //ÎÄ¼ş¶Ô±ÈÖ®ÓÃ
-string fileName_t;                                                           //ÎÄ¼ş¶Ô±ÈÖ®ÓÃ
-string playpath;                                                             //±£´æĞèÒª²¥·ÅµÄÓïÒôµÄÂ·¾¶
-double* mfccData;                                                            //ÓÃÓÚ±£´æµ±Ç°ÓïÒôÑµÁ·³öµÄÊı¾İ
-CharaParameter* charaParameter;                                              //ÓÃÓÚ±£´æµ±Ç°ÓïÒôÑµÁ·³öµÄ²ÎÊı
+WaveRecorder waveRecorder;                                                   //å…¨å±€å½•éŸ³å¯¹è±¡
+char* fileName;                                                              //æ–‡ä»¶å¯¹æ¯”ä¹‹ç”¨
+string fileName_t;                                                           //æ–‡ä»¶å¯¹æ¯”ä¹‹ç”¨
+string playpath;                                                             //ä¿å­˜éœ€è¦æ’­æ”¾çš„è¯­éŸ³çš„è·¯å¾„
+double* mfccData;                                                            //ç”¨äºä¿å­˜å½“å‰è¯­éŸ³è®­ç»ƒå‡ºçš„æ•°æ®
+CharaParameter* charaParameter;                                              //ç”¨äºä¿å­˜å½“å‰è¯­éŸ³è®­ç»ƒå‡ºçš„å‚æ•°
 
-void CVoiceprintRecognitionDlg::CompoundFile(vector<FILESTRUCT>& fileLib, int flag)    //ÓÃÓÚ½«txtĞÅÏ¢Óëµ±Ç°ÎÄ¼ş¼ĞÏÂÄÚÈİÏà½áºÏ
+void CVoiceprintRecognitionDlg::CompoundFile(vector<FILESTRUCT>& fileLib, int flag)    //ç”¨äºå°†txtä¿¡æ¯ä¸å½“å‰æ–‡ä»¶å¤¹ä¸‹å†…å®¹ç›¸ç»“åˆ
 {
 	char szModuleFilePath[MAX_PATH];
-	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //»ñµÃµ±Ç°Ö´ĞĞÎÄ¼şµÄÂ·¾¶
-	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //½«×îºóÒ»¸ö"\\"ºóµÄ×Ö·ûÖÃÎª0
-	
+	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //è·å¾—å½“å‰æ‰§è¡Œæ–‡ä»¶çš„è·¯å¾„
+	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //å°†æœ€åä¸€ä¸ª"\\"åçš„å­—ç¬¦ç½®ä¸º0
+
 	int index = 0;
 	char filePath[MAX_PATH];
-	for (int i = 0; i < (int) strlen(szModuleFilePath); ++i) {               //²¹È«//
+	for (int i = 0; i < (int)strlen(szModuleFilePath); ++i) {               //è¡¥å…¨//
 		filePath[index++] = szModuleFilePath[i];
 		if (szModuleFilePath[i] == '\\') {
 			filePath[index++] = '\\';
 		}
 	}
-	filePath[index++] = 0;                                                   //Ä©Î²¹éÁã
+	filePath[index++] = 0;                                                   //æœ«å°¾å½’é›¶
 
 	char path[MAX_PATH];
 	strcpy_s(path, filePath);
-	if (flag == 0) {                                                         //°´ÕÕÒªÇóÁ¬½ÓÎÄ¼ş¼Ğ
+	if (flag == 0) {                                                         //æŒ‰ç…§è¦æ±‚è¿æ¥æ–‡ä»¶å¤¹
 		strcat_s(path, "wavLib");
-	} else if (flag == 1) {
+	}
+	else if (flag == 1) {
 		strcat_s(path, "voiceLib");
 	}
 
 	vector<string> files;
-	getFiles(path, files);                                                   //»ñÈ¡ÎÄ¼ş¼ĞÄÚµÄËùÓĞÎÄ¼şÃû£¨Â·¾¶Ãû£©
+	getFiles(path, files);                                                   //è·å–æ–‡ä»¶å¤¹å†…çš„æ‰€æœ‰æ–‡ä»¶åï¼ˆè·¯å¾„åï¼‰
 
-	strcat_s(path, "\\\\info.list");                                         //Ö¸¶¨ÎÄ¼ş¼ĞµÄ¶ÁÈ¡ÎÄ¼ş
+	strcat_s(path, "\\\\info.list");                                         //æŒ‡å®šæ–‡ä»¶å¤¹çš„è¯»å–æ–‡ä»¶
 	ifstream in(path);
 	fileLib.clear();
-	readList(in, fileLib);                                                   //¶ÁÈ¡listÎÄ¼şÄÚÈİ
+	readList(in, fileLib);                                                   //è¯»å–listæ–‡ä»¶å†…å®¹
 	in.close();
 
 	vector<FILESTRUCT> newLib;
-	for (int i = 0, j = 0; i < (int) files.size(); ++i) {
+	for (int i = 0, j = 0; i < (int)files.size(); ++i) {
 		string fileName = files[i];
-		if (strcmp(getFileName(fileName).data(), "info.list") == 0) {        //Èç¹ûµ±Ç°ÎÄ¼şµÄÎÄ¼şÃûÎªinfo.listËµÃ÷ÆäÎªÅäÖÃÎÄ¼ş
+		if (strcmp(getFileName(fileName).data(), "info.list") == 0) {        //å¦‚æœå½“å‰æ–‡ä»¶çš„æ–‡ä»¶åä¸ºinfo.listè¯´æ˜å…¶ä¸ºé…ç½®æ–‡ä»¶
 			continue;
 		}
-		for (j = 0; j < (int) fileLib.size(); ++j) {
-			if (strcmp(getFileName(fileName).data(), fileLib[j].fileName.data()) == 0) {         //Èç¹ûµ±Ç°ÎÄ¼şÃûÓëÁĞ±íÃûÏàÆ¥Åä£¬ÔòËµÃ÷ÕâÊÇÒ»¸ö²»±äµÄÁĞ±íÏî
+		for (j = 0; j < (int)fileLib.size(); ++j) {
+			if (strcmp(getFileName(fileName).data(), fileLib[j].fileName.data()) == 0) {         //å¦‚æœå½“å‰æ–‡ä»¶åä¸åˆ—è¡¨åç›¸åŒ¹é…ï¼Œåˆ™è¯´æ˜è¿™æ˜¯ä¸€ä¸ªä¸å˜çš„åˆ—è¡¨é¡¹
 				newLib.push_back(fileLib[j]);
 				break;
 			}
@@ -60,77 +61,80 @@ void CVoiceprintRecognitionDlg::CompoundFile(vector<FILESTRUCT>& fileLib, int fl
 			FILESTRUCT item;
 			item.fileName = getFileName(fileName).data();
 			if (flag == 0) {
-				if (::fileName != NULL && (strcmp(::fileName_t.data(), fileName.data()) == 0)) { //Èç¹ûÂ¼ÒôÎÄ¼şÂ·¾¶Óëµ±Ç°Õâ¸öÎ´ÖªµÄÎÄ¼şÂ·¾¶ÏàÍ¬
+				if (::fileName != NULL && (strcmp(::fileName_t.data(), fileName.data()) == 0)) { //å¦‚æœå½•éŸ³æ–‡ä»¶è·¯å¾„ä¸å½“å‰è¿™ä¸ªæœªçŸ¥çš„æ–‡ä»¶è·¯å¾„ç›¸åŒ
 					CString str;
-					GetDlgItem(IDC_EDIT1)->GetWindowText(str);               //»ñÈ¡ËùÊôÈËÃû
+					GetDlgItem(IDC_EDIT1)->GetWindowText(str);               //è·å–æ‰€å±äººå
 					string tempstr = CStringA(str);
-					if (tempstr.size() == 0) {                               //ËùÊôÈËÃûÃ»Ğ´
-						item.peopleName = "Î´Öª";
-					} else {
+					if (tempstr.size() == 0) {                               //æ‰€å±äººåæ²¡å†™
+						item.peopleName = "æœªçŸ¥";
+					}
+					else {
 						item.peopleName = tempstr;
 					}
-				} else {
-					item.peopleName = "Î´Öª";
 				}
-			} else if (flag == 1) {
-				item.peopleName = "Î´Öª";
+				else {
+					item.peopleName = "æœªçŸ¥";
+				}
+			}
+			else if (flag == 1) {
+				item.peopleName = "æœªçŸ¥";
 			}
 			newLib.push_back(item);
 		}
 	}
 
 	ofstream wavOut(path);
-	writeList(wavOut, newLib);                                               //ÖØĞÂĞ´ÈëÊı¾İ
+	writeList(wavOut, newLib);                                               //é‡æ–°å†™å…¥æ•°æ®
 	wavOut.close();
 
 	fileLib.clear();
 	fileLib = newLib;
 }
 
-int CVoiceprintRecognitionDlg::GetItemSelect(int index)                      //»ñÈ¡Ä³¸ölistControlµ±Ç°Ñ¡ÖĞÏîµÄĞĞºÅ
+int CVoiceprintRecognitionDlg::GetItemSelect(int index)                      //è·å–æŸä¸ªlistControlå½“å‰é€‰ä¸­é¡¹çš„è¡Œå·
 {
 	int count = 0;
 	switch (index)
 	{
-	case 0 : count = this->listCtrl_1.GetItemCount(); break;
-	case 1 : count = this->listCtrl_2.GetItemCount(); break;
-	default : break;
+	case 0: count = this->listCtrl_1.GetItemCount(); break;
+	case 1: count = this->listCtrl_2.GetItemCount(); break;
+	default: break;
 	}
 
 	for (int i = 0; i < count; ++i) {
 		switch (index)
 		{
-		case 0 : 
+		case 0:
 			if (this->listCtrl_1.GetItemState(i, LVIS_SELECTED) == LVIS_SELECTED) {
 				return i;
 			}
 			break;
-		case 1 : 
+		case 1:
 			if (this->listCtrl_2.GetItemState(i, LVIS_SELECTED) == LVIS_SELECTED) {
 				return i;
 			}
 			break;
-		default : break;
+		default: break;
 		}
 	}
 	return -1;
 }
 
-bool CVoiceprintRecognitionDlg::OnButton1_record(char* fileName)             //¿ªÆôÂ¼ÒôÏß³Ì
+bool CVoiceprintRecognitionDlg::OnButton1_record(char* fileName)             //å¼€å¯å½•éŸ³çº¿ç¨‹
 {
 	::fileName = fileName;
-	pthread_attr_t attr;                                                     //Ïß³ÌÊôĞÔ½á¹¹Ìå£¬´´½¨Ïß³ÌÊ±¼ÓÈëµÄ²ÎÊı  
-	pthread_attr_init(&attr);                                                //³õÊ¼»¯
-	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);             //ÊÇÉèÖÃÄãÏëÒªÖ¸¶¨Ïß³ÌÊôĞÔ²ÎÊı
-    int ret = pthread_create(&thread_recordID, &attr, record, (void*)&fileName);  
-    if(ret != 0) {
+	pthread_attr_t attr;                                                     //çº¿ç¨‹å±æ€§ç»“æ„ä½“ï¼Œåˆ›å»ºçº¿ç¨‹æ—¶åŠ å…¥çš„å‚æ•°  
+	pthread_attr_init(&attr);                                                //åˆå§‹åŒ–
+	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);             //æ˜¯è®¾ç½®ä½ æƒ³è¦æŒ‡å®šçº¿ç¨‹å±æ€§å‚æ•°
+	int ret = pthread_create(&thread_recordID, &attr, record, (void*)&fileName);
+	if (ret != 0) {
 		MessageBoxA(NULL, "ERROR : Can't create thread !", "ERROR", MB_ICONHAND);
 		return false;
 	}
 	return true;
 }
 
-bool CVoiceprintRecognitionDlg::OnButton1_cancel()                           //½áÊøÂ¼Òô
+bool CVoiceprintRecognitionDlg::OnButton1_cancel()                           //ç»“æŸå½•éŸ³
 {
 	::waveRecorder.Stop();
 	::waveRecorder.Reset();
@@ -138,7 +142,7 @@ bool CVoiceprintRecognitionDlg::OnButton1_cancel()                           //½
 	return true;
 }
 
-bool CVoiceprintRecognitionDlg::OnButton4_refresh()                          //Â¼ÒôÎÄ¼şË¢ĞÂ
+bool CVoiceprintRecognitionDlg::OnButton4_refresh()                          //å½•éŸ³æ–‡ä»¶åˆ·æ–°
 {
 	CString str_f, str_p;
 	listCtrl_1.DeleteAllItems();
@@ -146,13 +150,13 @@ bool CVoiceprintRecognitionDlg::OnButton4_refresh()                          //Â
 		FILESTRUCT item = this->wavLib[i];
 		str_f = item.fileName.c_str();
 		str_p = item.peopleName.c_str();
-		listCtrl_1.InsertItem(i, str_f);                                     //ÉèÖÃÁĞ±íÎÄ¼şÃûĞÅÏ¢
-		listCtrl_1.SetItemText(i, 1, str_p);                                 //ÉèÖÃÁĞ±íÓÃ»§ĞÅÏ¢
+		listCtrl_1.InsertItem(i, str_f);                                     //è®¾ç½®åˆ—è¡¨æ–‡ä»¶åä¿¡æ¯
+		listCtrl_1.SetItemText(i, 1, str_p);                                 //è®¾ç½®åˆ—è¡¨ç”¨æˆ·ä¿¡æ¯
 	}
 	return true;
 }
 
-bool CVoiceprintRecognitionDlg::OnButton5_refresh()                          //Ä£ĞÍÎÄ¼şË¢ĞÂ
+bool CVoiceprintRecognitionDlg::OnButton5_refresh()                          //æ¨¡å‹æ–‡ä»¶åˆ·æ–°
 {
 	CString str_f, str_p;
 	listCtrl_2.DeleteAllItems();
@@ -160,13 +164,13 @@ bool CVoiceprintRecognitionDlg::OnButton5_refresh()                          //Ä
 		FILESTRUCT item = this->voiceLib[i];
 		str_f = item.fileName.c_str();
 		str_p = item.peopleName.c_str();
-		listCtrl_2.InsertItem(i, str_f);                                     //ÉèÖÃÁĞ±íÎÄ¼şÃûĞÅÏ¢
-		listCtrl_2.SetItemText(i, 1, str_p);;                                //ÉèÖÃÁĞ±íÓÃ»§ĞÅÏ¢
+		listCtrl_2.InsertItem(i, str_f);                                     //è®¾ç½®åˆ—è¡¨æ–‡ä»¶åä¿¡æ¯
+		listCtrl_2.SetItemText(i, 1, str_p);;                                //è®¾ç½®åˆ—è¡¨ç”¨æˆ·ä¿¡æ¯
 	}
 	return true;
 }
 
-void* record(void* args)                                                     //Â¼ÒôÏß³Ì
+void* record(void* args)                                                     //å½•éŸ³çº¿ç¨‹
 {
 	::waveRecorder.set_FileName((char*)fileName);
 	::waveRecorder.Start();
@@ -174,37 +178,38 @@ void* record(void* args)                                                     //Â
 	return NULL;
 }
 
-void* player(void* args)                                                     //·ÅÒôÏß³Ì
+void* player(void* args)                                                     //æ”¾éŸ³çº¿ç¨‹
 {
 	PlaySound((CString)(::playpath.data()), NULL, SND_FILENAME | SND_ASYNC);
 	return NULL;
 }
 
-string getFileName(string path)                                              //½«Ä³¸öÂ·¾¶×ª»»ÎªÄ³¸öÎÄ¼şÃû
+string getFileName(string path)                                              //å°†æŸä¸ªè·¯å¾„è½¬æ¢ä¸ºæŸä¸ªæ–‡ä»¶å
 {
 	return path.substr(path.rfind('\\') + 1, path.size() - path.rfind('\\') - 1);
 }
 
-void getFiles(string path, vector<string>& files)                            //»ñÈ¡pathÎÄ¼ş¼ĞÏÂµÄËùÓĞÎÄ¼şÃû
+void getFiles(string path, vector<string>& files)                            //è·å–pathæ–‡ä»¶å¤¹ä¸‹çš„æ‰€æœ‰æ–‡ä»¶å
 {
-    long hFile = 0;
-    struct _finddata_t fileinfo;
-    string p;
-    if((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1) {
+	long hFile = 0;
+	struct _finddata_t fileinfo;
+	string p;
+	if ((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1) {
 		do {
-            if((fileinfo.attrib & _A_SUBDIR)) {                              //ÅĞ¶ÏÊÇ·ñÎªÎÄ¼ş¼Ğ
-				if(strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0) {
-					getFiles(p.assign(path).append("\\").append(fileinfo.name), files);  
+			if ((fileinfo.attrib & _A_SUBDIR)) {                              //åˆ¤æ–­æ˜¯å¦ä¸ºæ–‡ä»¶å¤¹
+				if (strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0) {
+					getFiles(p.assign(path).append("\\").append(fileinfo.name), files);
 				}
-            } else {
+			}
+			else {
 				files.push_back(p.assign(path).append("\\\\").append(fileinfo.name));
 			}
-        } while(_findnext(hFile, &fileinfo) == 0);  
+		} while (_findnext(hFile, &fileinfo) == 0);
 		_findclose(hFile);
 	}
 }
 
-void readList(ifstream& in, vector<FILESTRUCT>& list)                        //¶ÁÈ¡ÎÄ¼şµÄÄÚÈİµ½listÖĞ
+void readList(ifstream& in, vector<FILESTRUCT>& list)                        //è¯»å–æ–‡ä»¶çš„å†…å®¹åˆ°listä¸­
 {
 	char buffer[512];
 	string str_f, str_p;
@@ -212,10 +217,10 @@ void readList(ifstream& in, vector<FILESTRUCT>& list)                        //¶
 	if (in.is_open()) {
 		while (!in.eof()) {
 			in.getline(buffer, 512);
-			if (strlen(buffer) == 0) {                                       //·ÀÖ¹µ½ÁË×îºóÒ»ĞĞÖ»ÊÇÒ»¸ö»»ĞĞ»¹ÖØ¸´¶ÁÈ¡
+			if (strlen(buffer) == 0) {                                       //é˜²æ­¢åˆ°äº†æœ€åä¸€è¡Œåªæ˜¯ä¸€ä¸ªæ¢è¡Œè¿˜é‡å¤è¯»å–
 				continue;
 			}
-			sscanf(buffer, "%s %s", &fileName, &peopleName);                 //¸ñÊ½»¯×Ö·û´®
+			sscanf(buffer, "%s %s", &fileName, &peopleName);                 //æ ¼å¼åŒ–å­—ç¬¦ä¸²
 			CChineseCode::UTF_8ToGB2312(str_f, fileName, strlen(fileName));
 			CChineseCode::UTF_8ToGB2312(str_p, peopleName, strlen(peopleName));
 			FILESTRUCT item(str_f, str_p);
@@ -225,22 +230,22 @@ void readList(ifstream& in, vector<FILESTRUCT>& list)                        //¶
 	}
 }
 
-void writeList(ofstream& out, vector<FILESTRUCT>& list)                      //½«listÎÄ¼şÄÚÈİĞ´ÈëÊı¾İÁ÷
+void writeList(ofstream& out, vector<FILESTRUCT>& list)                      //å°†listæ–‡ä»¶å†…å®¹å†™å…¥æ•°æ®æµ
 {
 	string str_f, str_p;
 	if (out.is_open()) {
-		for (int i = 0; i < (int) list.size(); ++i) {
-			CChineseCode::GB2312ToUTF_8(str_f, (char*) list[i].fileName.data(), list[i].fileName.length());
-			CChineseCode::GB2312ToUTF_8(str_p, (char*) list[i].peopleName.data(), list[i].peopleName.length());
+		for (int i = 0; i < (int)list.size(); ++i) {
+			CChineseCode::GB2312ToUTF_8(str_f, (char*)list[i].fileName.data(), list[i].fileName.length());
+			CChineseCode::GB2312ToUTF_8(str_p, (char*)list[i].peopleName.data(), list[i].peopleName.length());
 			out << str_f.data() << "\t" << str_p.data() << endl;
 		}
 	}
 }
 
-bool extractParameter(string wavfilePath)                                    //ÑµÁ·Ä¿±êÂ·¾¶µÄÓïÒôÎÄ¼şµÄÌØÕ÷²ÎÊı
+bool extractParameter(string wavfilePath)                                    //è®­ç»ƒç›®æ ‡è·¯å¾„çš„è¯­éŸ³æ–‡ä»¶çš„ç‰¹å¾å‚æ•°
 {
 	FILE *fp;
-	if ((fp = fopen(wavfilePath.data(), "rb")) == NULL) {                    //´ò¿ªÓïÒôÎÄ¼ş
+	if ((fp = fopen(wavfilePath.data(), "rb")) == NULL) {                    //æ‰“å¼€è¯­éŸ³æ–‡ä»¶
 		//LogSystem send message
 		if (p_logSystem->linkState) {
 			p_logSystem->sendMessage("<Message>\n");
@@ -250,7 +255,7 @@ bool extractParameter(string wavfilePath)                                    //Ñ
 		return false;
 	}
 
-	//Todo ³õÊ¼»¯ÓïÒôÎÄ¼şÀà ¶ÁÈ¡ÓïÒôÎÄ¼şÊı¾İ
+	//Todo åˆå§‹åŒ–è¯­éŸ³æ–‡ä»¶ç±» è¯»å–è¯­éŸ³æ–‡ä»¶æ•°æ®
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -258,13 +263,13 @@ bool extractParameter(string wavfilePath)                                    //Ñ
 	}
 	p_logSystem->writeMessage("Info : Read voice file data ! \n");
 
-	WavFile_Initial *wavFile = new WavFile_Initial(fp);                      //¶ÁÈ¡ÓïÒôÎÄ¼şÊı¾İ
+	WavFile_Initial *wavFile = new WavFile_Initial(fp);                      //è¯»å–è¯­éŸ³æ–‡ä»¶æ•°æ®
 	fclose(fp);
 	for (unsigned long i = 0; i < wavFile->Get_voiceNumber(); ++i) {
-		wavFile->Pre_emphasis(wavFile->Get_dataVoicePoint(i), wavFile->Get_WavFileData());       //¶Ô¿ÉÓÃ·¶Î§ÄÚµÄÊı¾İ½øĞĞÔ¤¼ÓÖØ
+		wavFile->Pre_emphasis(wavFile->Get_dataVoicePoint(i), wavFile->Get_WavFileData());       //å¯¹å¯ç”¨èŒƒå›´å†…çš„æ•°æ®è¿›è¡Œé¢„åŠ é‡
 	}
 
-	//Todo ³õÊ¼»¯ÌØÕ÷²ÎÊıÀà ¼ÆËãÓïÒôÊı¾İÌØÕ÷²ÎÊı
+	//Todo åˆå§‹åŒ–ç‰¹å¾å‚æ•°ç±» è®¡ç®—è¯­éŸ³æ•°æ®ç‰¹å¾å‚æ•°
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -273,19 +278,19 @@ bool extractParameter(string wavfilePath)                                    //Ñ
 	p_logSystem->writeMessage("Info : Initial characteristic parameters are calculated ! \n");
 
 	double *dataSpace = NULL;
-	
-	CharaParameter *charaParameter = new CharaParameter(wavFile->Get_frameNumber());             //³õÊ¼»¯ÌØÕï²ÎÊıÀà
-	for (unsigned long i = 1; i <= wavFile->Get_frameNumber(); ++i) {        //ÖğÖ¡±éÀú
-		dataSpace = new double[WavFile_Initial::N];                          //ĞÂ½¨Ö¡Êı¾İ¿Õ¼ä
+
+	CharaParameter *charaParameter = new CharaParameter(wavFile->Get_frameNumber());             //åˆå§‹åŒ–ç‰¹è¯Šå‚æ•°ç±»
+	for (unsigned long i = 1; i <= wavFile->Get_frameNumber(); ++i) {        //é€å¸§éå†
+		dataSpace = new double[WavFile_Initial::N];                          //æ–°å»ºå¸§æ•°æ®ç©ºé—´
 		memset(dataSpace, 0, sizeof(double) * WavFile_Initial::N);
-		wavFile->Frame_Data(wavFile->Get_WavFileData(), i, dataSpace, WavFile_Initial::N);       //·ÖÖ¡²¢¼Ó´°
-		charaParameter->Push_data(i, dataSpace);                             //½«·ÖÖ¡Íê³ÉµÄÊı¾İ±£´æ½øÌØÕ÷²ÎÊı±¸ÓÃ
+		wavFile->Frame_Data(wavFile->Get_WavFileData(), i, dataSpace, WavFile_Initial::N);       //åˆ†å¸§å¹¶åŠ çª—
+		charaParameter->Push_data(i, dataSpace);                             //å°†åˆ†å¸§å®Œæˆçš„æ•°æ®ä¿å­˜è¿›ç‰¹å¾å‚æ•°å¤‡ç”¨
 	}
-	
+
 	unsigned long sampleRate = wavFile->Get_SampleRate();
 	delete wavFile;
 
-	//Todo ¼ÆËãMFCC²ÎÊı
+	//Todo è®¡ç®—MFCCå‚æ•°
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -293,9 +298,9 @@ bool extractParameter(string wavfilePath)                                    //Ñ
 	}
 	p_logSystem->writeMessage("Info : Initial MFCC parameters are calculated ! \n");
 
-	charaParameter->MFCC_CharaParameter(sampleRate);                         //¼ÆËãMFCCÌØÕ÷²ÎÊı
+	charaParameter->MFCC_CharaParameter(sampleRate);                         //è®¡ç®—MFCCç‰¹å¾å‚æ•°
 
-	//Todo ³õÊ¼»¯KmeansÊı¾İ
+	//Todo åˆå§‹åŒ–Kmeansæ•°æ®
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Message>\n");
@@ -305,28 +310,28 @@ bool extractParameter(string wavfilePath)                                    //Ñ
 
 	::mfccData = new double[charaParameter->Get_frameNumber() * CharaParameter::MelDegreeNumber];
 	for (unsigned long i = 0; i < charaParameter->Get_frameNumber(); ++i) {
-		memcpy(&::mfccData[i * CharaParameter::MelDegreeNumber], 
-			charaParameter->Get_frameMelParameter(i), sizeof(double) * CharaParameter::MelDegreeNumber);             //¿½±´mfccÊı¾İµ½Ò»¶ÎÁ¬ĞøµÄ´æ´¢¿Õ¼äÖĞ±¸ÓÃ
+		memcpy(&::mfccData[i * CharaParameter::MelDegreeNumber],
+			charaParameter->Get_frameMelParameter(i), sizeof(double) * CharaParameter::MelDegreeNumber);             //æ‹·è´mfccæ•°æ®åˆ°ä¸€æ®µè¿ç»­çš„å­˜å‚¨ç©ºé—´ä¸­å¤‡ç”¨
 	}
 
 	::charaParameter = charaParameter;
 	return true;
 }
 
-bool trainingWAV(string wavfilePath, string gmmfilePath)                     //ÑµÁ·wavÎÄ¼ş
+bool trainingWAV(string wavfilePath, string gmmfilePath)                     //è®­ç»ƒwavæ–‡ä»¶
 {
 	bool success = extractParameter(wavfilePath);
 	if (!success) {
 		return false;
 	}
 
-	//Todo ¿ªÊ¼Kmeans¾ÛÀà²Ù×÷
-	KMeans* kmeans = new KMeans(CharaParameter::MelDegreeNumber, KMeans::ClusterNumber);         //Ê¹ÓÃ½×Êı¸ú´ØÊı³õÊ¼»¯KmeansÀà
+	//Todo å¼€å§‹Kmeansèšç±»æ“ä½œ
+	KMeans* kmeans = new KMeans(CharaParameter::MelDegreeNumber, KMeans::ClusterNumber);         //ä½¿ç”¨é˜¶æ•°è·Ÿç°‡æ•°åˆå§‹åŒ–Kmeansç±»
 	int* labels = new int[::charaParameter->Get_frameNumber()];
-	kmeans->SetInitMode(KMeans::InitUniform);                                //ÉèÖÃÊı¾İµÄ³õÊ¼»¯·½·¨
-	kmeans->Cluster(::mfccData, ::charaParameter->Get_frameNumber(), labels);//¿ªÊ¼¾ÛÀà
+	kmeans->SetInitMode(KMeans::InitUniform);                                //è®¾ç½®æ•°æ®çš„åˆå§‹åŒ–æ–¹æ³•
+	kmeans->Cluster(::mfccData, ::charaParameter->Get_frameNumber(), labels);//å¼€å§‹èšç±»
 
-	//Todo  ³õÊ¼»¯GMMÊı¾İ
+	//Todo  åˆå§‹åŒ–GMMæ•°æ®
 	double **test_data = new double*[KMeans::ClusterNumber];
 	for (int i = 0; i < KMeans::ClusterNumber; ++i) {
 		test_data[i] = new double[CharaParameter::MelDegreeNumber];
@@ -339,9 +344,9 @@ bool trainingWAV(string wavfilePath, string gmmfilePath)                     //Ñ
 	delete[]labels;
 	delete kmeans;
 
-	//Todo GMMÑµÁ·Êı¾İ
+	//Todo GMMè®­ç»ƒæ•°æ®
 	GMM *gmm = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
-	gmm->Train(::mfccData, ::charaParameter->Get_frameNumber());             //GMMÑµÁ·Êı¾İ
+	gmm->Train(::mfccData, ::charaParameter->Get_frameNumber());             //GMMè®­ç»ƒæ•°æ®
 
 	//Todo save GMM to file
 	ofstream gmm_file(gmmfilePath.data());
@@ -354,12 +359,12 @@ bool trainingWAV(string wavfilePath, string gmmfilePath)                     //Ñ
 	return true;
 }
 
-int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //ÉùÎÆÊ¶±ğ
+int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //å£°çº¹è¯†åˆ«
 {
 	char filePath[MAX_PATH];
 	GMM **gmmLib = new GMM*[voiceLib.size()];
 	ifstream *gmm_file = new ifstream[voiceLib.size()];
-	for (int i = 0; i < (int) voiceLib.size(); ++i) {
+	for (int i = 0; i < (int)voiceLib.size(); ++i) {
 		strcpy_s(filePath, rootPath.data());
 		strcat_s(filePath, voiceLib[i].fileName.data());
 		gmm_file[i].open(filePath);
@@ -369,14 +374,14 @@ int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //É
 		gmm_file[i].close();
 	}
 
-	//Todo Ê¶±ğ¼ÆËã
+	//Todo è¯†åˆ«è®¡ç®—
 	cout << "TIP : Begin reservation ..." << endl;
 	double *libProbability = new double[voiceLib.size()];
-	for (int i = 0; i < (int) voiceLib.size(); ++i) {
+	for (int i = 0; i < (int)voiceLib.size(); ++i) {
 		libProbability[i] = 0;
-		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //¼ÆËãµ±Ç°GMMÏÂ£¬Ä¿±êÌØÕ÷²ÎÊı¼¯ÔÚGMMÄ£ĞÍÏÂµÄ¸ÅÂÊÃÜ¶È
-			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(j));                   //»ñÈ¡GMMµÄÊıÖµ
-			if (tempData > 0) {                                                                                      //È¡¶ÔÊı²Ù×÷
+		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //è®¡ç®—å½“å‰GMMä¸‹ï¼Œç›®æ ‡ç‰¹å¾å‚æ•°é›†åœ¨GMMæ¨¡å‹ä¸‹çš„æ¦‚ç‡å¯†åº¦
+			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(j));                   //è·å–GMMçš„æ•°å€¼
+			if (tempData > 0) {                                                                                      //å–å¯¹æ•°æ“ä½œ
 				tempData = log10(tempData);
 			}
 			libProbability[i] += tempData;
@@ -386,7 +391,7 @@ int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //É
 	char tempData[24];
 	char resultName[1024] = {}, resultData[1024] = {};
 	cout << "TIP : Probability data is ";
-	for (int i = 0; i < (int) voiceLib.size(); ++i) {
+	for (int i = 0; i < (int)voiceLib.size(); ++i) {
 		cout << libProbability[i] << "\t";
 		if (i != voiceLib.size() - 1) {
 			strcat_s(resultName, voiceLib[i].peopleName.data());
@@ -394,7 +399,8 @@ int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //É
 			sprintf(tempData, "%d", libProbability[i]);
 			strcat_s(resultData, tempData);
 			strcat_s(resultData, "|");
-		} else {
+		}
+		else {
 			strcat_s(resultName, voiceLib[i].peopleName.data());
 			sprintf(tempData, "%d", libProbability[i]);
 			strcat_s(resultData, tempData);
@@ -403,7 +409,7 @@ int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //É
 		}
 	}
 	cout << endl;
-	
+
 	//LogSystem send message
 	if (p_logSystem->linkState) {
 		p_logSystem->sendMessage("<Result>\n");
@@ -414,7 +420,7 @@ int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //É
 	p_logSystem->writeMessage(resultData);
 
 	int countMax = 0;
-	for (int i = 1; i < (int) voiceLib.size(); ++i) {
+	for (int i = 1; i < (int)voiceLib.size(); ++i) {
 		if (libProbability[i] > libProbability[countMax]) {
 			countMax = i;
 		}

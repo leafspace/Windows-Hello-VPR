@@ -26,20 +26,20 @@ public:
 
 	void Copy(GMM* gmm);
 
-	void SetMaxIterNum(int i)     { m_maxIterNum = i; }
-	void SetEndError(double f)    { m_endError = f; }
+	void SetMaxIterNum(int i) { m_maxIterNum = i; }
+	void SetEndError(double f) { m_endError = f; }
 
-	int GetDimNum()         { return m_dimNum; }
-	int GetMixNum()         { return m_mixNum; }
-	int GetMaxIterNum()     { return m_maxIterNum; }
-	double GetEndError()    { return m_endError; }
+	int GetDimNum() { return m_dimNum; }
+	int GetMixNum() { return m_mixNum; }
+	int GetMaxIterNum() { return m_maxIterNum; }
+	double GetEndError() { return m_endError; }
 
-	double& Prior(int i)    { return m_priors[i]; }
-	double* Mean(int i)     { return m_means[i]; }
+	double& Prior(int i) { return m_priors[i]; }
+	double* Mean(int i) { return m_means[i]; }
 	double* Variance(int i) { return m_vars[i]; }
 
-	void setPrior(int i, double val)     { m_priors[i] = val; }
-	void setMean(int i, double *val)     { for (int j = 0; j < m_dimNum; j++) m_means[i][j] = val[j]; }
+	void setPrior(int i, double val) { m_priors[i] = val; }
+	void setMean(int i, double *val) { for (int j = 0; j < m_dimNum; j++) m_means[i][j] = val[j]; }
 	void setVariance(int i, double *val) { for (int j = 0; j < m_dimNum; j++) m_vars[i][j] = val[j]; }
 
 	double GetProbability(const double* sample);

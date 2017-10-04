@@ -20,14 +20,14 @@ struct FILESTRUCT;
 // CVoiceprintRecognitionDlg 对话框
 class CVoiceprintRecognitionDlg : public CDialogEx
 {
-// 构造
+	// 构造
 public:
 	CVoiceprintRecognitionDlg(CWnd* pParent = NULL);	// 标准构造函数
 
 // 对话框数据
 	enum { IDD = IDD_VOICEPRINTRECOGNITION_DIALOG };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
 
 

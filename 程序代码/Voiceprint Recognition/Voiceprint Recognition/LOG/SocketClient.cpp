@@ -1,117 +1,120 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "SocketClient.h"
 
-void SocketClient::setServerIP(string serverIP) 
+void SocketClient::setServerIP(string serverIP)
 {
-    this->serverIP = serverIP;
+	this->serverIP = serverIP;
 }
 
-void SocketClient::setPORT(int PORT) 
+void SocketClient::setPORT(int PORT)
 {
-    this->PORT = PORT;
+	this->PORT = PORT;
 }
 
-int SocketClient::getBufferSize() 
+int SocketClient::getBufferSize()
 {
-    return this->bufferSize;
+	return this->bufferSize;
 }
 
-bool SocketClient::pingTest()                                                //pingÄ¿±êÖ÷»ú£¬¿´ÓëÄ¿±êÖ÷»úÊÇ·ñÁ¬½Ó
+bool SocketClient::pingTest()                                                //pingç›®æ ‡ä¸»æœºï¼Œçœ‹ä¸Žç›®æ ‡ä¸»æœºæ˜¯å¦è¿žæŽ¥
 {
-	if(_access("temp", 0) == -1) {                                       //ÅÐ¶ÏlogsÎÄ¼þ¼ÐÊÇ·ñ´æÔÚ
-        if (_mkdir("temp") == -1) {                                      //´´½¨logsÎÄ¼þ¼Ð
-            return false;
-        }
-    }
+	if (_access("temp", 0) == -1) {                                          //åˆ¤æ–­logsæ–‡ä»¶å¤¹æ˜¯å¦å­˜åœ¨
+		if (_mkdir("temp") == -1) {                                          //åˆ›å»ºlogsæ–‡ä»¶å¤¹
+			return false;
+		}
+	}
 
-    string targetIP = this->serverIP;
-    char fileName[256] = "temp//";
-    char cmdstr[256] = "";
-    strcat_s(fileName, targetIP.data());
-    strcat_s(fileName, ".txt");
-    
-    strcat_s(cmdstr, "cmd /c ping ");
-    strcat_s(cmdstr, targetIP.data());
-    strcat_s(cmdstr, " -n 1 -w 500 >");
-    strcat_s(cmdstr, fileName);
-    
-    WinExec(cmdstr, SW_HIDE);
-    Sleep(500);
-    
-    ifstream inStream(fileName, ios::binary);
-    if (!inStream.is_open()) {
-        return false;
-    }
-    
-    char buffer[512];
-    inStream.getline(buffer, 512);
-    inStream.getline(buffer, 512);
-    inStream.getline(buffer, 512);
-    
-    if (strcmp(buffer, "ÇëÇó³¬Ê±¡£") == 0) {
-        return false;
-    } else {
-        return true;
-    }
+	string targetIP = this->serverIP;
+	char fileName[256] = "temp//";
+	char cmdstr[256] = "";
+	strcat_s(fileName, targetIP.data());
+	strcat_s(fileName, ".txt");
+
+	strcat_s(cmdstr, "cmd /c ping ");
+	strcat_s(cmdstr, targetIP.data());
+	strcat_s(cmdstr, " -n 1 -w 500 >");
+	strcat_s(cmdstr, fileName);
+
+	WinExec(cmdstr, SW_HIDE);
+	Sleep(500);
+
+	ifstream inStream(fileName, ios::binary);
+	if (!inStream.is_open()) {
+		return false;
+	}
+
+	char buffer[512];
+	inStream.getline(buffer, 512);
+	inStream.getline(buffer, 512);
+	inStream.getline(buffer, 512);
+
+	if (strcmp(buffer, "è¯·æ±‚è¶…æ—¶ã€‚") == 0) {
+		return false;
+	}
+	else {
+		return true;
+	}
 }
 
-bool SocketClient::linkTest() 
+bool SocketClient::linkTest()
 {
-    if (connect(this->client, (struct sockaddr*)&this->server, sizeof(this->server)) == INVALID_SOCKET) {
-        cout << "ERROR : Socket connect failed !" << endl;
-        return false;
-    } else {
-        return true;
-    }
+	if (connect(this->client, (struct sockaddr*)&this->server, sizeof(this->server)) == INVALID_SOCKET) {
+		cout << "ERROR : Socket connect failed !" << endl;
+		return false;
+	}
+	else {
+		return true;
+	}
 }
 
-bool SocketClient::initSocket() 
+bool SocketClient::initSocket()
 {
-    memset(this->bufferPool, 0, this->bufferSize);                           //½ÓÊÕ»º³åÇø³õÊ¼»¯
-    if (WSAStartup(MAKEWORD(2, 2), &this->wsaData) != 0) {
-        cout << "ERROR : Winsock load failed !" << endl;
-        return false;
-    }
+	memset(this->bufferPool, 0, this->bufferSize);                           //æŽ¥æ”¶ç¼“å†²åŒºåˆå§‹åŒ–
+	if (WSAStartup(MAKEWORD(2, 2), &this->wsaData) != 0) {
+		cout << "ERROR : Winsock load failed !" << endl;
+		return false;
+	}
 
-    this->server.sin_family = AF_INET;                                       //ÐèÒªÁ¬½ÓµÄ·þÎñÆ÷µÄµØÖ·ÐÅÏ¢
-    this->server.sin_addr.s_addr = inet_addr(this->serverIP.data());         //½«ÃüÁîÐÐµÄIPµØÖ·×ª»»Îª¶þ½øÖÆ±íÊ¾µÄÍøÂç×Ö½ÚË³ÐòIPµØÖ·
-    this->server.sin_port = htons(this->PORT);
-        
-    this->client = socket(AF_INET, SOCK_STREAM, 0);                          //½¨Á¢¿Í»§¶ËÁ÷Ì×½Ó
-    if (this->client == INVALID_SOCKET) {
-        cout << "ERROR : Socket create failed !" << endl;
-        return false;
-    }
-        
-    return true;
+	this->server.sin_family = AF_INET;                                       //éœ€è¦è¿žæŽ¥çš„æœåŠ¡å™¨çš„åœ°å€ä¿¡æ¯
+	this->server.sin_addr.s_addr = inet_addr(this->serverIP.data());         //å°†å‘½ä»¤è¡Œçš„IPåœ°å€è½¬æ¢ä¸ºäºŒè¿›åˆ¶è¡¨ç¤ºçš„ç½‘ç»œå­—èŠ‚é¡ºåºIPåœ°å€
+	this->server.sin_port = htons(this->PORT);
+
+	this->client = socket(AF_INET, SOCK_STREAM, 0);                          //å»ºç«‹å®¢æˆ·ç«¯æµå¥—æŽ¥
+	if (this->client == INVALID_SOCKET) {
+		cout << "ERROR : Socket create failed !" << endl;
+		return false;
+	}
+
+	return true;
 }
 
-bool SocketClient::sendMessage(string message)                               //ÀûÓÃsocket·¢ËÍÐÅÏ¢
+bool SocketClient::sendMessage(string message)                               //åˆ©ç”¨socketå‘é€ä¿¡æ¯
 {
-    int msgLen;
+	int msgLen;
 	if ((msgLen = send(this->client, message.data(), strlen(message.data()), 0)) == SOCKET_ERROR) {
-        cout << "ERROR : Socket send message error !" << endl;
-        return false;
+		cout << "ERROR : Socket send message error !" << endl;
+		return false;
 	}
 	return true;
 }
 
-bool SocketClient::sendMessage(string message, int messageLen)               //ÀûÓÃsocket·¢ËÍÐÅÏ¢
+bool SocketClient::sendMessage(string message, int messageLen)               //åˆ©ç”¨socketå‘é€ä¿¡æ¯
 {
-    int msgLen;
+	int msgLen;
 	if ((msgLen = send(this->client, message.data(), messageLen, 0)) == SOCKET_ERROR) {
-        cout << "ERROR : Socket send message error !" << endl;
-        return false;
-	} else if (msgLen != messageLen) {
+		cout << "ERROR : Socket send message error !" << endl;
+		return false;
+	}
+	else if (msgLen != messageLen) {
 		cout << "ERROR : Socket send message has failure byte (" << msgLen << ") !" << endl;
 		return false;
 	}
 	return true;
 }
 
-void SocketClient::freeResourse() 
+void SocketClient::freeResourse()
 {
-    closesocket(this->client);
-    WSACleanup();
-    delete this->bufferPool;
+	closesocket(this->client);
+	WSACleanup();
+	delete this->bufferPool;
 }
