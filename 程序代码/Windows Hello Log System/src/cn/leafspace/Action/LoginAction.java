@@ -27,7 +27,7 @@ public class LoginAction extends Action {
             request.getSession().setAttribute("user", user);
             return mapping.findForward("userPage");
         } else {
-            request.getSession().setAttribute("errorInfo", "不存在此用户或密码不正确!");
+            request.setAttribute("errorInfo", "不存在此用户或密码不正确!");
         }
         return mapping.findForward("error");
     }

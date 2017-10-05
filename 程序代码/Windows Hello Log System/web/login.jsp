@@ -4,13 +4,20 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title></title>	
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        <title>Windows Hello后台Log系统</title>
 		<link rel="stylesheet" href="assets/css/core.css" />
 		<link rel="stylesheet" href="assets/css/menu.css" />
 		<link rel="stylesheet" href="assets/css/amazeui.css" />
 		<link rel="stylesheet" href="assets/css/component.css" />
 		<link rel="stylesheet" href="assets/css/page/form.css" />
 	</head>
+    <%
+        String errorInfo = request.getParameter("errorInfo");
+        if (errorInfo == null) {
+            errorInfo = "";
+        }
+    %>
 	<body>
 		<div class="account-pages">
 			<div class="wrapper-page">
@@ -23,14 +30,15 @@
 	                    <h4 class="text-uppercase font-bold m-b-0">登 陆</h4>
 	                </div>
 	                <div class="panel-body">
-	                	<form class="am-form" action="/login.do" method="post">
+	                	<form class="am-form" action="login.do" method="post">
 	                		<div class="am-g">
 	                			<div class="am-form-group">
-							      <input type="text" name="username" class="am-radius"  placeholder="请输入用户名...">
+							        <input type="text" name="username" class="am-radius"  placeholder="请输入用户名...">
 							    </div>
 							
 							    <div class="am-form-group form-horizontal m-t-20">
-							      <input type="password" name="password" class="am-radius"  placeholder="请输入密码...">
+							        <input type="password" name="password" class="am-radius"  placeholder="请输入密码...">
+                                    <label style="font-weight: normal;color: #FF0000;"><%=errorInfo%></label>
 							    </div>
 							    
 							    <div class="am-form-group ">

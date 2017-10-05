@@ -9,6 +9,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="favicon.ico" type="image/x-icon"/>
 		<title>Windows Hello后台Log系统</title>
 		<link rel="stylesheet" href="assets/css/amazeui.css" />
 		<link rel="stylesheet" href="assets/css/core.css" />
@@ -23,7 +24,7 @@
     <%
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
-            request.getRequestDispatcher("login.jsp?errorInfo=不存在此用户或密码不正确!").forward(request,response);
+            request.getRequestDispatcher("login.jsp").forward(request,response);
         }
         DatabaseProxyFactory databaseProxyFactory = new DatabaseProxyFactory();
         DatabaseProxyInterface databaseProxyInterface = databaseProxyFactory.getDatabaseProxy("MySQL");
