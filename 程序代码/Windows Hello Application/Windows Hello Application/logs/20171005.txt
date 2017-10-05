@@ -1,0 +1,24 @@
+[19:16:40] ==============================================
+[19:16:40] TIP : System begin to start recorder. 
+[19:16:45] TIP : Init voice file, read voice data !
+[19:16:46] TIP : Init charaparameter !
+[19:16:46] TIP : Caculater MFCC parameter !
+[19:16:46] TIP : Begin recognition !
+[19:16:46] TIP : Init library gmm model !
+[19:16:46] TIP : Begin reservation ... !
+[19:16:46] me.txt|女-liuchang(我们需要帮助).txt|女-zhaoquanyin(我们需要帮助).txt|男-wangzhe(我们需要帮助).txt|男-zhaozuoxiang(我们需要帮助).txt
+[19:16:46] -614987178|1354032416|-771080873|1773607523|-958031675
+[19:16:46] ERROR : User Unknow ! 
+[19:16:46] ERROR : 对不起，您没有权限登陆 ! 
+[19:18:21] ==============================================
+[19:18:21] TIP : System begin to start recorder. 
+[19:18:27] TIP : Init voice file, read voice data !
+[19:18:27] TIP : Init charaparameter !
+[19:18:27] TIP : Caculater MFCC parameter !
+[19:18:27] TIP : Begin recognition !
+[19:18:27] TIP : Init library gmm model !
+[19:18:27] TIP : Begin reservation ... !
+[19:18:27] me.txt|女-liuchang(我们需要帮助).txt|女-zhaoquanyin(我们需要帮助).txt|男-wangzhe(我们需要帮助).txt|男-zhaozuoxiang(我们需要帮助).txt
+[19:18:27] -3648.806174|-3222.640652|-11305.846080|-3927.292020|-4733.249068
+[19:18:27] ERROR : User Unknow ! 
+[19:18:27] ERROR : 对不起，您没有权限登陆 ! 

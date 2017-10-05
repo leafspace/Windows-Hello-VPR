@@ -1,4 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="cn.leafspace.ToolBean.User" %>
 <%@ page import="cn.leafspace.ToolBean.MessageItem" %>
 <%@ page import="cn.leafspace.Database.Factory.DatabaseProxyFactory" %>
 <%@ page import="cn.leafspace.Database.Interface.DatabaseProxyInterface" %>
@@ -20,6 +21,10 @@
 	</head>
 
     <%
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            request.getRequestDispatcher("login.jsp?errorInfo=不存在此用户或密码不正确!").forward(request,response);
+        }
         DatabaseProxyFactory databaseProxyFactory = new DatabaseProxyFactory();
         DatabaseProxyInterface databaseProxyInterface = databaseProxyFactory.getDatabaseProxy("MySQL");
         ArrayList<MessageItem> messageItems = databaseProxyInterface.getInfoList();
@@ -51,10 +56,10 @@
 				<div class="am-offcanvas-bar admin-offcanvas-bar">
 					<div class="user-box am-hide-sm-only">
 						<div class="user-img">
-							<img src="assets/img/avatar-1.jpg" alt="user-img" title="Mat Helme" class="img-circle img-thumbnail img-responsive">
+							<img src="assets/img/avatar-1.jpg" alt="user-img" class="img-circle img-thumbnail img-responsive">
 							<div class="user-status offline"><i class="am-icon-dot-circle-o" aria-hidden="true"></i></div>
 						</div>
-						<h5><a href="#">leafspace</a> </h5>
+						<h5><a href="#"><%=user.getUsername()%></a> </h5>
 							<ul class="list-inline">
 							<li>
 								<a href="#">
@@ -104,7 +109,7 @@
 											<%
 												for (int i = 0; i < Math.min(messageItems.size(), 15); ++i) {
 											%>
-												<tr>
+												<tr onclick="window.location.href='form_validate.jsp?ID=<%=messageItems.get(i).getID()%>'">
 													<td><%=messageItems.get(i).getID()%></td>
 													<td><%=messageItems.get(i).getClientType()%></td>
 													<td><%=messageItems.get(i).getIssueTime().substring(0, 19)%></td>

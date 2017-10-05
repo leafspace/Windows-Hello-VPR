@@ -396,13 +396,13 @@ int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //å
 		if (i != voiceLib.size() - 1) {
 			strcat_s(resultName, voiceLib[i].peopleName.data());
 			strcat_s(resultName, "|");
-			sprintf(tempData, "%d", libProbability[i]);
+			sprintf(tempData, "%lf", libProbability[i]);
 			strcat_s(resultData, tempData);
 			strcat_s(resultData, "|");
 		}
 		else {
 			strcat_s(resultName, voiceLib[i].peopleName.data());
-			sprintf(tempData, "%d", libProbability[i]);
+			sprintf(tempData, "%lf", libProbability[i]);
 			strcat_s(resultData, tempData);
 			strcat_s(resultName, "\n");
 			strcat_s(resultData, "\n");

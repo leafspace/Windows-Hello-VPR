@@ -5,4 +5,14 @@
         "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 
 <struts-config>
+    <form-beans>
+        <form-bean name="loginActionForm" type="cn.leafspace.ActionForm.LoginActionForm" />
+    </form-beans>
+
+    <action-mappings>
+        <action path="/login" type="cn.leafspace.Action.LoginAction" name="loginActionForm" scope="request">
+            <forward name="userPage" path="/index.jsp" />
+            <forward name="error" path="/login.jsp?errorInfo=不存在此用户或密码不正确!" />
+        </action>
+    </action-mappings>
 </struts-config>

@@ -1,4 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="cn.leafspace.ToolBean.User" %>
 <%@ page import="cn.leafspace.ToolBean.MessageItem" %>
 <%@ page import="cn.leafspace.Database.Factory.DatabaseProxyFactory" %>
 <%@ page import="cn.leafspace.Database.Interface.DatabaseProxyInterface" %>
@@ -20,21 +21,41 @@
 	</head>
 
     <%
-        DatabaseProxyFactory databaseProxyFactory = new DatabaseProxyFactory();
-        DatabaseProxyInterface databaseProxyInterface = databaseProxyFactory.getDatabaseProxy("MySQL");
-        ArrayList<MessageItem> messageItems = databaseProxyInterface.getInfoList();
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            request.getRequestDispatcher("login.jsp?errorInfo=不存在此用户或密码不正确!").forward(request,response);
+        }
 
         int index = 1;
+        String keyWord = "";
         try {
             index = Integer.parseInt(request.getParameter("index"));
         } catch (NumberFormatException exception) {
         }
+
+        if (request.getParameter("keyword") != null) {
+            keyWord = request.getParameter("keyword");
+        }
+
+        DatabaseProxyFactory databaseProxyFactory = new DatabaseProxyFactory();
+        DatabaseProxyInterface databaseProxyInterface = databaseProxyFactory.getDatabaseProxy("MySQL");
+        ArrayList<MessageItem> messageItems = null;
+        if (keyWord.length() == 0) {
+            messageItems = databaseProxyInterface.getInfoList();
+        } else {
+            messageItems = databaseProxyInterface.getKeywordInfoList(keyWord);
+        }
+
         final int pageSize = 15;
         int pageLength = 1;
         if (messageItems.size() % pageSize != 0) {
             pageLength = messageItems.size() / pageSize + 1;
         } else {
             pageLength = messageItems.size() / pageSize;
+        }
+
+        if (index <= 0 || index > pageLength) {
+            index = 1;
         }
     %>
 
@@ -65,10 +86,10 @@
                 <div class="am-offcanvas-bar admin-offcanvas-bar">
                     <div class="user-box am-hide-sm-only">
                         <div class="user-img">
-                            <img src="assets/img/avatar-1.jpg" alt="user-img" title="leafspace" class="img-circle img-thumbnail img-responsive">
+                            <img src="assets/img/avatar-1.jpg" alt="user-img" class="img-circle img-thumbnail img-responsive">
                             <div class="user-status offline"><i class="am-icon-dot-circle-o" aria-hidden="true"></i></div>
                         </div>
-                        <h5><a href="#">leafspace</a> </h5>
+                        <h5><a href="#"><%=user.getUsername()%></a> </h5>
                         <ul class="list-inline">
                             <li>
                                 <a href="#">
@@ -87,7 +108,9 @@
                     <ul class="am-list admin-sidebar-list">
                         <li><a href="index.jsp"><span class="am-icon-home"></span> 首页</a></li>
                         <li class="admin-parent">
-                            <a class="am-cf am-collapsed" data-am-collapse="{target: '#collapse-nav1'}"><span class="am-icon-table"></span> 表格 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                            <a class="am-cf am-collapsed" data-am-collapse="{target: '#collapse-nav1'}">
+                                <span class="am-icon-table"></span> 表格 <span class="am-icon-angle-right am-fr am-margin-right"></span>
+                            </a>
                             <ul class="am-list admin-sidebar-sub am-collapse" id="collapse-nav1">
                                 <li><a href="table_complete.jsp">完整表格</a></li>
                             </ul>
@@ -111,9 +134,9 @@
                             </div>
 
                             <div class="am-u-sm-12 am-u-md-3">
-                                <form name="search" method="post" action="">
+                                <form name="search" method="get" action="table_complete.jsp">
                                     <div class="am-input-group am-input-group-sm">
-                                        <input type="text" class="am-form-field">
+                                        <input type="text" name="keyword" class="am-form-field">
                                         <span class="am-input-group-btn">
                                             <button class="am-btn am-btn-default" type="submit">搜索</button>
                                         </span>
@@ -139,9 +162,9 @@
                                         </thead>
                                         <tbody>
                                             <%
-                                                for (int i = 0; i < messageItems.size(); ++i) {
+                                                for (int i = (index - 1) * pageSize; i < Math.min(messageItems.size(), index * pageSize - 1); ++i) {
                                             %>
-                                                    <tr>
+                                                    <tr onclick="window.location.href='form_validate.jsp?ID=<%=messageItems.get(i).getID()%>'">
                                                         <td><input type="checkbox" name="idList" value="<%=messageItems.get(i).getID()%>"/></td>
                                                         <td><%=messageItems.get(i).getID()%></td>
                                                         <td><a href="#"><%=messageItems.get(i).getClientType()%></a></td>
@@ -164,7 +187,7 @@
                                                             <div class="am-btn-toolbar">
                                                                 <div style="float: left;">
                                                                     <audio controls="controls" height="100" width="50">
-                                                                        <source src="wavLib/1179276193420.wav" type="audio/wav" />
+                                                                        <source src="wavLib/<%=messageItems.get(i).getFilePath()%>" type="audio/wav" />
                                                                     </audio>
                                                                 </div>
                                                                 <div class="am-btn-group am-btn-group-xs" style="float: right;">

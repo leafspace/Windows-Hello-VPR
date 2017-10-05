@@ -72,6 +72,8 @@ public class SocketThread extends Thread {
                                 clientType = bufferedReader.readLine();
                             } else if (targetFlag.equals("<File>")) {
                                 filePath = bufferedReader.readLine();
+                                int lastIndex = filePath.lastIndexOf('\\');
+                                filePath = filePath.substring(lastIndex + 1);
                             /*
                             //Socket 接受文件方法（未成功）
                             SimpleDateFormat tempDataFormat = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -135,7 +137,7 @@ public class SocketThread extends Thread {
                         socket.close();
                     }
                 } catch (IOException exception) {
-                    exception.printStackTrace();
+                    System.out.println("Connection reset.");
                 } finally {
                     if (clientType.equals("Windows Hello") && result.length() == 0) {
                         infoType = false;
