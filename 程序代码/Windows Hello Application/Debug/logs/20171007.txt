@@ -1,0 +1,12 @@
+[15:51:11] ==============================================
+[15:51:11] TIP : System begin to start recorder. 
+[15:51:17] TIP : Init voice file, read voice data !
+[15:51:17] TIP : Init charaparameter !
+[15:51:17] TIP : Caculater MFCC parameter !
+[15:51:17] TIP : Begin recognition !
+[15:51:17] TIP : Init library gmm model !
+[15:51:17] TIP : Begin reservation ... !
+[15:51:17] me.txt|女-liuchang(我们需要帮助).txt|女-zhaoquanyin(我们需要帮助).txt|男-wangzhe(我们需要帮助).txt|男-zhaozuoxiang(我们需要帮助).txt
+[15:51:17] -3563.263378|-1951.352504|-11073.281676|-3461.168047|-3040.955536
+[15:51:17] ERROR : User Unknow ! 
+[15:51:17] ERROR : 对不起，您没有权限登陆 ! 

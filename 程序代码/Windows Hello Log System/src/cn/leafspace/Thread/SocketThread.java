@@ -3,6 +3,7 @@ package cn.leafspace.Thread;
 import cn.leafspace.Database.Interface.DatabaseProxyInterface;
 import cn.leafspace.Database.Factory.DatabaseProxyFactory;
 import cn.leafspace.ToolBean.MessageItem;
+import cn.leafspace.ToolBean.WebSocket;
 
 import java.io.*;
 import java.util.Date;
@@ -146,6 +147,7 @@ public class SocketThread extends Thread {
                     DatabaseProxyFactory databaseProxyFactory = new DatabaseProxyFactory();
                     DatabaseProxyInterface databaseProxyInterface = databaseProxyFactory.getDatabaseProxy("MySQL");
                     databaseProxyInterface.insertInfoItem(messageItem);
+                    WebSocket.broadcastMessage("refresh");
                 }
             }
         } catch (Exception exception){

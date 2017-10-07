@@ -133,6 +133,49 @@
 		</div>
 
 		<a href="admin-offcanvas" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+		<script type="text/javascript">
+            var websocket = null;
+            if ('WebSocket' in window) {                                         //判断当前浏览器是否支持WebSocket
+                websocket = new WebSocket("ws://localhost:8080/websocket");
+            } else {
+                alert('您的浏览器不支持WebSocket,某些功能无法使用!');
+            }
+
+            websocket.onerror = function () {                                    //连接发生错误的回调方法
+                alert('WebSocket连接发生错误!');
+            }
+
+            websocket.onopen = function () {}                                    //连接成功建立的回调方法
+
+            websocket.onmessage = function (event) {                             //接收到消息的回调方法
+                //alert(event.data);
+                handleMessage(event.data);
+            }
+
+            websocket.onclose = function () {                                    //连接关闭的回调方法
+                //alert('WebSocket连接关闭!');
+            }
+
+            window.onbeforeunload = function () {
+                //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接
+                //防止连接还没断开就关闭窗口，server端会抛异常
+                closeWebSocket();
+            }
+
+            function handleMessage(innerHTML) {                                  //处理接受到的消息
+                if (innerHTML == "refresh") {
+                    location.reload();
+                }
+            }
+
+            function closeWebSocket() {                                          //关闭WebSocket连接
+                websocket.close();
+            }
+
+            function send(message) {                                             //发送消息
+                websocket.send('refresh');
+            }
+		</script>
 		<script type="text/javascript" src="assets/js/jquery-2.1.0.js" ></script>
 		<script type="text/javascript" src="assets/js/amazeui.min.js"></script>
 		<script type="text/javascript" src="assets/js/app.js" ></script>
