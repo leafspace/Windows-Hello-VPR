@@ -1,4 +1,4 @@
-﻿生成启动时间为 2017/10/5 19:18:17。
+﻿生成启动时间为 2017/10/10 18:15:33。
      1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Windows Hello Application\Windows Hello Application.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\Windows Hello Application.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
@@ -33,4 +33,4 @@
 
 生成成功。
 
-已用时间 00:00:02.96
+已用时间 00:00:01.58

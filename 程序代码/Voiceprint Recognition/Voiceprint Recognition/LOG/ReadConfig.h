@@ -11,11 +11,17 @@ private:
 	string path;
 	string serverIP;
 	string password;
+	string method;
+	string threshold;
+	string probability;
 
 public:
 	ReadConfig() {
 		this->serverIP = "127.0.0.1";
 		this->password = "123456";
+		this->method = "1";
+		this->threshold = "5";
+		this->probability = "0";
 	}
 
 	bool ReadFile() {
@@ -53,6 +59,15 @@ public:
 		else if (label == "path") {
 			this->path = info;
 		}
+		else if (label == "probability") {
+			this->probability = info;
+		}
+		else if (label == "threshold") {
+			this->threshold = info;
+		}
+		else if (label == "method") {
+			this->method = info;
+		}
 	}
 
 	string getPath() {
@@ -65,5 +80,17 @@ public:
 
 	string getPassword() {
 		return this->password;
+	}
+
+	string getMethod() {
+		return this->method;
+	}
+
+	string getThreshold() {
+		return this->threshold;
+	}
+
+	string getProbability() {
+		return this->probability;
 	}
 };

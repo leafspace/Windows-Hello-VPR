@@ -318,6 +318,56 @@ bool extractParameter(string wavfilePath)                                    //�
 	return true;
 }
 
+bool trainingWAV(string wavfilePath)                                         //训练wav文件，将当前语音计算出gmm模型，再将模型数据放入模型中，计算出概率值
+{
+	bool success = extractParameter(wavfilePath);
+	if (!success) {
+		return false;
+	}
+
+	//Todo 开始Kmeans聚类操作
+	KMeans* kmeans = new KMeans(CharaParameter::MelDegreeNumber, KMeans::ClusterNumber);         //使用阶数跟簇数初始化Kmeans类
+	int* labels = new int[::charaParameter->Get_frameNumber()];
+	kmeans->SetInitMode(KMeans::InitUniform);                                //设置数据的初始化方法
+	kmeans->Cluster(::mfccData, ::charaParameter->Get_frameNumber(), labels);//开始聚类
+
+	//Todo  初始化GMM数据
+	double **test_data = new double*[KMeans::ClusterNumber];
+	for (int i = 0; i < KMeans::ClusterNumber; ++i) {
+		test_data[i] = new double[CharaParameter::MelDegreeNumber];
+		double *tempSpace = kmeans->GetMean(i);
+		for (int j = 0; j < CharaParameter::MelDegreeNumber; ++j) {
+			test_data[i][j] = tempSpace[j];
+		}
+	}
+
+	delete[]labels;
+	delete kmeans;
+
+	//Todo GMM训练数据
+	GMM *gmm = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
+	gmm->Train(::mfccData, ::charaParameter->Get_frameNumber());             //GMM训练数据
+
+	double probability = 0;
+	for (unsigned long i = 0; i < charaParameter->Get_frameNumber(); ++i) {
+		double tempData = gmm->GetProbability(charaParameter->Get_frameMelParameter(i));
+		if (tempData > 0) {
+			tempData = log10(tempData);
+		}
+		probability += tempData;
+	}
+	delete gmm;
+
+	//Todo 将probability数据写入到文件中
+	ofstream out;
+    out.open("info.conf", ios::app);
+	out << endl;
+    out << "<probability>" << probability << "</probability>";
+	out.close();
+
+	return true;
+}
+
 bool trainingWAV(string wavfilePath, string gmmfilePath)                     //训练wav文件
 {
 	bool success = extractParameter(wavfilePath);

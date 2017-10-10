@@ -72,6 +72,7 @@ public:
 	afx_msg void OnBnClickedButton4();                                       //刷新
 	afx_msg void OnBnClickedButton5();                                       //刷新
 	afx_msg void OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButton6();
 };
 
 typedef struct FILESTRUCT
@@ -100,5 +101,6 @@ void readList(ifstream& in, vector<FILESTRUCT>& list);                       //�
 void writeList(ofstream& out, vector<FILESTRUCT>& list);                     //将list文件内容写入数据流
 
 bool extractParameter(string wavfilePath);                                   //训练目标路径的语音文件的特征参数
+bool trainingWAV(string wavfilePath);                                        //训练wav文件，将当前语音计算出gmm模型，再将模型数据放入模型中，计算出概率值
 bool trainingWAV(string wavfilePath, string gmmfilePath);                    //训练wav文件
 int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib);     //声纹识别

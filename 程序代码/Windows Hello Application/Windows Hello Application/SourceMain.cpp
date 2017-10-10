@@ -12,6 +12,7 @@
 string getFileName(string path);                                                                                     //将某个路径转换为某个文件名
 void writePassword(const char* password);
 void getFiles(string path, vector<string>& files);                                                                   //获取path文件夹下的所有文件名
+bool recognitionMethods(vector<string> files, double *libProbability, int countMax, int gmmNumber, int methods);     //通过不同的方式进行判断
 
 LogSystem *p_logSystem;                                                                                              //用于处理Log相关
 
@@ -207,7 +208,15 @@ int main()
 	p_logSystem->writeMessage(resultName);
 	p_logSystem->writeMessage(resultData);
 
-	if (strcmp(getFileName(files[countMax]).data(), "me.txt") == 0) {
+
+	int method = 1;
+	ReadConfig *readConfig = new ReadConfig;                                                                         //打开文件读取
+	bool isSuccess = readConfig->ReadFile();                                                                         //读取文件
+	if (isSuccess) {
+		method = atoi(readConfig->getMethod().c_str());
+	}
+	delete readConfig;
+	if (recognitionMethods(files, libProbability, countMax, gmmNumber, method)) {
 		cout << "TIP : Recognition successfully ! - Login..." << endl;
 
 		//LogSystem send message
@@ -249,7 +258,7 @@ int main()
 	return 0;
 }
 
-string getFileName(string path)                                              //将某个路径转换为某个文件名
+string getFileName(string path)                                                                                      //将某个路径转换为某个文件名
 {
 	return path.substr(path.rfind('\\') + 1, path.size() - path.rfind('\\') - 1);
 }
@@ -269,14 +278,14 @@ void writePassword(const char* password)
 	SendMessage(hWnd, WM_KEYDOWN, VK_RETURN, 0);
 }
 
-void getFiles(string path, vector<string>& files)                            //获取path文件夹下的所有文件名
+void getFiles(string path, vector<string>& files)                                                                    //获取path文件夹下的所有文件名
 {
 	long hFile = 0;
 	struct _finddata_t fileinfo;
 	string p;
 	if ((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1) {
 		do {
-			if ((fileinfo.attrib & _A_SUBDIR)) {                              //判断是否为文件夹
+			if ((fileinfo.attrib & _A_SUBDIR)) {                                                                     //判断是否为文件夹
 				if (strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0) {
 					getFiles(p.assign(path).append("\\").append(fileinfo.name), files);
 				}
@@ -286,5 +295,74 @@ void getFiles(string path, vector<string>& files)                            //�
 			}
 		} while (_findnext(hFile, &fileinfo) == 0);
 		_findclose(hFile);
+	}
+}
+
+bool recognitionMethods(vector<string> files, double *libProbability, int countMax, int gmmNumber, int methods)
+{
+	if (methods == 0) {                                                                                              //通过比较最大值文件是否为me.txt的方式来获取结果
+		//LogSystem send message
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("TIP : Use max probability to recognition .\n");
+		}
+		p_logSystem->writeMessage("TIP : Use max probability to recognition .\n");
+
+		if (strcmp(getFileName(files[countMax]).data(), "me.txt") == 0) {
+			return true;
+		} 
+		else {
+			return false;
+		}
+	}
+	else {                                                                                                           //通过比较数据是否在设置的门限之间的方式来判断
+		//LogSystem send message
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage("TIP : Use probability max and min to recognition .\n");
+		}
+		p_logSystem->writeMessage("TIP : Use probability max and min to recognition .\n");
+
+		double threshold = 0;
+		double probability = 0;
+		double probabilityMax = 0, probabilityMin = 0;
+
+		ReadConfig *readConfig = new ReadConfig;                                                                     //打开文件读取
+		bool isSuccess = readConfig->ReadFile();                                                                     //读取文件
+		if (isSuccess) {
+			threshold = atof(readConfig->getThreshold().c_str());
+			probability = atof(readConfig->getProbability().c_str());
+		}
+		delete readConfig;
+
+		if (threshold >= 1) {
+			threshold /= 100;
+		}
+		probabilityMax = probability + fabs(probability) * threshold;
+		probabilityMin = probability - fabs(probability) * threshold;
+
+		int index = 0;
+		for (int i = 0; i < gmmNumber; ++i) {
+			if (strcmp(getFileName(files[i]).data(), "me.txt") == 0) {
+				index = i;
+				break;
+			}
+		}
+
+		//LogSystem send message
+		char tempStr[256];
+		sprintf(tempStr, "TIP : Probability max (%lf) and min (%lf) to recognition .\n", probabilityMax, probabilityMin);
+		if (p_logSystem->linkState) {
+			p_logSystem->sendMessage("<Message>\n");
+			p_logSystem->sendMessage(tempStr);
+		}
+		p_logSystem->writeMessage(tempStr);
+
+		if (libProbability[index] >= probabilityMin && libProbability[index] <= probabilityMax) {
+			return true;
+		} 
+		else {
+			return false;
+		}
 	}
 }

@@ -74,6 +74,7 @@ BEGIN_MESSAGE_MAP(CVoiceprintRecognitionDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON4, &CVoiceprintRecognitionDlg::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON5, &CVoiceprintRecognitionDlg::OnBnClickedButton5)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST1, &CVoiceprintRecognitionDlg::OnNMDblclkList1)
+	ON_BN_CLICKED(IDC_BUTTON6, &CVoiceprintRecognitionDlg::OnBnClickedButton6)
 END_MESSAGE_MAP()
 
 
@@ -456,4 +457,49 @@ void CVoiceprintRecognitionDlg::OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	*pResult = 0;
+}
+
+
+void CVoiceprintRecognitionDlg::OnBnClickedButton6()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	//LogSystem send message
+	if (p_logSystem->linkState) {
+		p_logSystem->sendMessage("<Message>\n");
+		p_logSystem->sendMessage("Info : Begin traning probalily voice ! \n");
+	}
+	p_logSystem->writeMessage("Info : Begin traning probalily voice ! \n");
+
+	int selectIndex = this->GetItemSelect(0);
+	FILESTRUCT selectItem = this->wavLib[selectIndex];
+
+	char szModuleFilePath[MAX_PATH];
+	int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
+	szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
+
+	int index = 0;
+	char filePath[MAX_PATH];
+	for (int i = 0; i < (int)strlen(szModuleFilePath); ++i) {               //补全//
+		filePath[index++] = szModuleFilePath[i];
+		if (szModuleFilePath[i] == '\\') {
+			filePath[index++] = '\\';
+		}
+	}
+	filePath[index++] = 0;                                                   //末尾归零
+
+	char wavfilePath[MAX_PATH], gmmfilePath[MAX_PATH];
+	strcpy_s(wavfilePath, filePath);
+	strcpy_s(gmmfilePath, filePath);
+	strcat_s(wavfilePath, "wavLib\\\\");
+	strcat_s(gmmfilePath, "voiceLib\\\\");
+	strcat_s(wavfilePath, selectItem.fileName.data());
+	strcat_s(gmmfilePath, selectItem.peopleName.data());
+	strcat_s(gmmfilePath, "-gmm(-).txt");
+
+	if (::charaParameter != NULL) {
+		delete ::charaParameter;
+	}
+	trainingWAV(wavfilePath);
+
+	MessageBoxA(NULL, "TIP : Traning probalily data OK !", "TIP", MB_ICONASTERISK);
 }
