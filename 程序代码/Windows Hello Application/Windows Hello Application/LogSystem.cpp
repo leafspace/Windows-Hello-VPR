@@ -23,8 +23,8 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			sprintf(fileName, "%d%d%d%d%d%d.wav", localtime(&date)->tm_year,
 				localtime(&date)->tm_mon, localtime(&date)->tm_yday,
 				localtime(&date)->tm_hour, localtime(&date)->tm_min,
-				localtime(&date)->tm_sec);
-			strcat(filePath, fileName);
+				localtime(&date)->tm_sec);                                   //格式化文件名
+			strcat(filePath, fileName);                                      //连接文件路径
 			delete fileName;
 			cout << filePath << endl;
 
@@ -33,12 +33,12 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			for (int i = 0; filePath[i] != 0; ++i) {
 				tempStr[index++] = filePath[i];
 				if (filePath[i] == '\\') {
-					tempStr[index++] = '\\';
+					tempStr[index++] = '\\';                                 //修改格式化路径为双杠
 				}
 			}
 			tempStr[index] = 0;
 
-			CopyFileA(p_logSystem->filePath.data(), tempStr, FALSE);
+			CopyFileA(p_logSystem->filePath.data(), tempStr, FALSE);         //复制文件到目标路径
 			p_logSystem->socketClient.sendMessage(filePath);                 //利用socket发送文件路径
 			delete filePath;
 
