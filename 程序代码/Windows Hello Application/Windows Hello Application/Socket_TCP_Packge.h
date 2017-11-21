@@ -33,6 +33,16 @@ public:
     void setDataSize(int dataSize);
 
     void setState(int state);
+
+	string getOrginIP();
+    string getTargetIP();
+    
+    int getPackgeNumber();
+    int getPackgeSize();
+    int getHeadSize();
+    int getDataSize();
+
+    int getState();
 };
 
 class SocketDataPackge : public PackgeHead
@@ -47,6 +57,9 @@ public:
 
     bool setData(char* data, int dataSize);
     void setHashMD5(string hashMD5);
+
+	char* getData();
+    string getHashMD5();
 };
 
 class SocketResponsePackge : public PackgeHead
@@ -58,4 +71,6 @@ public:
     }
 
     void setLostNumber(int lostNumber);
+
+	int getLostNumber();
 };

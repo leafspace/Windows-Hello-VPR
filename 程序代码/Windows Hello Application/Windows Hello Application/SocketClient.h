@@ -36,6 +36,7 @@ public:
 	bool initSocket();
 	bool sendMessage(string message);
 	bool sendMessage(string message, int messageLen);
+	string recvMessage();
 	void freeResourse();
 };
 

@@ -10,6 +10,7 @@
 #include "ReadConfig.h"
 #include "SocketClient.h"
 #include "MessageQueue.h"
+#include "Socket_TCP_Packge.h"
 using namespace std;
 
 DWORD WINAPI messageThread(LPVOID lpThreadParameter);
@@ -108,6 +109,28 @@ public:
 		out.close();
 		return true;
 	}
+
+	bool GetLocalIP(char* ipAddress) {
+		WSADATA wsaData;                                                     //初始化wsa
+		int ret = WSAStartup(MAKEWORD(2, 2), &wsaData);
+		if (ret != 0) {
+			return false;
+		}
+		
+		char hostname[256];
+		ret = gethostname(hostname, sizeof(hostname));                       //获取主机名
+		if (ret == SOCKET_ERROR) {
+			return false;  
+		}  
+		
+		HOSTENT* host = gethostbyname(hostname);                             //获取主机ip
+		if (host == NULL) {
+			return false;
+		}
+		strcpy(ipAddress, inet_ntoa(*(in_addr*)*host->h_addr_list));         //转化为char*并拷贝返回
+		return true;
+	}
+
 };
 
 extern LogSystem *p_logSystem;

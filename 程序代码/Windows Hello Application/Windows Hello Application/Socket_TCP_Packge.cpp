@@ -36,6 +36,41 @@ void PackgeHead::setState(int state)
     this->state = state;
 }
 
+string PackgeHead::getOrginIP()
+{
+	return this->orginIP;
+}
+
+string PackgeHead::getTargetIP()
+{
+	return this->targetIP;
+}
+    
+int PackgeHead::getPackgeNumber()
+{
+	return this->packgeNumber;
+}
+
+int PackgeHead::getPackgeSize()
+{
+	return this->packgeSize;
+}
+
+int PackgeHead::getHeadSize()
+{
+	return this->headSize;
+}
+
+int PackgeHead::getDataSize()
+{
+	return this->dataSize;
+}
+
+int PackgeHead::getState()
+{
+	return this->state;
+}
+
 bool SocketDataPackge::setData(char* data, int dataSize)
 {
     bool state = true;
@@ -59,7 +94,23 @@ void SocketDataPackge::setHashMD5(string hashMD5)
     this->hashMD5 = hashMD5;
 }
 
+
+char* SocketDataPackge::getData()
+{
+	return this->dataList;
+}
+
+string SocketDataPackge::getHashMD5()
+{
+	return this->hashMD5;
+}
+
 void SocketResponsePackge::setLostNumber(int lostNumber)
 {
     this->lostNumber = lostNumber;
+}
+
+int SocketResponsePackge::getLostNumber()
+{
+	return this->lostNumber;
 }

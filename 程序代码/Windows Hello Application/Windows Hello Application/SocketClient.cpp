@@ -111,6 +111,22 @@ bool SocketClient::sendMessage(string message, int messageLen)               //�
 	return true;
 }
 
+string SocketClient::recvMessage(void)
+{
+	memset(this->bufferPool, 0, this->bufferSize);                           //接收缓冲区初始化
+	int msgLen;
+	if ((msgLen = recv(this->client, this->bufferPool, this->bufferSize, 0)) == SOCKET_ERROR) {
+		cout << "ERROR : Socket recive message error !" << endl;
+		return NULL;
+	}
+	
+	if (msgLen == this->bufferSize) {
+	    msgLen--;
+	}
+	this->bufferPool[msgLen] = 0;
+	return string(this->bufferPool);
+}
+
 void SocketClient::freeResourse()
 {
 	closesocket(this->client);

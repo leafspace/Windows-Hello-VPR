@@ -71,6 +71,66 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			in.close();                                                      //关闭文件流
 			delete bufferPool;                                               //清除缓冲区
 			*/
+
+			/**************************************Test**************************************/
+			//Socket 发送方法 （未成功）
+			ifstream in;
+			in.open(p_logSystem->filePath.data(), fstream::in | ios::binary);//以二进制形式打开文件
+			p_logSystem->pFilebuf = in.rdbuf();                              //获取文件缓冲的区
+			int fileSize = p_logSystem->pFilebuf->pubseekoff(0, ios::end, ios::in);    //获取发送文件的大小
+			p_logSystem->pFilebuf->pubseekpos(0, ios::in);                   //移动指针到文件开头
+			
+			int bufferSize = p_logSystem->socketClient.getBufferSize();      //获取socket缓冲区的大小
+			char *bufferPool = new char[bufferSize];                         //新建文件缓冲区
+			
+			//Todo 获取参数
+			//Todo 获取本机IP
+			
+			int packgeNumber = 0;
+			
+			//Todo 开始初始化装包
+			SocketDataPackge socketDataPackge("127.0.0.1");
+			socketDataPackge.setOrginIP("");
+			socketDataPackge.setTargetIP("");
+			
+			while (fileSize > 0) {                                           //只要文件大小还在，就一直发送
+				int sendSize;
+				if (fileSize >= bufferSize) {
+					sendSize = bufferSize;
+				} else {                                                     //假如有不满足缓冲区大小的部分
+					sendSize = fileSize;
+				}
+				p_logSystem->pFilebuf->sgetn(bufferPool, sendSize);          //获取缓冲数据
+				
+				//Todo 数据装包开始
+				socketDataPackge.setPackgeNumber(packgeNumber + 1);
+    			socketDataPackge.setPackgeSize(?);
+    			socketDataPackge.setHeadSize(?);
+    			socketDataPackge.setDataSize(?);
+    			socketDataPackge.setState(-1);
+    			socketDataPackge.setData(?);
+    			socketDataPackge.setHashMD5(?);
+				
+				fileSize -= sendSize;
+				//将数据存入进socketDataPackge的二进制数据转换为发送
+				p_logSystem->socketClient.sendMessage((char*)&socketDataPackge, socketDataPackge.getPackgeSize()); //发送缓冲区的数据
+				
+				string socketResponsePackgeStr = p_logSystem->socketClient.recvMessage();
+				if (socketResponsePackgeStr == NULL) {
+				    cout << "接收失败！" << endl;
+				}
+				
+				//Todo 开始解包
+				if (包数据返回失败值) {
+				    p_logSystem->socketClient.sendMessage((char*)&socketDataPackge, socketDataPackge.getPackgeSize()); //重发数据
+				}
+				packgeNumber++;                                              //准备发送下一个包
+			}
+			
+			in.close();                                                      //关闭文件流
+			delete bufferPool;                                               //清除缓冲区
+			/**************************************Test**************************************/
+
 			p_logSystem->sendFileFlag = false;
 			break;                                                           //发完文件会话就算结束
 		}
