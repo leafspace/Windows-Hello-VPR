@@ -73,7 +73,7 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			*/
 
 			/**************************************Test**************************************/
-			//Socket 发送方法 （未成功）
+			//Socket 发送方法 （Todo）
 			ifstream in;
 			in.open(p_logSystem->filePath.data(), fstream::in | ios::binary);//以二进制形式打开文件
 			p_logSystem->pFilebuf = in.rdbuf();                              //获取文件缓冲的区
@@ -83,20 +83,29 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			int bufferSize = p_logSystem->socketClient.getBufferSize();      //获取socket缓冲区的大小
 			char *bufferPool = new char[bufferSize];                         //新建文件缓冲区
 			
-			//Todo 获取参数
-			//Todo 获取本机IP
+			char *ipAddress = new char[16];                                  //IP内存分配
+			p_logSystem->getLocalIP(ipAddress, 16);                          //获取本机IP
 			
+			char *targetIP = new char[16];
+			ReadConfig *readConfig = new ReadConfig;                         //打开文件读取
+			bool isSuccess = readConfig->ReadFile();                         //读取文件
+			if (isSuccess) {
+				strncpy(targetIP, readConfig->getServerIP().data(), 16);     //拷贝从文件读取的目标IP地址
+			}
+			delete readConfig;
+
 			int packgeNumber = 0;
+			int headSize = sizeof(PackgeHead) + sizeof(string);
 			
 			//Todo 开始初始化装包
-			SocketDataPackge socketDataPackge("127.0.0.1");
-			socketDataPackge.setOrginIP("");
-			socketDataPackge.setTargetIP("");
+			SocketDataPackge socketDataPackge("127.0.0.1");                  //创建一个新包
+			socketDataPackge.setOrginIP(ipAddress);                          //设置本机IP
+			socketDataPackge.setTargetIP(targetIP);                          //设置目标主机IP
 			
+			int sendSize = 0;
 			while (fileSize > 0) {                                           //只要文件大小还在，就一直发送
-				int sendSize;
-				if (fileSize >= bufferSize) {
-					sendSize = bufferSize;
+				if (fileSize >= (bufferSize - headSize)) {
+					sendSize = bufferSize - headSize;
 				} else {                                                     //假如有不满足缓冲区大小的部分
 					sendSize = fileSize;
 				}
@@ -104,11 +113,11 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 				
 				//Todo 数据装包开始
 				socketDataPackge.setPackgeNumber(packgeNumber + 1);
-    			socketDataPackge.setPackgeSize(?);
-    			socketDataPackge.setHeadSize(?);
-    			socketDataPackge.setDataSize(?);
-    			socketDataPackge.setState(-1);
-    			socketDataPackge.setData(?);
+    			socketDataPackge.setPackgeSize(bufferSize);
+    			socketDataPackge.setHeadSize(headSize);
+    			socketDataPackge.setDataSize(sendSize);
+    			socketDataPackge.setState(1);
+    			socketDataPackge.setData(bufferPool, sendSize);
     			socketDataPackge.setHashMD5(?);
 				
 				fileSize -= sendSize;
@@ -124,10 +133,14 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 				if (包数据返回失败值) {
 				    p_logSystem->socketClient.sendMessage((char*)&socketDataPackge, socketDataPackge.getPackgeSize()); //重发数据
 				}
+
+				delete socketDataPackge.getData();
 				packgeNumber++;                                              //准备发送下一个包
 			}
 			
 			in.close();                                                      //关闭文件流
+			delete targetIP;                                                 //清除缓冲区
+			delete ipAddress;                                                //清除缓冲区
 			delete bufferPool;                                               //清除缓冲区
 			/**************************************Test**************************************/
 

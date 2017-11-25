@@ -2,6 +2,7 @@
 
 #include <io.h>
 #include <time.h>
+#include <stdio.h>
 #include <cstdlib>
 #include <fstream>
 #include <direct.h>
@@ -110,27 +111,15 @@ public:
 		return true;
 	}
 
-	bool GetLocalIP(char* ipAddress) {
-		WSADATA wsaData;                                                     //初始化wsa
-		int ret = WSAStartup(MAKEWORD(2, 2), &wsaData);
-		if (ret != 0) {
-			return false;
-		}
-		
-		char hostname[256];
-		ret = gethostname(hostname, sizeof(hostname));                       //获取主机名
-		if (ret == SOCKET_ERROR) {
-			return false;  
-		}  
-		
-		HOSTENT* host = gethostbyname(hostname);                             //获取主机ip
-		if (host == NULL) {
-			return false;
-		}
-		strcpy(ipAddress, inet_ntoa(*(in_addr*)*host->h_addr_list));         //转化为char*并拷贝返回
-		return true;
+	void getLocalIP(char* ipAddress, int size) {                             //获取本机IP
+		WORD word = MAKEWORD(1, 1);
+		WSADATA wsaData;
+		WSAStartup(word, &wsaData);
+		char *ip = inet_ntoa(*((struct in_addr *)(*gethostbyname("")->h_addr_list)));
+		strncpy(ipAddress, ip, size);
+		ipAddress[size] = 0;
+		WSACleanup();
 	}
-
 };
 
 extern LogSystem *p_logSystem;
