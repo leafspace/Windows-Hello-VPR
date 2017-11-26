@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="CChineseCode.cpp" />
     <ClCompile Include="LogSystem.cpp" />
+    <ClCompile Include="MD5.cpp" />
     <ClCompile Include="Model_GMM.cpp" />
     <ClCompile Include="Model_KMeans.cpp" />
     <ClCompile Include="SocketClient.cpp" />
@@ -93,6 +94,7 @@
   <ItemGroup>
     <ClInclude Include="CChineseCode.h" />
     <ClInclude Include="LogSystem.h" />
+    <ClInclude Include="MD5.h" />
     <ClInclude Include="MessageQueue.h" />
     <ClInclude Include="Model_GMM.h" />
     <ClInclude Include="Model_KMeans.h" />

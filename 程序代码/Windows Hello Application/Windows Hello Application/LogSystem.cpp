@@ -77,7 +77,7 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			ifstream in;
 			in.open(p_logSystem->filePath.data(), fstream::in | ios::binary);//以二进制形式打开文件
 			p_logSystem->pFilebuf = in.rdbuf();                              //获取文件缓冲的区
-			int fileSize = p_logSystem->pFilebuf->pubseekoff(0, ios::end, ios::in);    //获取发送文件的大小
+			int fileSize = (int) p_logSystem->pFilebuf->pubseekoff(0, ios::end, ios::in);        //获取发送文件的大小
 			p_logSystem->pFilebuf->pubseekpos(0, ios::in);                   //移动指针到文件开头
 			
 			int bufferSize = p_logSystem->socketClient.getBufferSize();      //获取socket缓冲区的大小
@@ -87,8 +87,8 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			p_logSystem->getLocalIP(ipAddress, 16);                          //获取本机IP
 			
 			char *targetIP = new char[16];
-			ReadConfig *readConfig = new ReadConfig;                         //打开文件读取
-			bool isSuccess = readConfig->ReadFile();                         //读取文件
+			readConfig = new ReadConfig;                                     //打开文件读取
+			isSuccess = readConfig->ReadFile();                         //读取文件
 			if (isSuccess) {
 				strncpy(targetIP, readConfig->getServerIP().data(), 16);     //拷贝从文件读取的目标IP地址
 			}
@@ -97,7 +97,7 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			int packgeNumber = 0;
 			int headSize = sizeof(PackgeHead) + sizeof(string);
 			
-			//Todo 开始初始化装包
+			//开始初始化装包
 			SocketDataPackge socketDataPackge("127.0.0.1");                  //创建一个新包
 			socketDataPackge.setOrginIP(ipAddress);                          //设置本机IP
 			socketDataPackge.setTargetIP(targetIP);                          //设置目标主机IP
@@ -111,27 +111,31 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 				}
 				p_logSystem->pFilebuf->sgetn(bufferPool, sendSize);          //获取缓冲数据
 				
-				//Todo 数据装包开始
+				MD5 md5;
+				string hashMD5 = md5.getMD5(bufferPool);
+				//数据装包开始
 				socketDataPackge.setPackgeNumber(packgeNumber + 1);
     			socketDataPackge.setPackgeSize(bufferSize);
     			socketDataPackge.setHeadSize(headSize);
     			socketDataPackge.setDataSize(sendSize);
     			socketDataPackge.setState(1);
     			socketDataPackge.setData(bufferPool, sendSize);
-    			socketDataPackge.setHashMD5(?);
+				socketDataPackge.setHashMD5(hashMD5);
 				
 				fileSize -= sendSize;
 				//将数据存入进socketDataPackge的二进制数据转换为发送
-				p_logSystem->socketClient.sendMessage((char*)&socketDataPackge, socketDataPackge.getPackgeSize()); //发送缓冲区的数据
+				p_logSystem->socketClient.sendMessage((char*)&socketDataPackge, socketDataPackge.getPackgeSize());   //发送缓冲区的数据
 				
 				string socketResponsePackgeStr = p_logSystem->socketClient.recvMessage();
-				if (socketResponsePackgeStr == NULL) {
-				    cout << "接收失败！" << endl;
-				}
-				
-				//Todo 开始解包
-				if (包数据返回失败值) {
-				    p_logSystem->socketClient.sendMessage((char*)&socketDataPackge, socketDataPackge.getPackgeSize()); //重发数据
+				if (socketResponsePackgeStr.length() == 0) {
+				    cout << "Error : Recv message failed！" << endl;
+					p_logSystem->socketClient.sendMessage((char*)&socketDataPackge, socketDataPackge.getPackgeSize());         //重发数据
+				} else {
+					//开始解包为SocketDataPackge
+					SocketDataPackge *recive = (SocketDataPackge*)socketResponsePackgeStr.data();
+					if (recive->getState() != 2) {
+						p_logSystem->socketClient.sendMessage((char*)&socketDataPackge, socketDataPackge.getPackgeSize());     //重发数据
+					}
 				}
 
 				delete socketDataPackge.getData();

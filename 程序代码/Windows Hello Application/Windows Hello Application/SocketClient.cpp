@@ -117,7 +117,7 @@ string SocketClient::recvMessage(void)
 	int msgLen;
 	if ((msgLen = recv(this->client, this->bufferPool, this->bufferSize, 0)) == SOCKET_ERROR) {
 		cout << "ERROR : Socket recive message error !" << endl;
-		return NULL;
+		return string("");
 	}
 	
 	if (msgLen == this->bufferSize) {

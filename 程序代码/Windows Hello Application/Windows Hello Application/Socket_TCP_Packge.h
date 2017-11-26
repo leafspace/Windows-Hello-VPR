@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 using namespace std;
 
@@ -29,7 +31,7 @@ public:
     
     void setPackgeNumber(int packgeNumber);
     void setPackgeSize(int packgeSize);
-    void setHeadSize(int headSize = 20);
+    void setHeadSize(int headSize);
     void setDataSize(int dataSize);
 
     void setState(int state);

@@ -1,36 +1,20 @@
-﻿生成启动时间为 2017/10/10 18:15:33。
-     1>项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Windows Hello Application\Windows Hello Application.vcxproj”在节点 2 上(build 个目标)。
+﻿生成启动时间为 2017-11-26 16:23:45。
+     1>项目“Z:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Windows Hello Application\Windows Hello Application.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\Windows Hello Application.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SourceMain.cpp
-         SourceMain.cpp
+         所有输出均为最新。
        ManifestResourceCompile:
          所有输出均为最新。
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Debug\Windows Hello Application.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Windows Hello Application.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Debug\Windows Hello Application.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Debug\Windows Hello Application.lib" /MACHINE:X86 "Debug\Windows Hello Application.exe.embed.manifest.res"
-         Debug\CChineseCode.obj
-         Debug\LogSystem.obj
-         Debug\Model_GMM.obj
-         Debug\Model_KMeans.obj
-         Debug\SocketClient.obj
-         Debug\SourceMain.obj
-         Debug\WavData_CharaParameter.obj
-         Debug\WavData_SupportFunction.obj
-         Debug\WaveRecorder.obj
-         Debug\WavFile_Initial.obj
-         Debug\WavFile_Struct.obj
+         所有输出均为最新。
        Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Windows Hello Application.exe.embed.manifest" /manifest "Debug\Windows Hello Application.exe.intermediate.manifest"
          所有输出均为最新。
-       LinkEmbedManifest:
-         所有输出均为最新。
-         Windows Hello Application.vcxproj -> F:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Debug\Windows Hello Application.exe
        FinalizeBuildStatus:
          正在删除文件“Debug\Windows Hello Application.unsuccessfulbuild”。
          正在对“Debug\Windows Hello Application.lastbuildstate”执行 Touch 任务。
-     1>已完成生成项目“F:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Windows Hello Application\Windows Hello Application.vcxproj”(build 个目标)的操作。
+     1>已完成生成项目“Z:\Project Engineering\Windows-Hello-VPR\程序代码\Windows Hello Application\Windows Hello Application\Windows Hello Application.vcxproj”(build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:01.58
+已用时间 00:00:00.32

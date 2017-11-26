@@ -7,7 +7,6 @@
 #include <iostream>
 #include <direct.h>
 #include <winsock.h>
-#include <WinSock2.h>
 using namespace std;
 
 class SocketClient

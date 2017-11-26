@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <io.h>
+#include "MD5.h"
 #include <time.h>
 #include <stdio.h>
 #include <cstdlib>
