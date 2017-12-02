@@ -118,17 +118,12 @@ public class MD5{
     }
 
     private MD5(){};
-
+    
     private static MD5 instance;
     public static MD5 getInstance() {                                        //单例
         if(instance == null) {
             instance = new MD5();
         }
         return instance;
-    }
-
-    public static void main(String[] args) {
-        String str = MD5.getInstance().getMD5("abc");
-        System.out.println(str);
     }
 }
