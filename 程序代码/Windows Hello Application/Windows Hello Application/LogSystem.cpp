@@ -42,8 +42,9 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			p_logSystem->socketClient.sendMessage(filePath);                 //利用socket发送文件路径
 			delete filePath;
 
-			/*
+			/**************************************Socket发送文件方法测试-First**************************************/
 			//Socket 发送方法 （未成功）
+			/*
 			ifstream in;
 			in.open(p_logSystem->filePath.data(), fstream::in | ios::binary);//以二进制形式打开文件
 			p_logSystem->pFilebuf = in.rdbuf();                              //获取文件缓冲的区
@@ -71,9 +72,11 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			in.close();                                                      //关闭文件流
 			delete bufferPool;                                               //清除缓冲区
 			*/
-
-			/**************************************Test**************************************/
-			//Socket 发送方法 （Todo）
+			/**************************************Socket发送文件方法测试-First**************************************/
+			
+			/**************************************Socket发送文件方法测试-Second**************************************/
+			//Socket 发送方法 （Todo 内容已经完成 但内容未结合websocket端测试）
+			/*
 			ifstream in;
 			in.open(p_logSystem->filePath.data(), fstream::in | ios::binary);//以二进制形式打开文件
 			p_logSystem->pFilebuf = in.rdbuf();                              //获取文件缓冲的区
@@ -88,7 +91,7 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			
 			char *targetIP = new char[16];
 			readConfig = new ReadConfig;                                     //打开文件读取
-			isSuccess = readConfig->ReadFile();                         //读取文件
+			isSuccess = readConfig->ReadFile();                              //读取文件
 			if (isSuccess) {
 				strncpy(targetIP, readConfig->getServerIP().data(), 16);     //拷贝从文件读取的目标IP地址
 			}
@@ -146,7 +149,8 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			delete targetIP;                                                 //清除缓冲区
 			delete ipAddress;                                                //清除缓冲区
 			delete bufferPool;                                               //清除缓冲区
-			/**************************************Test**************************************/
+			*/
+			/**************************************Socket发送文件方法测试-Second**************************************/
 
 			p_logSystem->sendFileFlag = false;
 			break;                                                           //发完文件会话就算结束
