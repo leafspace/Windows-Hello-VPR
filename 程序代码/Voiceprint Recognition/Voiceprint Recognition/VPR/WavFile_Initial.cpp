@@ -419,7 +419,7 @@ bool WavFile_Initial::Endpoint_Detection(void)                               //�
 
 	for (unsigned long i = 0, frame = 0; i < this->Get_dataNumber() - N; ++i) { //遍历每一帧
 		frame = (i - N) / WavFile_Initial::FrameShift + 1;
-		if (i <= 256) {
+		if (i <= N) {
 			frame = 0;
 		}
 		switch (statusFlag)
