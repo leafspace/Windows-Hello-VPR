@@ -1,6 +1,10 @@
 package cn.leafspace.Database.Connector;
 
 import cn.leafspace.Database.Interface.DatabaseConnectorInterface;
+import cn.leafspace.ToolBean.JSON.JSONObject;
+import org.apache.commons.io.FileUtils;
+import java.io.IOException;
+import java.io.File;
 
 import java.sql.*;
 
@@ -13,6 +17,21 @@ public class MySqlDatabaseConnection implements DatabaseConnectorInterface {
 
     private Connection connection;
     private PreparedStatement preparedStatement;
+
+    public MySqlDatabaseConnection() {
+        try
+        {
+            File file = new File("info.json");
+            String content = FileUtils.readFileToString(file,"UTF-8");
+            JSONObject jsonObject = new JSONObject(content);
+            MySqlDatabaseConnection.driverName = jsonObject.getString("dbName");
+            MySqlDatabaseConnection.userName = jsonObject.getString("userName");
+            MySqlDatabaseConnection.userPassword = jsonObject.getString("userPassword");
+            MySqlDatabaseConnection.databaseIp = jsonObject.getString("dbHost");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Connection getConnection() {
         try {
