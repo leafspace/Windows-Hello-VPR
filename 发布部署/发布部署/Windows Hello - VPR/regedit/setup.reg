@@ -1,4 +1,4 @@
 Windows Registry Editor Version 5.00 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe]
-"Debugger"="C:\\Program Files\\Windows Hello VPR\\Windows Hello Application.exe" 
+"Debugger"="C:\\Program Files (x86)\\Windows Hello - VPR\\Windows Hello Application.exe" 
 "Type"=REG_SZ
