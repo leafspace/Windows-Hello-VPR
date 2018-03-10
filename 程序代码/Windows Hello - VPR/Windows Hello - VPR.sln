@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Windows Hello Application",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Voiceprint Recognition", "Voiceprint Recognition\Voiceprint Recognition.vcxproj", "{4DD587C6-946D-4187-8EE0-1620FD58782D}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WindowsHelloVPRSetup", "WindowsHelloVPRSetup\WindowsHelloVPRSetup.vdproj", "{7684A9E3-55A1-4A70-8C31-7707CA6ED685}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -25,6 +27,8 @@ Global
 		{4DD587C6-946D-4187-8EE0-1620FD58782D}.Debug|Win32.Build.0 = Debug|Win32
 		{4DD587C6-946D-4187-8EE0-1620FD58782D}.Release|Win32.ActiveCfg = Release|Win32
 		{4DD587C6-946D-4187-8EE0-1620FD58782D}.Release|Win32.Build.0 = Release|Win32
+		{7684A9E3-55A1-4A70-8C31-7707CA6ED685}.Debug|Win32.ActiveCfg = Debug
+		{7684A9E3-55A1-4A70-8C31-7707CA6ED685}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
