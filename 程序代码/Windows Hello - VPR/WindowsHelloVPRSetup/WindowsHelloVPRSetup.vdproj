@@ -105,6 +105,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_B348A4288113400C9CFC18ED1DA3B0D4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_C1A4403348A94A0EA17EEB7984C117A0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -195,6 +201,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
     }
@@ -517,6 +536,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B348A4288113400C9CFC18ED1DA3B0D4"
+            {
+            "SourcePath" = "8:resource\\Windows Hello VPR.ico"
+            "TargetName" = "8:Windows Hello VPR.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C1A4403348A94A0EA17EEB7984C117A0"
             {
             "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\Windows Hello Application.exe"
@@ -647,7 +686,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_AFD4F16A23814E6EBB3247389687C57D"
             {
-            "DefaultLocation" = "8:C:\\Program Files\\Windows Hello - VPR"
+            "DefaultLocation" = "8:[ProgramFilesFolder]\\Windows Hello - VPR"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
@@ -696,7 +735,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Windows Hello VPR"
         "ProductCode" = "8:{2C2E558E-17CD-425A-A067-6B0FE9FA618B}"
-        "PackageCode" = "8:{6BCF2A23-2969-438B-9236-CCDA8543349A}"
+        "PackageCode" = "8:{EAB0D0BE-9F5B-4BEC-8204-E8B6F8A0E544}"
         "UpgradeCode" = "8:{689C9E6E-1B42-4844-91BB-E773CCD2262E}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -719,7 +758,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:regedit /s \"C:\\Program Files\\Windows Hello - VPR\\setup.reg\"\r\ndel /f/s/q \"C:\\Program Files\\Windows Hello - VPR\\setup.reg\"\r\nset path=\"C:\\Program Files\\Windows Hello - VPR\\Voiceprint Recognition.exe\"\r\nset topath=\"%USERPROFILE%\\桌面\\Voiceprint Recognition.url\"\r\necho [InternetShortcut] >> %topath%\r\necho URL=\"%path%\" >> %topath%\r\necho IconIndex=0 >> %topath%\r\necho IconFile=%path% >> %topath%\r\n"
+        "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
@@ -728,24 +767,88 @@
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E92C72080EB34EF89200BE336D223D82"
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E545ECAC810D4BC38FDC61972C048C5E"
                     {
-                    "Name" = "8:Software"
+                    "Name" = "8:SOFTWARE"
                     "Condition" = "8:"
                     "AlwaysCreate" = "11:FALSE"
                     "DeleteAtUninstall" = "11:FALSE"
                     "Transitive" = "11:FALSE"
                         "Keys"
                         {
-                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_5999401D118C4D5F98B07409594DAA59"
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_897FF193D2ED49E1985603C5E85018E4"
                             {
-                            "Name" = "8:[Manufacturer]"
+                            "Name" = "8:Microsoft"
                             "Condition" = "8:"
                             "AlwaysCreate" = "11:FALSE"
                             "DeleteAtUninstall" = "11:FALSE"
                             "Transitive" = "11:FALSE"
                                 "Keys"
                                 {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_4E8594FF1048430C8254E9817988B09C"
+                                    {
+                                    "Name" = "8:Windows NT"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_DAE16D2A99254BC0ABE09BEC16B86825"
+                                            {
+                                            "Name" = "8:CurrentVersion"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_0ED7668E31554EAFBD1D0CC2B1C355AD"
+                                                    {
+                                                    "Name" = "8:Image File Execution Options"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_CF4C8587292A4772B505A517F61DFEFE"
+                                                            {
+                                                            "Name" = "8:utilman.exe"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_643D0D358E364C12BDD4A2085C2717A4"
+                                                                    {
+                                                                    "Name" = "8:Debugger"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:[ProgramFilesFolder]Windows Hello - VPR\\Windows Hello Application.exe"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        "Values"
+                                                        {
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
                                 }
                                 "Values"
                                 {
@@ -816,6 +919,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1C62AC45CF224889B6D9CB4CC3C6A667"
+            {
+            "Name" = "8:Windows Hello 桌面客户端"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_66D85F2C55E649B0AAE286735C2C296F"
+            "Folder" = "8:_29869DA536ED4C15A39D3F93E0FBFCEF"
+            "WorkingFolder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
+            "Icon" = "8:_B348A4288113400C9CFC18ED1DA3B0D4"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -1001,28 +1118,6 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_7471F20833B94A54A8B165B58BB72B9C"
-                    {
-                    "Sequence" = "3:300"
-                    "DisplayName" = "8:确认安装"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminConfirmDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_9227685E3BC845C8A02623F7CF6588C2"
                     {
                     "Sequence" = "3:100"
@@ -1133,28 +1228,6 @@
                             "Setting" = "3:0"
                             "Value" = "3:1"
                             "DefaultValue" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_ADEB3812DE6547CEA73C24461121EFCA"
-                    {
-                    "Sequence" = "3:300"
-                    "DisplayName" = "8:确认安装"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdConfirmDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }

@@ -8,5 +8,5 @@
     拷贝Windows Hello Log System文件夹至服务器路径下
 
     修改Windows Hello - VPR下info.conf的server和path选项为web服务器的地址跟web系统保存文件的位置
-    修改Windows Hello - VPR/regedit/setup.reg的Debugger路径为Windows Hello Application.exe的路径
+    修改注册表导入/setup.reg的Debugger路径为Windows Hello Application.exe的路径
     修改Windows Hello Log System/WEB-INF/info.json中的数据库服务器配置
