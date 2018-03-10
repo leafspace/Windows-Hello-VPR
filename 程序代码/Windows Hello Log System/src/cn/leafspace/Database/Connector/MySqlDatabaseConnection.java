@@ -3,31 +3,42 @@ package cn.leafspace.Database.Connector;
 import cn.leafspace.Database.Interface.DatabaseConnectorInterface;
 import cn.leafspace.ToolBean.JSON.JSONObject;
 import org.apache.commons.io.FileUtils;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.File;
 
+import java.net.URL;
 import java.sql.*;
 
 public class MySqlDatabaseConnection implements DatabaseConnectorInterface {
+    private static boolean isInitFlag = false;
     private static String driverName = "com.mysql.jdbc.Driver";
     private static String userName = "root";
     private static String userPassword = "123456";
-    private static String databaseIp = "192.168.155.3";
+    private static String databaseIp = "127.0.0.1";
     private static String dbName = "windowshello-vpr-logsystem";
 
     private Connection connection;
     private PreparedStatement preparedStatement;
 
     public MySqlDatabaseConnection() {
-        try
-        {
-            File file = new File("info.json");
-            String content = FileUtils.readFileToString(file,"UTF-8");
-            JSONObject jsonObject = new JSONObject(content);
-            MySqlDatabaseConnection.driverName = jsonObject.getString("dbName");
-            MySqlDatabaseConnection.userName = jsonObject.getString("userName");
-            MySqlDatabaseConnection.userPassword = jsonObject.getString("userPassword");
-            MySqlDatabaseConnection.databaseIp = jsonObject.getString("dbHost");
+        try {
+            if (!MySqlDatabaseConnection.isInitFlag) {
+                URL url = Thread.currentThread().getContextClassLoader().getResource("");
+                String configurePath = url.getPath().replace("classes", "info.json").substring(1);
+
+                File file = new File(configurePath);
+                String content = FileUtils.readFileToString(file, "UTF-8");
+                JSONObject jsonObject = new JSONObject(content);
+                MySqlDatabaseConnection.driverName = jsonObject.getString("dbName");
+                MySqlDatabaseConnection.userName = jsonObject.getString("userName");
+                MySqlDatabaseConnection.userPassword = jsonObject.getString("userPassword");
+                MySqlDatabaseConnection.databaseIp = jsonObject.getString("dbHost");
+                MySqlDatabaseConnection.isInitFlag = true;
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Error : Can't find profile !");
         } catch (IOException e) {
             e.printStackTrace();
         }
