@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Windows Hello - VPR", "Windows Hello - VPR\Windows Hello - VPR.vcxproj", "{9A2DF67D-80BC-425D-B77E-A39C151CE704}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Windows Hello Application", "Windows Hello Application\Windows Hello Application.vcxproj", "{A2C01DEE-B401-44A9-B210-AC3F7C534A0A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Voiceprint Recognition", "Voiceprint Recognition\Voiceprint Recognition.vcxproj", "{4DD587C6-946D-4187-8EE0-1620FD58782D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +17,14 @@ Global
 		{9A2DF67D-80BC-425D-B77E-A39C151CE704}.Debug|Win32.Build.0 = Debug|Win32
 		{9A2DF67D-80BC-425D-B77E-A39C151CE704}.Release|Win32.ActiveCfg = Release|Win32
 		{9A2DF67D-80BC-425D-B77E-A39C151CE704}.Release|Win32.Build.0 = Release|Win32
+		{A2C01DEE-B401-44A9-B210-AC3F7C534A0A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A2C01DEE-B401-44A9-B210-AC3F7C534A0A}.Debug|Win32.Build.0 = Debug|Win32
+		{A2C01DEE-B401-44A9-B210-AC3F7C534A0A}.Release|Win32.ActiveCfg = Release|Win32
+		{A2C01DEE-B401-44A9-B210-AC3F7C534A0A}.Release|Win32.Build.0 = Release|Win32
+		{4DD587C6-946D-4187-8EE0-1620FD58782D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4DD587C6-946D-4187-8EE0-1620FD58782D}.Debug|Win32.Build.0 = Debug|Win32
+		{4DD587C6-946D-4187-8EE0-1620FD58782D}.Release|Win32.ActiveCfg = Release|Win32
+		{4DD587C6-946D-4187-8EE0-1620FD58782D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
