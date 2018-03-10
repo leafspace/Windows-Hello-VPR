@@ -26,7 +26,8 @@ public class MySqlDatabaseConnection implements DatabaseConnectorInterface {
         try {
             if (!MySqlDatabaseConnection.isInitFlag) {
                 URL url = Thread.currentThread().getContextClassLoader().getResource("");
-                String configurePath = url.getPath().replace("classes", "info.json").substring(1);
+                String configurePath = url.getPath().replace("classes/", "info.json").substring(1);
+                configurePath = configurePath.replaceAll("/", "\\\\\\\\");
 
                 File file = new File(configurePath);
                 String content = FileUtils.readFileToString(file, "UTF-8");
@@ -39,7 +40,7 @@ public class MySqlDatabaseConnection implements DatabaseConnectorInterface {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error : Can't find profile !");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
