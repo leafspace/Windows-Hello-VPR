@@ -7,7 +7,6 @@ import cn.leafspace.Database.Interface.DatabaseConnectorInterface;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class MySqlDatabaseProxy implements DatabaseProxyInterface {
@@ -18,7 +17,7 @@ public class MySqlDatabaseProxy implements DatabaseProxyInterface {
     }
 
     public int findUser(String username, String password) {
-        Connection connection = this.databaseConnection.getConnection();
+        this.databaseConnection.getConnection();
         String sqlStr = "SELECT * FROM userlist WHERE Username = '" + username + "' AND `Password` = '" + password + "';";
         ResultSet resultSet = this.databaseConnection.query(sqlStr);
         try {
@@ -40,7 +39,7 @@ public class MySqlDatabaseProxy implements DatabaseProxyInterface {
 
     public ArrayList<MessageItem> getInfoList() {
         ArrayList<MessageItem> messageItems = new ArrayList<MessageItem>();
-        Connection connection = this.databaseConnection.getConnection();
+        this.databaseConnection.getConnection();
         String sqlStr = "SELECT * FROM infolist ORDER BY IssueTime DESC;";
         ResultSet resultSet = this.databaseConnection.query(sqlStr);
         try {
@@ -65,7 +64,7 @@ public class MySqlDatabaseProxy implements DatabaseProxyInterface {
 
     public ArrayList<MessageItem> getKeywordInfoList(String keyWord) {
         ArrayList<MessageItem> messageItems = new ArrayList<MessageItem>();
-        Connection connection = this.databaseConnection.getConnection();
+        this.databaseConnection.getConnection();
         String sqlStr = "SELECT * FROM infolist WHERE ClientType LIKE '%" + keyWord + "%' OR Information LIKE '%" +
                 keyWord + "%' OR Result LIKE '%" + keyWord + "%' ORDER BY IssueTime DESC;";
         ResultSet resultSet = this.databaseConnection.query(sqlStr);
@@ -91,7 +90,7 @@ public class MySqlDatabaseProxy implements DatabaseProxyInterface {
 
     public MessageItem getMessage(int id) {
         MessageItem messageItems = null;
-        Connection connection = this.databaseConnection.getConnection();
+        this.databaseConnection.getConnection();
         String sqlStr = "SELECT * FROM infolist WHERE ID = "+ id +";";
         ResultSet resultSet = this.databaseConnection.query(sqlStr);
         try {
@@ -116,7 +115,7 @@ public class MySqlDatabaseProxy implements DatabaseProxyInterface {
     }
 
     public void insertInfoItem(MessageItem messageItem) {
-        Connection connection = this.databaseConnection.getConnection();
+        this.databaseConnection.getConnection();
         String sqlStr = "INSERT INTO infolist(InfoType, ClientType, IssueTime, Information, Result, ClientIP, FilePath) VALUES("+
                 messageItem.getInfoType() +", '"+ messageItem.getClientType() +"', '"+ messageItem.getIssueTime() +"', '"+
                 messageItem.getInformation() +"', '"+ messageItem.getResult() +"', '"+ messageItem.getClientIP() +"', '"+ messageItem.getFilePath() +"');";

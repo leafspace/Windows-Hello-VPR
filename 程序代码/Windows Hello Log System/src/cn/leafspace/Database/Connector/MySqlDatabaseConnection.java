@@ -40,7 +40,7 @@ public class MySqlDatabaseConnection implements DatabaseConnectorInterface {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error : Can't find profile !");
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
