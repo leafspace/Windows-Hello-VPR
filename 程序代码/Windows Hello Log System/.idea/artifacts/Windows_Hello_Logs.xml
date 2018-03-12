@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Windows Hello Logs">
+    <output-path>$PROJECT_DIR$/out/artifacts/Windows_Hello_Logs</output-path>
+    <root id="archive" name="Windows Hello Logs.war">
+      <element id="artifact" artifact-name="Windows Hello Log System" />
+    </root>
+  </artifact>
+</component>
