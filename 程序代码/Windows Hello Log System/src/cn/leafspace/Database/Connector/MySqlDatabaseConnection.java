@@ -48,7 +48,8 @@ public class MySqlDatabaseConnection implements DatabaseConnectorInterface {
     public Connection getConnection() {
         try {
             String url = "jdbc:mysql://" + MySqlDatabaseConnection.databaseIp + ":3306/" + MySqlDatabaseConnection.dbName +
-                    "?useUnicode=true&characterEncoding=utf8&user=" + MySqlDatabaseConnection.userName + "&password=" + MySqlDatabaseConnection.userPassword;
+                    "?useUnicode=true&characterEncoding=utf8&user=" + MySqlDatabaseConnection.userName + "&password=" + MySqlDatabaseConnection.userPassword +
+                    "useSSL=false;";
             Class.forName(MySqlDatabaseConnection.driverName);               //加载数据库驱动程序类
             this.connection = DriverManager.getConnection(url);              //获取数据库链接
             return this.connection;
