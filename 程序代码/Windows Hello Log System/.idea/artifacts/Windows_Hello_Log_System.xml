@@ -9,9 +9,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/mysql-connector-java-5.1.18-bin.jar" />
-          <element id="file-copy" path="C:/Program Files (x86)/JetBrains/Support/J2EE Server Apache Tomcat/x64/apache-tomcat-9.0.0.M13/lib/websocket-api.jar" />
           <element id="library" level="project" name="server lib" />
-          <element id="file-copy" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.45-bin.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/commons-logging.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/antlr.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/commons-digester.jar" />
@@ -23,6 +21,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-5.1.45-bin.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/oro.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/struts-core.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/websocket-api.jar" />
         </element>
       </element>
     </root>

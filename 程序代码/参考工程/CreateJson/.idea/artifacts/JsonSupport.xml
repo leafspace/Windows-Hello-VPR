@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JsonSupport">
+    <output-path>$PROJECT_DIR$/out/artifacts/JsonSupport</output-path>
+    <root id="archive" name="JsonSupport.jar">
+      <element id="javaee-facet-resources" facet="CreateJson/javaeeApplication/javaEEApplication" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
