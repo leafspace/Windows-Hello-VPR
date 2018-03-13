@@ -1,3 +1,5 @@
+package cn.leafspace.ToolBean;
+
 public class MD5{
     //四个链接变量
     private final int A = 0x67452301;
