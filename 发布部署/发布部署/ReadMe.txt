@@ -1,9 +1,9 @@
 ﻿安装说明：
-    数据库配置：
+    数据库配置（默认情况）：
         数据库名：windowshello-vpr-logsystem
         用户名：root
         用户密码：123456
-        数据库地址：192.168.155.3
+        数据库地址：127.0.0.1
     拷贝Windows Hello - VPR文件夹至你想要的位置
     拷贝Windows Hello Log System文件夹至服务器路径下
 
