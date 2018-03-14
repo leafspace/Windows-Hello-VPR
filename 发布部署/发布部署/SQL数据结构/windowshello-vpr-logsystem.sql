@@ -1,16 +1,16 @@
-﻿/*
+/*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50612
-Source Host           : 127.0.0.1:3306
+Source Server         : Mysql
+Source Server Version : 50714
+Source Host           : localhost:3306
 Source Database       : windowshello-vpr-logsystem
 
 Target Server Type    : MYSQL
-Target Server Version : 50612
+Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2018-03-10 20:26:47
+Date: 2018-03-13 20:42:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `infolist` (
   `ClientIP` varchar(36) DEFAULT NULL,
   `FilePath` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of infolist
@@ -40,11 +40,13 @@ CREATE TABLE `infolist` (
 -- ----------------------------
 DROP TABLE IF EXISTS `userlist`;
 CREATE TABLE `userlist` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Username` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Password` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of userlist
 -- ----------------------------
-INSERT INTO `userlist` VALUES ('admin', 'admin');
+INSERT INTO `userlist` VALUES ('1', 'admin', 'admin');

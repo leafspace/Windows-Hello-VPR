@@ -32,7 +32,7 @@ public class MySqlDatabaseConnection implements DatabaseConnectorInterface {
                 File file = new File(configurePath);
                 String content = FileUtils.readFileToString(file, "UTF-8");
                 JSONObject jsonObject = new JSONObject(content);
-                MySqlDatabaseConnection.driverName = jsonObject.getString("dbName");
+                MySqlDatabaseConnection.dbName = jsonObject.getString("dbName");
                 MySqlDatabaseConnection.userName = jsonObject.getString("userName");
                 MySqlDatabaseConnection.userPassword = jsonObject.getString("userPassword");
                 MySqlDatabaseConnection.databaseIp = jsonObject.getString("dbHost");
@@ -49,7 +49,7 @@ public class MySqlDatabaseConnection implements DatabaseConnectorInterface {
         try {
             String url = "jdbc:mysql://" + MySqlDatabaseConnection.databaseIp + ":3306/" + MySqlDatabaseConnection.dbName +
                     "?useUnicode=true&characterEncoding=utf8&user=" + MySqlDatabaseConnection.userName + "&password=" + MySqlDatabaseConnection.userPassword +
-                    "useSSL=false;";
+                    "&useSSL=false";
             Class.forName(MySqlDatabaseConnection.driverName);               //加载数据库驱动程序类
             this.connection = DriverManager.getConnection(url);              //获取数据库链接
             return this.connection;
