@@ -236,6 +236,7 @@ int main()
 		string str;
 		//CChineseCode::GB2312ToUTF_8(str, password, strlen(password));
 		p_logSystem->sendMessage("<Finish>\n");
+		PlaySound(TEXT("success.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	}
 	else {
 		cout << "ERROR : User Unknow !" << endl;
@@ -253,6 +254,7 @@ int main()
 		p_logSystem->sendFile("tempRecord.wav");
 
 		MessageBoxA(NULL, "对不起，您没有权限登陆 !", "错误", MB_ICONHAND);
+		PlaySound(TEXT("failed.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	}
 
 	return 0;
