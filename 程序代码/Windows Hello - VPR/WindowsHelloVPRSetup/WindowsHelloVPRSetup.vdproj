@@ -135,6 +135,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D8BF00D4BD5340899CCE31EF0CF56969"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_EB77CB9ABAB54B0BBF952F0DFF4470B4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -648,6 +654,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D8BF00D4BD5340899CCE31EF0CF56969"
+            {
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\msvcp100.dll"
+            "TargetName" = "8:msvcp100.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EB77CB9ABAB54B0BBF952F0DFF4470B4"
             {
             "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\voiceLib\\info.list"
@@ -734,6 +760,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_4149C476D9334FEF9E3F5AAEA4A5AF2C"
+                    {
+                    "Name" = "8:Windows Hello VPR"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_CA6E1BDF938C4F718563E5115519C81B"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_AFD4F16A23814E6EBB3247389687C57D"
@@ -787,7 +824,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Windows Hello VPR"
         "ProductCode" = "8:{2C2E558E-17CD-425A-A067-6B0FE9FA618B}"
-        "PackageCode" = "8:{EAB0D0BE-9F5B-4BEC-8204-E8B6F8A0E544}"
+        "PackageCode" = "8:{42A01546-B3F9-427D-B0F9-912AC67F7790}"
         "UpgradeCode" = "8:{689C9E6E-1B42-4844-91BB-E773CCD2262E}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -983,6 +1020,20 @@
             "Folder" = "8:_29869DA536ED4C15A39D3F93E0FBFCEF"
             "WorkingFolder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
             "Icon" = "8:_B348A4288113400C9CFC18ED1DA3B0D4"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F7883B399C2A4ABF82146A5A34C743B3"
+            {
+            "Name" = "8:Windows Hello 桌面客户端"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_6E88EDBA98B647A0A0E76F0FB6BE405F"
+            "Folder" = "8:_4149C476D9334FEF9E3F5AAEA4A5AF2C"
+            "WorkingFolder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
