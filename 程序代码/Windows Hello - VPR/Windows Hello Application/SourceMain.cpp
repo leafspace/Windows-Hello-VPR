@@ -1,4 +1,6 @@
-﻿#include <io.h>
+﻿#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")                                         //不显示控制台
+
+#include <io.h>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -38,12 +40,17 @@ int main()
 	waveRecorder.set_FileName("tempRecord.wav");
 	waveRecorder.Start();
 	cout << "TIP : System begin to start recorder. " << endl;
+	//count down
+	PlaySound(TEXT("resourse\\countdown03.wav"), NULL, SND_SYNC | SND_FILENAME);
+	PlaySound(TEXT("resourse\\countdown02.wav"), NULL, SND_SYNC | SND_FILENAME);
+	PlaySound(TEXT("resourse\\countdown01.wav"), NULL, SND_SYNC | SND_FILENAME);
+	PlaySound(TEXT("resourse\\countdown00.wav"), NULL, SND_SYNC | SND_FILENAME);
 	Sleep(5500);
 	waveRecorder.Stop();
 	waveRecorder.Reset();
 
 
-	FILE *fp;
+	FILE *fp = NULL;
 	if ((fp = fopen("tempRecord.wav", "rb")) == NULL) {                                                              //打开语音文件
 		cout << "ERROR : File open failed !" << endl;
 		//LogSystem send message
@@ -52,6 +59,7 @@ int main()
 			p_logSystem->sendMessage("ERROR : File open failed !\n");
 		}
 		p_logSystem->writeMessage("ERROR : File open failed !\n");
+		PlaySound(TEXT("resourse\\failed.wav"), NULL, SND_ASYNC | SND_FILENAME);
 		exit(-1);
 	}
 
@@ -236,7 +244,7 @@ int main()
 		string str;
 		//CChineseCode::GB2312ToUTF_8(str, password, strlen(password));
 		p_logSystem->sendMessage("<Finish>\n");
-		PlaySound(TEXT("success.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		PlaySound(TEXT("resourse\\success.wav"), NULL, SND_ASYNC | SND_FILENAME);
 	}
 	else {
 		cout << "ERROR : User Unknow !" << endl;
@@ -253,8 +261,8 @@ int main()
 		p_logSystem->sendMessage("<File>\n");
 		p_logSystem->sendFile("tempRecord.wav");
 
+		PlaySound(TEXT("resourse\\failed.wav"), NULL, SND_ASYNC | SND_FILENAME);
 		MessageBoxA(NULL, "对不起，您没有权限登陆 !", "错误", MB_ICONHAND);
-		PlaySound(TEXT("failed.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	}
 
 	return 0;
@@ -310,10 +318,13 @@ bool recognitionMethods(vector<string> files, double *libProbability, int countM
 		}
 		p_logSystem->writeMessage("TIP : Use max probability to recognition .\n");
 
-		if (strcmp(getFileName(files[countMax]).data(), "me.txt") == 0) {
-			return true;
-		} 
-		else {
+		if (countMax < (int) files.size()) {
+			if (strcmp(getFileName(files[countMax]).data(), "me.txt") == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}
@@ -343,12 +354,19 @@ bool recognitionMethods(vector<string> files, double *libProbability, int countM
 		probabilityMax = probability + fabs(probability) * threshold;
 		probabilityMin = probability - fabs(probability) * threshold;
 
-		int index = 0;
+		int index = -1;
 		for (int i = 0; i < gmmNumber; ++i) {
-			if (strcmp(getFileName(files[i]).data(), "me.txt") == 0) {
-				index = i;
-				break;
+			if (countMax < (int) files.size()) {
+				if (strcmp(getFileName(files[i]).data(), "me.txt") == 0) {
+					index = i;
+					break;
+				}
 			}
+		}
+
+		if (index = -1) {
+			// can't find me.txt file
+			return false;
 		}
 
 		//LogSystem send message

@@ -21,19 +21,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_06AB35EE72CE44ABB7314E8D2EE3C8E0"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_144FCE59B5354B719CFEFC39923C79CF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_30D4C88F4C024E1992B7C7FFA6D2AD21"
+        "MsmKey" = "8:_30F0DF1C54C243E483183A42125B8390"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_321BDF2328514B689DF16CF985703D81"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,7 +51,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_3FF396C618A548ECAB7739E8704FFD31"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4537883A89C7465C874A96F095F6C031"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4D65D314B34B4638A1890A0BAF8A8680"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -69,13 +81,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5CCA90F7045040A79710E9B1BB1628FF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_62C572340FB2483693462010F6F289BE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6E88EDBA98B647A0A0E76F0FB6BE405F"
+        "MsmKey" = "8:_6816DE97959C4187B4B402AA5C61779D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -105,12 +123,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9C0AC4E9C81A4C5B8BDD7B5D8CDA5660"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_AF21EC1B2A2A449FAFDA28301C357E2C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -123,7 +135,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B953D7405DE843DDBF92BC12622016C9"
+        "MsmKey" = "8:_C3B7AFD1A5614C58B0F1A7FAD8C94CAB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CF938D41FC1C403CBC1405F61084A7A0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -136,6 +154,12 @@
         "Entry"
         {
         "MsmKey" = "8:_D8BF00D4BD5340899CCE31EF0CF56969"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DF183486DD06434FA8DA7A7916F0069F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -274,26 +298,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_06AB35EE72CE44ABB7314E8D2EE3C8E0"
-            {
-            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\编译结果\\Release\\Windows Hello - VPR.exe"
-            "TargetName" = "8:Windows Hello - VPR.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_144FCE59B5354B719CFEFC39923C79CF"
             {
             "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\msvcr100d.dll"
@@ -314,12 +318,32 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_30D4C88F4C024E1992B7C7FFA6D2AD21"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_30F0DF1C54C243E483183A42125B8390"
             {
-            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\success.wav"
-            "TargetName" = "8:success.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown02.wav"
+            "TargetName" = "8:countdown02.wav"
             "Tag" = "8:"
-            "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
+            "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_321BDF2328514B689DF16CF985703D81"
+            {
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown01.wav"
+            "TargetName" = "8:countdown01.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -374,12 +398,52 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3FF396C618A548ECAB7739E8704FFD31"
+            {
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\编译结果\\Release\\Windows Hello Application.exe"
+            "TargetName" = "8:Windows Hello Application.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4537883A89C7465C874A96F095F6C031"
             {
             "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\zhaocaiyun.wav"
             "TargetName" = "8:zhaocaiyun.wav"
             "Tag" = "8:"
             "Folder" = "8:_1A72469727964AA28896CE643A531D5E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4D65D314B34B4638A1890A0BAF8A8680"
+            {
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown00.wav"
+            "TargetName" = "8:countdown00.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -434,6 +498,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5CCA90F7045040A79710E9B1BB1628FF"
+            {
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\编译结果\\Release\\Windows Hello - VPR.exe"
+            "TargetName" = "8:Windows Hello - VPR.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_62C572340FB2483693462010F6F289BE"
             {
             "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\msvcp100d.dll"
@@ -454,7 +538,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6E88EDBA98B647A0A0E76F0FB6BE405F"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6816DE97959C4187B4B402AA5C61779D"
             {
             "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\编译结果\\Release\\Voiceprint Recognition.exe"
             "TargetName" = "8:Voiceprint Recognition.exe"
@@ -554,26 +638,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9C0AC4E9C81A4C5B8BDD7B5D8CDA5660"
-            {
-            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\failed.wav"
-            "TargetName" = "8:failed.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AF21EC1B2A2A449FAFDA28301C357E2C"
             {
             "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\leafspace.wav"
@@ -614,12 +678,32 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B953D7405DE843DDBF92BC12622016C9"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C3B7AFD1A5614C58B0F1A7FAD8C94CAB"
             {
-            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\编译结果\\Release\\Windows Hello Application.exe"
-            "TargetName" = "8:Windows Hello Application.exe"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\success.wav"
+            "TargetName" = "8:success.wav"
             "Tag" = "8:"
-            "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
+            "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CF938D41FC1C403CBC1405F61084A7A0"
+            {
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\failed.wav"
+            "TargetName" = "8:failed.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -660,6 +744,26 @@
             "TargetName" = "8:msvcp100.dll"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF183486DD06434FA8DA7A7916F0069F"
+            {
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown03.wav"
+            "TargetName" = "8:countdown03.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -801,6 +905,39 @@
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_2AFA419CF1EA41C0A62B022758193608"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_704579086DB94B3C813C8F6873841941"
+                    {
+                    "Name" = "8:logs"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_ADBFBD0EF3F543C4AD67AE48354D2129"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_C21D3F1F4FD0438B85785EC27428BA30"
+                    {
+                    "Name" = "8:resourse"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_3DAF922466A145C7BCDFCEE8F3E38563"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_DBA66143C7D647F9A5DE3DD768FAA38A"
+                    {
+                    "Name" = "8:temp"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_241E5420A9DC4A78A001F2E3C07BE8E1"
                         "Folders"
                         {
                         }
@@ -1016,7 +1153,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_6E88EDBA98B647A0A0E76F0FB6BE405F"
+            "Target" = "8:_6816DE97959C4187B4B402AA5C61779D"
             "Folder" = "8:_29869DA536ED4C15A39D3F93E0FBFCEF"
             "WorkingFolder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
             "Icon" = "8:_B348A4288113400C9CFC18ED1DA3B0D4"
@@ -1030,7 +1167,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_6E88EDBA98B647A0A0E76F0FB6BE405F"
+            "Target" = "8:_6816DE97959C4187B4B402AA5C61779D"
             "Folder" = "8:_4149C476D9334FEF9E3F5AAEA4A5AF2C"
             "WorkingFolder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
             "Icon" = "8:"
