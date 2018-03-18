@@ -1,6 +1,7 @@
 ﻿#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")                                         //不显示控制台
 
 #include <io.h>
+#include <stdio.h>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -36,15 +37,16 @@ int main()
 	}
 	p_logSystem->writeMessage("TIP : System begin to start recorder. \n");
 
-	WaveRecorder waveRecorder;
-	waveRecorder.set_FileName("tempRecord.wav");
-	waveRecorder.Start();
 	cout << "TIP : System begin to start recorder. " << endl;
 	//count down
 	PlaySound(TEXT("resourse\\countdown03.wav"), NULL, SND_SYNC | SND_FILENAME);
 	PlaySound(TEXT("resourse\\countdown02.wav"), NULL, SND_SYNC | SND_FILENAME);
 	PlaySound(TEXT("resourse\\countdown01.wav"), NULL, SND_SYNC | SND_FILENAME);
 	PlaySound(TEXT("resourse\\countdown00.wav"), NULL, SND_SYNC | SND_FILENAME);
+
+	WaveRecorder waveRecorder;
+	waveRecorder.set_FileName("tempRecord.wav");
+	waveRecorder.Start();
 	Sleep(5500);
 	waveRecorder.Stop();
 	waveRecorder.Reset();
@@ -265,6 +267,7 @@ int main()
 		MessageBoxA(NULL, "对不起，您没有权限登陆 !", "错误", MB_ICONHAND);
 	}
 
+	remove("tempRecord.wav");
 	return 0;
 }
 

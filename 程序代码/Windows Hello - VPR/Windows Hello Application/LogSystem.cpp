@@ -11,6 +11,7 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			}
 
 			char* filePath = new char[256];
+			memset(filePath, 0, 256);
 			ReadConfig *readConfig = new ReadConfig;                         //打开文件读取
 			bool isSuccess = readConfig->ReadFile();                         //读取文件
 			if (isSuccess) {
@@ -19,6 +20,7 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			delete readConfig;
 
 			char* fileName = new char[256];
+			memset(fileName, 0, 256);
 			time_t date = time(0);
 			sprintf(fileName, "%d%d%d%d%d%d.wav", localtime(&date)->tm_year,
 				localtime(&date)->tm_mon, localtime(&date)->tm_yday,
@@ -28,7 +30,7 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			delete fileName;
 			cout << filePath << endl;
 
-			char tempStr[256];
+			char tempStr[256] = { 0 };
 			int index = 0;
 			for (int i = 0; filePath[i] != 0; ++i) {
 				tempStr[index++] = filePath[i];
@@ -40,6 +42,7 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 
 			CopyFileA(p_logSystem->filePath.data(), tempStr, FALSE);         //复制文件到目标路径
 			p_logSystem->socketClient.sendMessage(filePath);                 //利用socket发送文件路径
+			delete fileName;
 			delete filePath;
 
 			/**************************************Socket发送文件方法测试-First**************************************/

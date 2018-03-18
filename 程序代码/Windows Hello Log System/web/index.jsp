@@ -1,4 +1,4 @@
-<%@ page import="java.util.ArrayList" %>
+﻿<%@ page import="java.util.ArrayList" %>
 <%@ page import="cn.leafspace.ToolBean.User" %>
 <%@ page import="cn.leafspace.ToolBean.MessageItem" %>
 <%@ page import="cn.leafspace.Database.Factory.DatabaseProxyFactory" %>
@@ -139,7 +139,7 @@
 			var ipHost = window.location.href;
 			var tempIndex = ipHost.indexOf("//");
 			ipHost = ipHost.substr(tempIndex + 2, ipHost.length);
-			tempIndex = stipHostr.indexOf("/");
+			tempIndex = ipHostr.indexOf("/");
 			ipHost = ipHost.substr(0, tempIndex);
 			tempIndex = ipHost.indexOf(":");
 			if (tempIndex > 0) {
