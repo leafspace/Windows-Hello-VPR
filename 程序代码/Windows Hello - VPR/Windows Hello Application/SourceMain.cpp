@@ -245,7 +245,11 @@ int main()
 
 		string str;
 		//CChineseCode::GB2312ToUTF_8(str, password, strlen(password));
-		p_logSystem->sendMessage("<Finish>\n");
+		
+		p_logSystem->sendMessage("<File>\n");
+		Sleep(500);
+		p_logSystem->sendFile("tempRecord.wav");
+		//p_logSystem->sendMessage("<Finish>\n");
 		PlaySound(TEXT("resourse\\success.wav"), NULL, SND_ASYNC | SND_FILENAME);
 	}
 	else {
@@ -261,11 +265,24 @@ int main()
 		p_logSystem->writeMessage("ERROR : 对不起，您没有权限登陆 ! \n");
 
 		p_logSystem->sendMessage("<File>\n");
+		Sleep(500);
 		p_logSystem->sendFile("tempRecord.wav");
 
 		PlaySound(TEXT("resourse\\failed.wav"), NULL, SND_ASYNC | SND_FILENAME);
 		MessageBoxA(NULL, "对不起，您没有权限登陆 !", "错误", MB_ICONHAND);
 	}
+
+	// 备份录音数据
+	char* fileName = new char[256];
+	memset(fileName, 0, 256);
+	time_t date = time(0);
+	sprintf(fileName, "temp\\%d%d%d%d%d%d.wav", localtime(&date)->tm_year,
+		localtime(&date)->tm_mon, localtime(&date)->tm_yday,
+		localtime(&date)->tm_hour, localtime(&date)->tm_min,
+		localtime(&date)->tm_sec);                                                                               //格式化文件名
+
+	CopyFileA("tempRecord.wav", fileName, FALSE);
+	delete fileName;
 
 	remove("tempRecord.wav");
 	return 0;
@@ -359,7 +376,7 @@ bool recognitionMethods(vector<string> files, double *libProbability, int countM
 
 		int index = -1;
 		for (int i = 0; i < gmmNumber; ++i) {
-			if (countMax < (int) files.size()) {
+			if (i < (int) files.size()) {
 				if (strcmp(getFileName(files[i]).data(), "me.txt") == 0) {
 					index = i;
 					break;
@@ -367,7 +384,7 @@ bool recognitionMethods(vector<string> files, double *libProbability, int countM
 			}
 		}
 
-		if (index = -1) {
+		if (index == -1) {
 			// can't find me.txt file
 			return false;
 		}

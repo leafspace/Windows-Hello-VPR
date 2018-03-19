@@ -139,15 +139,11 @@
 			var ipHost = window.location.href;
 			var tempIndex = ipHost.indexOf("//");
 			ipHost = ipHost.substr(tempIndex + 2, ipHost.length);
-			tempIndex = ipHostr.indexOf("/");
+			tempIndex = ipHost.indexOf("/");
 			ipHost = ipHost.substr(0, tempIndex);
-			tempIndex = ipHost.indexOf(":");
-			if (tempIndex > 0) {
-				ipHost = ipHost.substr(0, tempIndex);
-			}
 
             if ('WebSocket' in window) {                                         //判断当前浏览器是否支持WebSocket
-                websocket = new WebSocket("ws://" + ipHost + ":8080/websocket");
+                websocket = new WebSocket("ws://" + ipHost + "/websocket");
             } else {
                 alert('您的浏览器不支持WebSocket,某些功能无法使用!');
             }

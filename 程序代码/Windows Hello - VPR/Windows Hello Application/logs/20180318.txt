@@ -1,0 +1,42 @@
+[21:34:43] ==============================================
+[21:34:43] TIP : System begin to start recorder. 
+[21:34:54] TIP : Init voice file, read voice data !
+[21:34:54] TIP : Init charaparameter !
+[21:34:54] TIP : Caculater MFCC parameter !
+[21:34:54] TIP : Begin recognition !
+[21:34:54] TIP : Init library gmm model !
+[21:34:54] TIP : Begin reservation ... !
+[21:34:54] [21:34:54] [21:35:44] ==============================================
+[21:35:44] TIP : System begin to start recorder. 
+[21:35:54] TIP : Init voice file, read voice data !
+[21:35:54] TIP : Init charaparameter !
+[21:35:54] TIP : Caculater MFCC parameter !
+[21:35:54] TIP : Begin recognition !
+[21:35:54] TIP : Init library gmm model !
+[21:35:54] TIP : Begin reservation ... !
+[21:35:54] [21:35:55] [21:36:3] TIP : Use probability max and min to recognition .
+[21:38:8] ==============================================
+[21:38:8] TIP : System begin to start recorder. 
+[21:38:18] TIP : Init voice file, read voice data !
+[21:38:18] TIP : Init charaparameter !
+[21:38:18] TIP : Caculater MFCC parameter !
+[21:38:19] TIP : Begin recognition !
+[21:38:19] TIP : Init library gmm model !
+[21:39:59] ==============================================
+[21:39:59] TIP : System begin to start recorder. 
+[21:40:9] TIP : Init voice file, read voice data !
+[21:40:9] TIP : Init charaparameter !
+[21:40:9] TIP : Caculater MFCC parameter !
+[21:40:9] TIP : Begin recognition !
+[21:41:22] ==============================================
+[21:41:22] TIP : System begin to start recorder. 
+[21:41:32] TIP : Init voice file, read voice data !
+[21:41:32] TIP : Init charaparameter !
+[21:41:32] TIP : Caculater MFCC parameter !
+[21:41:32] TIP : Begin recognition !
+[21:41:32] TIP : Init library gmm model !
+[21:41:33] TIP : Begin reservation ... !
+[21:41:33] me.txt|女-liuchang(我们需要帮助).txt|女-zhaoquanyin(我们需要帮助).txt|男-wangzhe(我们需要帮助).txt|男-zhaozuoxiang(我们需要帮助).txt
+[21:41:33] -4098.418573|-3055.919009|-12267.941922|-3576.386995|-3621.184270
+[21:41:42] TIP : Use probability max and min to recognition .
+[21:42:38] TIP : Probability max (-3754.084500) and min (-5079.055500) to recognition .
