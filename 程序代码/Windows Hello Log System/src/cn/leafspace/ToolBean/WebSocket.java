@@ -33,6 +33,7 @@ public class WebSocket {
     @OnOpen
     public void onOpen(Session session) {                                    //连接建立成功调用的方法
         this.session = session;
+        System.out.println("Have some one link the web socket");
         WebSocket.webSocketSet.add(this);                                    //存入每个客户端对应的WebSocket对象
         addOnlineCount();                                                    //在线数加1
     }

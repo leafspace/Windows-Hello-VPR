@@ -139,7 +139,7 @@
 			var ipHost = window.location.href;
 			var tempIndex = ipHost.indexOf("//");
 			ipHost = ipHost.substr(tempIndex + 2, ipHost.length);
-			tempIndex = ipHost.indexOf("/");
+			tempIndex = ipHost.lastIndexOf("/");
 			ipHost = ipHost.substr(0, tempIndex);
 
             if ('WebSocket' in window) {                                         //判断当前浏览器是否支持WebSocket
@@ -149,7 +149,7 @@
             }
 
             websocket.onerror = function () {                                    //连接发生错误的回调方法
-                alert('WebSocket连接发生错误!');
+                alert("WebSocket" + "(" + ipHost + "/websocket" +")" +"连接发生错误!");
             }
 
             websocket.onopen = function () {}                                    //连接成功建立的回调方法
