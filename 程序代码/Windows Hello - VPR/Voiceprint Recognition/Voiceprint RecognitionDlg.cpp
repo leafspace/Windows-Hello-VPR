@@ -296,7 +296,7 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 
 	if (strcmp(selectItem.peopleName.data(), "未知") == 0 ||
 		strcmp(selectItem.peopleName.data(), "unknow") == 0) {
-		MessageBoxA(NULL, "未知的用户语音无法训练进入语音库", "错误", MB_ICONHAND);
+		MessageBoxA(NULL, "未知的用户语音无法训练进入训练库", "错误", MB_ICONHAND);
 		//LogSystem send message
 		if (p_logSystem->linkState) {
 			p_logSystem->sendMessage("<Message>\n");
@@ -324,7 +324,7 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 	strcpy_s(wavfilePath, filePath);
 	strcpy_s(gmmfilePath, filePath);
 	strcat_s(wavfilePath, "wavLib\\\\");
-	strcat_s(gmmfilePath, "voiceLib\\\\");
+	strcat_s(gmmfilePath, "trainLib\\\\");
 	strcat_s(wavfilePath, selectItem.fileName.data());
 	strcat_s(gmmfilePath, selectItem.peopleName.data());
 	strcat_s(gmmfilePath, "-gmm(-).txt");
