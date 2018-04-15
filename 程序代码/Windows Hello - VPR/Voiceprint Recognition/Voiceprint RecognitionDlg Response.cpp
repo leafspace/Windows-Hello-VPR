@@ -213,12 +213,20 @@ void readList(ifstream& in, vector<FILESTRUCT>& list)                        //�
 {
 	char buffer[512];
 	string str_f, str_p;
+	bool isFirstRound = true;
 	char fileName[256], peopleName[256];
 	if (in.is_open()) {
 		while (!in.eof()) {
 			in.getline(buffer, 512);
 			if (strlen(buffer) == 0) {                                       //防止到了最后一行只是一个换行还重复读取
 				continue;
+			}
+
+			if (isFirstRound) {                                              //0xef 0xbb 0xbf如果出现这三个字节说明此为UTF-8文件
+				if (buffer[0] == -17 && buffer[1] == -69 && buffer[2] == -65) {
+					strcpy(buffer, &buffer[3]);
+				}
+				isFirstRound = false;
 			}
 			sscanf(buffer, "%s %s", &fileName, &peopleName);                 //格式化字符串
 			CChineseCode::UTF_8ToGB2312(str_f, fileName, strlen(fileName));

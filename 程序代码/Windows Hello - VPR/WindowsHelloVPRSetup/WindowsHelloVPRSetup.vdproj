@@ -274,7 +274,7 @@
         {
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_144FCE59B5354B719CFEFC39923C79CF"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\msvcr100d.dll"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\msvcr100d.dll"
             "TargetName" = "8:msvcr100d.dll"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -294,7 +294,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_14BBDC20AA554BFC923B5760B5B49F86"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\voiceLib\\zhaocaiyun.txt"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\voiceLib\\zhaocaiyun.txt"
             "TargetName" = "8:zhaocaiyun.txt"
             "Tag" = "8:"
             "Folder" = "8:_4E1AC102D55C4D4394592E1148469406"
@@ -314,7 +314,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_30F0DF1C54C243E483183A42125B8390"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown02.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown02.wav"
             "TargetName" = "8:countdown02.wav"
             "Tag" = "8:"
             "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
@@ -334,7 +334,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_321BDF2328514B689DF16CF985703D81"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown01.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown01.wav"
             "TargetName" = "8:countdown01.wav"
             "Tag" = "8:"
             "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
@@ -354,7 +354,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3E497FD717E342B29DA62A9C611DB245"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\msvcr100.dll"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\msvcr100.dll"
             "TargetName" = "8:msvcr100.dll"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -374,7 +374,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3FF396C618A548ECAB7739E8704FFD31"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\编译结果\\Release\\Windows Hello Application.exe"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\编译结果\\Release\\Windows Hello Application.exe"
             "TargetName" = "8:Windows Hello Application.exe"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -394,7 +394,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4537883A89C7465C874A96F095F6C031"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\zhaocaiyun.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\zhaocaiyun.wav"
             "TargetName" = "8:zhaocaiyun.wav"
             "Tag" = "8:"
             "Folder" = "8:_1A72469727964AA28896CE643A531D5E"
@@ -414,7 +414,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4D65D314B34B4638A1890A0BAF8A8680"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown00.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown00.wav"
             "TargetName" = "8:countdown00.wav"
             "Tag" = "8:"
             "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
@@ -434,7 +434,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5048EDABA46E4870AF0C1A1D144241F0"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\info.conf"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\info.conf"
             "TargetName" = "8:info.conf"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -454,7 +454,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5B6851E074D2496EB0E4EF438E6E9CCC"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\lflytek.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\lflytek.wav"
             "TargetName" = "8:lflytek.wav"
             "Tag" = "8:"
             "Folder" = "8:_1A72469727964AA28896CE643A531D5E"
@@ -474,7 +474,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5CCA90F7045040A79710E9B1BB1628FF"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\编译结果\\Release\\Windows Hello - VPR.exe"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\编译结果\\Release\\Windows Hello - VPR.exe"
             "TargetName" = "8:Windows Hello - VPR.exe"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -494,7 +494,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_62C572340FB2483693462010F6F289BE"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\msvcp100d.dll"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\msvcp100d.dll"
             "TargetName" = "8:msvcp100d.dll"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -514,7 +514,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6816DE97959C4187B4B402AA5C61779D"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\编译结果\\Release\\Voiceprint Recognition.exe"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\编译结果\\Release\\Voiceprint Recognition.exe"
             "TargetName" = "8:Voiceprint Recognition.exe"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -534,7 +534,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7047F2C803C64EF9B96417706259A12F"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\flash.swf"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\flash.swf"
             "TargetName" = "8:flash.swf"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -554,7 +554,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_73105BC92E2345E48183F64F78229572"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\mary.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\mary.wav"
             "TargetName" = "8:mary.wav"
             "Tag" = "8:"
             "Folder" = "8:_1A72469727964AA28896CE643A531D5E"
@@ -574,7 +574,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7A5D1BC90DC1415786AE2CE1914D71CE"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\qinglihao.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\qinglihao.wav"
             "TargetName" = "8:qinglihao.wav"
             "Tag" = "8:"
             "Folder" = "8:_1A72469727964AA28896CE643A531D5E"
@@ -594,7 +594,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_92793C3B711E42869C3F8B7F0655EC27"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\info.list"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\info.list"
             "TargetName" = "8:info.list"
             "Tag" = "8:"
             "Folder" = "8:_1A72469727964AA28896CE643A531D5E"
@@ -614,7 +614,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AF21EC1B2A2A449FAFDA28301C357E2C"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\leafspace.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\leafspace.wav"
             "TargetName" = "8:leafspace.wav"
             "Tag" = "8:"
             "Folder" = "8:_1A72469727964AA28896CE643A531D5E"
@@ -654,7 +654,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B45176456E0940AFBA2FD6C0DC25095A"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\voiceLib\\qinlihao.txt"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\voiceLib\\qinlihao.txt"
             "TargetName" = "8:qinlihao.txt"
             "Tag" = "8:"
             "Folder" = "8:_4E1AC102D55C4D4394592E1148469406"
@@ -674,7 +674,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C3B7AFD1A5614C58B0F1A7FAD8C94CAB"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\success.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\success.wav"
             "TargetName" = "8:success.wav"
             "Tag" = "8:"
             "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
@@ -694,7 +694,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CF938D41FC1C403CBC1405F61084A7A0"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\failed.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\failed.wav"
             "TargetName" = "8:failed.wav"
             "Tag" = "8:"
             "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
@@ -714,7 +714,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D37E820057A14E4E95116E4968D4C729"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\voiceLib\\me.txt"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\voiceLib\\me.txt"
             "TargetName" = "8:me.txt"
             "Tag" = "8:"
             "Folder" = "8:_4E1AC102D55C4D4394592E1148469406"
@@ -734,7 +734,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D8BF00D4BD5340899CCE31EF0CF56969"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\msvcp100.dll"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\msvcp100.dll"
             "TargetName" = "8:msvcp100.dll"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -754,7 +754,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF183486DD06434FA8DA7A7916F0069F"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown03.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\resourse\\countdown03.wav"
             "TargetName" = "8:countdown03.wav"
             "Tag" = "8:"
             "Folder" = "8:_C21D3F1F4FD0438B85785EC27428BA30"
@@ -774,7 +774,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FE76C9D1E5DC47479C3FB8718970C172"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\pthreadVC2.dll"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\pthreadVC2.dll"
             "TargetName" = "8:pthreadVC2.dll"
             "Tag" = "8:"
             "Folder" = "8:_AFD4F16A23814E6EBB3247389687C57D"
@@ -794,7 +794,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FF8957795AC5478EA31D7B59DEFC0B26"
             {
-            "SourcePath" = "8:\\\\vmware-host\\Shared Folders\\F\\Coding\\Windows-Hello-VPR\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\zhanglife.wav"
+            "SourcePath" = "8:..\\..\\..\\发布部署\\发布部署\\Windows Hello - VPR\\wavLib\\zhanglife.wav"
             "TargetName" = "8:zhanglife.wav"
             "Tag" = "8:"
             "Folder" = "8:_1A72469727964AA28896CE643A531D5E"
