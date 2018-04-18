@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>无标题文档</title>
+		<link href="img/style.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript">
+			var active = function(obj){
+				var lis=obj.parentNode.childNodes;
+				for(var i=0;i<lis.length;i++){
+					lis.item(i).className = "";
+				} 
+				obj.className = 'active';
+			}
+		</script>
+	</head>
+	<body>
+		<div class="header">
+			<div class="logo"><a href="http://www.paperok.com/" target="_blank">PaperOK</a></div>
+			<div class="title">
+				《声纹识别应用检测报告》
+			</div>
+			<div class="similarity">
+				<span>总相似率</span>
+				<strong>34.32%</strong>
+			</div>
+			<div class="nav">
+				<ul class="menu">
+					<li class="active" onclick="active(this)"><a href="main-report.html" target="mainFrame">综合评估</a></li>
+					<li onclick="active(this)"><a href="full-text-report.html" target="mainFrame">详细报告</a></li>
+					<li onclick="active(this)"><a href="paper-modify.html" target="mainFrame">在线修改</a></li>
+					<li onclick="active(this)"><a href="original-text.html" target="mainFrame">查看原文</a></li>
+					<li><a href="../PDF报告（简洁打印版）.pdf" target="_blank">打印PDF</a></li>
+					<li onclick="active(this)"><a href="modify-help.html" target="mainFrame">改重攻略</a></li>
+				</ul>
+					<span class="report-id">
+						报告编号：61c62182-8cd4-4dc3-b92e-448c56e32d2c
+						<a href="http://www.paperok.com/check?number=61c62182-8cd4-4dc3-b92e-448c56e32d2c" target="_blank">真伪查询</a>
+					</span>
+			</div>
+		</div>
+	</body>
+</html>
