@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\VPR">
+      <UniqueIdentifier>{2d2fe02a-4215-4ece-8865-dab3a837f761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\VPR">
+      <UniqueIdentifier>{e3494377-200b-4198-9bf7-74006ac3610b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\LOG">
+      <UniqueIdentifier>{57550ed7-23bb-4645-a906-c0da4b79010d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LOG">
+      <UniqueIdentifier>{83688260-68fd-40f6-8a39-07f04d7f2a56}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="res\VoiceprintRecognition.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\Voiceprint Recognition.ico">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="flash.swf">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Shockwaveflash.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WaveRecorder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CChineseCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\WavFile_Struct.h">
+      <Filter>头文件\VPR</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\WavFile_Initial.h">
+      <Filter>头文件\VPR</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\WavData_CharaParameter.h">
+      <Filter>头文件\VPR</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\Model_GMM.h">
+      <Filter>头文件\VPR</Filter>
+    </ClInclude>
+    <ClInclude Include="Voiceprint RecognitionDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Voiceprint Recognition.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="VPR\Model_KMeans.h">
+      <Filter>头文件\VPR</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG\LogSystem.h">
+      <Filter>头文件\LOG</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG\MessageQueue.h">
+      <Filter>头文件\LOG</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG\ReadConfig.h">
+      <Filter>头文件\LOG</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG\SocketClient.h">
+      <Filter>头文件\LOG</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Voiceprint Recognition.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Voiceprint RecognitionDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Shockwaveflash.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Voiceprint RecognitionDlg Response.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WaveRecorder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CChineseCode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\Model_GMM.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\Model_KMeans.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\WavData_CharaParameter.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\WavData_SupportFunction.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\WavFile_Initial.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="VPR\WavFile_Struct.cpp">
+      <Filter>源文件\VPR</Filter>
+    </ClCompile>
+    <ClCompile Include="LOG\SocketClient.cpp">
+      <Filter>源文件\LOG</Filter>
+    </ClCompile>
+    <ClCompile Include="LOG\LogSystem.cpp">
+      <Filter>源文件\LOG</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Voiceprint Recognition.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

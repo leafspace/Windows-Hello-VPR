@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\MediaControl">
+      <UniqueIdentifier>{43b0dac1-0c11-44f4-9a0c-222ea63b1727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\MediaControl">
+      <UniqueIdentifier>{cf92b444-7c70-4079-a099-79e4797b2887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\MediaControl\Common">
+      <UniqueIdentifier>{73da3371-d8be-4379-b84f-cdc19686583b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\MediaControl\Common">
+      <UniqueIdentifier>{95b4d3b1-a18b-4b9e-8ac0-a824c69136a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\MediaControl\WAVFile">
+      <UniqueIdentifier>{0fc582d8-4d29-484d-9814-0a9bdc7b1a64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\MediaControl\WAVFile">
+      <UniqueIdentifier>{071ef64e-5a70-4ce7-ab4c-0d8216199821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\CharaParameterControl">
+      <UniqueIdentifier>{429179f6-ce26-4d2e-9ac1-d7e6ab10d40d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\CharaParameterControl">
+      <UniqueIdentifier>{88e8196f-b651-4af9-a059-f9c9d91977b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\OperationalModelControl">
+      <UniqueIdentifier>{4a36099b-d3fb-43bd-b247-0f9194400d68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\OperationalModelControl">
+      <UniqueIdentifier>{848d7913-f16d-4d83-9fc1-f91e5ad07a02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\PretreatmentControl">
+      <UniqueIdentifier>{950a5829-0b84-4435-b524-f6dbd4d4117c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\PretreatmentControl">
+      <UniqueIdentifier>{990c7c1b-4e72-4774-8f87-d74599c64057}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main_Source.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MediaControl\Common\CommonType.cpp">
+      <Filter>源文件\MediaControl\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="MediaControl\WAVFile\WavFileBase.cpp">
+      <Filter>源文件\MediaControl\WAVFile</Filter>
+    </ClCompile>
+    <ClCompile Include="CharaParameterControl\WavData_CharaParameter.cpp">
+      <Filter>源文件\CharaParameterControl</Filter>
+    </ClCompile>
+    <ClCompile Include="CharaParameterControl\WavData_SupportFunction.cpp">
+      <Filter>源文件\CharaParameterControl</Filter>
+    </ClCompile>
+    <ClCompile Include="OperationalModelControl\Model_GMM.cpp">
+      <Filter>源文件\OperationalModelControl</Filter>
+    </ClCompile>
+    <ClCompile Include="OperationalModelControl\Model_KMeans.cpp">
+      <Filter>源文件\OperationalModelControl</Filter>
+    </ClCompile>
+    <ClCompile Include="PretreatmentControl\PretreatmentControlCommon.cpp">
+      <Filter>源文件\PretreatmentControl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MediaControl\Common\CommonType.h">
+      <Filter>头文件\MediaControl\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="MediaControl\WAVFile\WavFileBase.h">
+      <Filter>头文件\MediaControl\WAVFile</Filter>
+    </ClInclude>
+    <ClInclude Include="MediaControl\Common\CommonStruct.h">
+      <Filter>头文件\MediaControl\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="MediaControl\Common\MediaFile.h">
+      <Filter>头文件\MediaControl\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CharaParameterControl\WavData_CharaParameter.h">
+      <Filter>头文件\CharaParameterControl</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationalModelControl\Model_GMM.h">
+      <Filter>头文件\OperationalModelControl</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationalModelControl\Model_KMeans.h">
+      <Filter>头文件\OperationalModelControl</Filter>
+    </ClInclude>
+    <ClInclude Include="PretreatmentControl\PretreatmentControlCommon.h">
+      <Filter>头文件\PretreatmentControl</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
