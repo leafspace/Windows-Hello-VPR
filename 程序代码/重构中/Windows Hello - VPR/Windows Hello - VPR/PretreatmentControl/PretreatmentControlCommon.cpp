@@ -13,11 +13,14 @@ PretreatmentControlCommon::PretreatmentControlCommon(MediaFile *mediaFile)
 {
 	this->mediaFile = NULL;
 	this->mediaFile = mediaFile;
-	
+
 	this->energyHigh = 0;
 	this->energyLow = 0;
 	this->zcrHigh = 0;
 	this->zcrLow = 0;
+
+	this->mediaDataList = NULL;
+	this->mediaDataList = new DataType[mediaFile->getDataNumber()];
 
 	this->maxEnergy = 0;
 	this->minEnergy = 0;
@@ -29,7 +32,9 @@ PretreatmentControlCommon::PretreatmentControlCommon(MediaFile *mediaFile)
 
 PretreatmentControlCommon::~PretreatmentControlCommon()
 {
+	delete this->mediaDataList;
 	this->mediaFile = NULL;
+	this->mediaDataList = NULL;
 }
 
 double PretreatmentControlCommon::Hamming_window(const double data)                   // 汉明窗函数
@@ -57,7 +62,7 @@ bool PretreatmentControlCommon::Frame_Energy(void)                              
 	this->maxEnergy = 0;                                                              // 最大短时帧能量置0
 	this->minEnergy = DBL_MAX;                                                        // 最小短时帧能量置1000000
 	double sum = 0;
-	for (unsigned long i = 0; i < this->mediaFile->getDataNumber() - PretreatmentControlCommon::N; 
+	for (unsigned long i = 0; i < this->mediaFile->getDataNumber() - PretreatmentControlCommon::N;
 		i += PretreatmentControlCommon::FrameShift) {                                 // 这是所有短时帧能量数据的个数
 		for (unsigned long j = i; j < i + PretreatmentControlCommon::N; ++j) {        // 遍历窗中的每一个数据
 			sum += pow(this->mediaFile->getData(j) * Hamming_window(i + PretreatmentControlCommon::N - 1 - j), 2);  // 求每一个数据的能量
@@ -80,7 +85,7 @@ bool PretreatmentControlCommon::Frame_ZCR(void)                                 
 	this->maxZCR = 0;                                                                 // 最大短时过零率置0
 	this->minZCR = DBL_MIN;                                                           // 最小短时过零率置1000000
 	double sum = 0;
-	for (unsigned long i = 0; i < this->mediaFile->getDataNumber() - PretreatmentControlCommon::N; 
+	for (unsigned long i = 0; i < this->mediaFile->getDataNumber() - PretreatmentControlCommon::N;
 		i += PretreatmentControlCommon::FrameShift) {                                 // 这是所有短时帧过零率数据的个数
 		for (unsigned long j = i; j < i + PretreatmentControlCommon::N; ++j) {        // 遍历窗中的每一个数据
 			sum += abs(Sign_Function(this->mediaFile->getData(j)) - Sign_Function(this->mediaFile->getData(j - 1))) // 过零率中的绝对值部分
@@ -102,6 +107,11 @@ bool PretreatmentControlCommon::Frame_ZCR(void)                                 
 bool PretreatmentControlCommon::Frame_EnergyZcr(void)                                 // 用于同时求取短时帧能量与短时过零率
 {
 	return this->Frame_Energy() && this->Frame_ZCR();
+}
+
+DataType* PretreatmentControlCommon::Get_MediaFileData(void)                          // 获取当前处理过的语音数据
+{
+	return this->mediaDataList;
 }
 
 vector<double> PretreatmentControlCommon::Get_DataEnergy(void)                        // 获取短时帧能量的数据
@@ -180,7 +190,7 @@ unsigned long PretreatmentControlCommon::Get_frameNumber()                      
 
 unsigned long PretreatmentControlCommon::Get_frameNumber(const double dataSize)       // 计算长度内的帧数
 {
-	unsigned long frameNumber = (unsigned long)((dataSize - PretreatmentControlCommon::N) / PretreatmentControlCommon::FrameShift);       //计算这段数据内有多少帧
+	unsigned long frameNumber = (unsigned long)((dataSize - PretreatmentControlCommon::N) / PretreatmentControlCommon::FrameShift);     //计算这段数据内有多少帧
 	unsigned long end = (frameNumber - 1) * PretreatmentControlCommon::FrameShift + PretreatmentControlCommon::N;   // 求出当前计算帧数中所包含的数据量
 	if (end < this->mediaFile->getDataNumber()) {                                     // 如果没有包含所有的数据，则帧数+1
 		frameNumber++;
@@ -203,18 +213,21 @@ VoiceParagraph PretreatmentControlCommon::Get_dataVoicePoint(const unsigned long
 	}
 }
 
-void PretreatmentControlCommon::Pre_emphasis(VoiceParagraph voiceParagraph, double *dataDouble)                     // 对一个段落内的数据进行预加重处理 
+void PretreatmentControlCommon::Pre_emphasis(VoiceParagraph voiceParagraph, DataType *dataList)                     // 对一个段落内的数据进行预加重处理 
 {
 	for (unsigned long i = 0; i < voiceParagraph.voiceLength; ++i) {
 		unsigned long dataIndex = voiceParagraph.begin + i;
-		if(dataIndex == 0 || dataIndex == this->mediaFile->getDataNumber()) {
+		if (dataIndex == 0 || dataIndex == this->mediaFile->getDataNumber()) {
 			continue;
 		}
-		dataDouble[dataIndex] = dataDouble[dataIndex] - PretreatmentControlCommon::preCoefficient * dataDouble[dataIndex - 1];// 加一阶数字滤波器
+
+		double tempValue = PretreatmentControlCommon::preCoefficient * dataList[dataIndex - 1];
+		tempValue = dataList[dataIndex] - tempValue;
+		dataList[dataIndex] = (DataType)(int)(tempValue);                             // 加一阶数字滤波器
 	}
 }
 
-bool PretreatmentControlCommon::Frame_Data(double *data, unsigned long index, double* dataSpace, int dataSpaceSize)                      //获取端点检测后第index帧的分帧加窗操作
+bool PretreatmentControlCommon::Frame_Data(DataType *data, unsigned long index, double* dataSpace, const int dataSpaceSize)             // 获取端点检测后第index帧的分帧加窗操作
 {
 	if (dataSpaceSize < PretreatmentControlCommon::N) {                               // 预分配的空间不足一帧时
 		return false;
@@ -234,7 +247,7 @@ bool PretreatmentControlCommon::Frame_Data(double *data, unsigned long index, do
 	}
 
 	unsigned long begin = voiceParagraph.begin + (index - 1) * PretreatmentControlCommon::FrameShift;
-	unsigned long end   = begin + PretreatmentControlCommon::N - 1;
+	unsigned long end = begin + PretreatmentControlCommon::N - 1;
 	unsigned long voiceLength = PretreatmentControlCommon::N;
 
 	if (end >= voiceParagraph.end) {
@@ -253,7 +266,7 @@ bool PretreatmentControlCommon::Frame_Data(double *data, unsigned long index, do
 	return true;
 }
 
-bool PretreatmentControlCommon::Frame_Data(double *data, double dataSize, unsigned long index, double* dataSpace, int dataSpaceSize)    // 对部分数据进行分帧加窗操作
+bool PretreatmentControlCommon::Frame_Data(DataType *data, const double dataSize, const unsigned long index, double* dataSpace, const int dataSpaceSize)    // 对部分数据进行分帧加窗操作
 {
 	if (dataSpaceSize < PretreatmentControlCommon::N) {                               // 预分配的空间不足一帧时
 		return false;
@@ -265,12 +278,13 @@ bool PretreatmentControlCommon::Frame_Data(double *data, double dataSize, unsign
 	}
 
 	unsigned long begin = (index - 1) * PretreatmentControlCommon::FrameShift;
-	unsigned long end   = begin + PretreatmentControlCommon::N - 1;
+	unsigned long end = begin + PretreatmentControlCommon::N - 1;
 	unsigned long voiceLength = PretreatmentControlCommon::N;
 
 	if (index == frameNumber && end != dataSize) {                                    // 如果长度不为整帧
 		if (end < dataSize) {                                                         // 全部数据多余
-		} else if (end > dataSize) {                                                  // 全部数据缺少
+		}
+		else if (end > dataSize) {                                                    // 全部数据缺少
 			end = (unsigned long)(dataSize - 1);
 			voiceLength = (unsigned long)(dataSize - begin);
 		}
@@ -314,7 +328,7 @@ bool PretreatmentControlCommon::Endpoint_Detection(void)                        
 		case MUTEPARAGRAPH:
 		case INTERIMPARAGRAPH:
 			if (this->Get_DataEnergy(frame) > this->energyHigh) {                     // 帧能量大于能量高门限,进入语音段
-				begin = (unsigned long) max((int)(i - voiceLength - 1), 0);
+				begin = (unsigned long)max((int)(i - voiceLength - 1), 0);
 				statusFlag = VOICEPARAGRAPH;
 				voiceLength++;
 				silence = 0;
@@ -329,7 +343,7 @@ bool PretreatmentControlCommon::Endpoint_Detection(void)                        
 			}
 			break;
 		case VOICEPARAGRAPH:
-			if (this->Get_DataEnergy(frame) > this->Get_minEnergy() || this->Get_DataZCR(frame) > this->Get_minZCR()) {       // 保持在语音段
+			if (this->Get_DataEnergy(frame) > this->Get_minEnergy() || this->Get_DataZCR(frame) > this->Get_minZCR()) {                 // 保持在语音段
 				voiceLength++;
 			}
 			else {                                                                    // 语音将结束
@@ -345,7 +359,7 @@ bool PretreatmentControlCommon::Endpoint_Detection(void)                        
 					}
 					else {                                                            // 语音结束
 						statusFlag = OVERPARAGRAPH;
-						end = max(begin + voiceLength, 0);
+						end = begin + voiceLength;
 					}
 				}
 			}
@@ -357,7 +371,6 @@ bool PretreatmentControlCommon::Endpoint_Detection(void)                        
 			statusFlag = MUTEPARAGRAPH;
 			break;
 		default:
-			MessageBoxA(NULL, "ERROR : Status failure !", "ERROR", MB_ICONHAND);
 			return false;
 			break;
 		}

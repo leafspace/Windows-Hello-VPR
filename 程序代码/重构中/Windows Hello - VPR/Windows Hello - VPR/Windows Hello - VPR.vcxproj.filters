@@ -49,6 +49,12 @@
     <Filter Include="源文件\PretreatmentControl">
       <UniqueIdentifier>{990c7c1b-4e72-4774-8f87-d74599c64057}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\OperationalModelControl\GaussianMixtureModel">
+      <UniqueIdentifier>{d7909ace-01ad-4d7e-8910-77279960c10a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\OperationalModelControl\GaussianMixtureModel">
+      <UniqueIdentifier>{9b2e136b-be95-4cd0-8768-6a3f337ba34d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main_Source.cpp">
@@ -60,20 +66,23 @@
     <ClCompile Include="MediaControl\WAVFile\WavFileBase.cpp">
       <Filter>源文件\MediaControl\WAVFile</Filter>
     </ClCompile>
-    <ClCompile Include="CharaParameterControl\WavData_CharaParameter.cpp">
-      <Filter>源文件\CharaParameterControl</Filter>
-    </ClCompile>
-    <ClCompile Include="CharaParameterControl\WavData_SupportFunction.cpp">
-      <Filter>源文件\CharaParameterControl</Filter>
-    </ClCompile>
-    <ClCompile Include="OperationalModelControl\Model_GMM.cpp">
-      <Filter>源文件\OperationalModelControl</Filter>
-    </ClCompile>
-    <ClCompile Include="OperationalModelControl\Model_KMeans.cpp">
-      <Filter>源文件\OperationalModelControl</Filter>
-    </ClCompile>
     <ClCompile Include="PretreatmentControl\PretreatmentControlCommon.cpp">
       <Filter>源文件\PretreatmentControl</Filter>
+    </ClCompile>
+    <ClCompile Include="OperationalModelControl\GaussianMixtureModel\Model_GMM.cpp">
+      <Filter>源文件\OperationalModelControl\GaussianMixtureModel</Filter>
+    </ClCompile>
+    <ClCompile Include="OperationalModelControl\GaussianMixtureModel\Model_KMeans.cpp">
+      <Filter>源文件\OperationalModelControl\GaussianMixtureModel</Filter>
+    </ClCompile>
+    <ClCompile Include="CharaParameterControl\CharaParameterControl.cpp">
+      <Filter>源文件\CharaParameterControl</Filter>
+    </ClCompile>
+    <ClCompile Include="CharaParameterControl\CharaParameterControl_SupportFunction.cpp">
+      <Filter>源文件\CharaParameterControl</Filter>
+    </ClCompile>
+    <ClCompile Include="MediaControl\Common\MediaFile.cpp">
+      <Filter>源文件\MediaControl\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,17 +98,17 @@
     <ClInclude Include="MediaControl\Common\MediaFile.h">
       <Filter>头文件\MediaControl\Common</Filter>
     </ClInclude>
-    <ClInclude Include="CharaParameterControl\WavData_CharaParameter.h">
-      <Filter>头文件\CharaParameterControl</Filter>
-    </ClInclude>
-    <ClInclude Include="OperationalModelControl\Model_GMM.h">
-      <Filter>头文件\OperationalModelControl</Filter>
-    </ClInclude>
-    <ClInclude Include="OperationalModelControl\Model_KMeans.h">
-      <Filter>头文件\OperationalModelControl</Filter>
-    </ClInclude>
     <ClInclude Include="PretreatmentControl\PretreatmentControlCommon.h">
       <Filter>头文件\PretreatmentControl</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationalModelControl\GaussianMixtureModel\Model_GMM.h">
+      <Filter>头文件\OperationalModelControl\GaussianMixtureModel</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationalModelControl\GaussianMixtureModel\Model_KMeans.h">
+      <Filter>头文件\OperationalModelControl\GaussianMixtureModel</Filter>
+    </ClInclude>
+    <ClInclude Include="CharaParameterControl\CharaParameterControl.h">
+      <Filter>头文件\CharaParameterControl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

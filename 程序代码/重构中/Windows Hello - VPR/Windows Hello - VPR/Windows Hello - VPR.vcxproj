@@ -75,23 +75,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CharaParameterControl\WavData_CharaParameter.cpp" />
-    <ClCompile Include="CharaParameterControl\WavData_SupportFunction.cpp" />
+    <ClCompile Include="CharaParameterControl\CharaParameterControl.cpp" />
+    <ClCompile Include="CharaParameterControl\CharaParameterControl_SupportFunction.cpp" />
     <ClCompile Include="Main_Source.cpp" />
     <ClCompile Include="MediaControl\Common\CommonType.cpp" />
+    <ClCompile Include="MediaControl\Common\MediaFile.cpp" />
     <ClCompile Include="MediaControl\WAVFile\WavFileBase.cpp" />
-    <ClCompile Include="OperationalModelControl\Model_GMM.cpp" />
-    <ClCompile Include="OperationalModelControl\Model_KMeans.cpp" />
+    <ClCompile Include="OperationalModelControl\GaussianMixtureModel\Model_GMM.cpp" />
+    <ClCompile Include="OperationalModelControl\GaussianMixtureModel\Model_KMeans.cpp" />
     <ClCompile Include="PretreatmentControl\PretreatmentControlCommon.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CharaParameterControl\WavData_CharaParameter.h" />
+    <ClInclude Include="CharaParameterControl\CharaParameterControl.h" />
     <ClInclude Include="MediaControl\Common\CommonStruct.h" />
     <ClInclude Include="MediaControl\Common\CommonType.h" />
     <ClInclude Include="MediaControl\Common\MediaFile.h" />
     <ClInclude Include="MediaControl\WAVFile\WavFileBase.h" />
-    <ClInclude Include="OperationalModelControl\Model_GMM.h" />
-    <ClInclude Include="OperationalModelControl\Model_KMeans.h" />
+    <ClInclude Include="OperationalModelControl\GaussianMixtureModel\Model_GMM.h" />
+    <ClInclude Include="OperationalModelControl\GaussianMixtureModel\Model_KMeans.h" />
     <ClInclude Include="PretreatmentControl\PretreatmentControlCommon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

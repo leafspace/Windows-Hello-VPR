@@ -18,7 +18,7 @@ DataType::DataType()
 
 DataType::DataType(const int data)
 {
-	//DataType();
+	// DataType();
 	this->data8B = NULL;
 	this->data16B = NULL;
 	this->data32B = NULL;
@@ -46,7 +46,7 @@ DataType::~DataType()
 	DataType::clearBuffer(this->data32B);
 }
 
-inline void DataType::clearBuffer(void* pointer)                            // 提供与本类清理数据用
+inline void DataType::clearBuffer(void* pointer)                                      // 提供与本类清理数据用
 {
 	if (pointer != NULL) {
 		delete pointer;
@@ -54,7 +54,7 @@ inline void DataType::clearBuffer(void* pointer)                            // �
 	}
 }
 
-DataType::operator int() const                                              // 用于返回本类数据 例如：int result = (int) dataType;
+DataType::operator int() const                                                        // 用于返回本类数据 例如：int result = (int) dataType;
 {
 	switch (DataType::sizeFlag)
 	{
@@ -65,7 +65,7 @@ DataType::operator int() const                                              // �
 	}
 }
 
-int DataType::operator=(const int &dataType) const                          // 用于支持赋值作用 例如：DataType dataType = (int) result;
+int DataType::operator=(const int &dataType) const                                    // 用于支持赋值作用 例如：DataType dataType = (int) result;
 {
 	switch (DataType::sizeFlag)
 	{
@@ -87,7 +87,7 @@ void DataType::setValue(const int value)
 	}
 }
 
-void DataType::setSizeFlag(const short sizeFlag)                            // 用于设置本类的数据类型
+void DataType::setSizeFlag(const short sizeFlag)                                      // 用于设置本类的数据类型
 {
 	DataType::sizeFlag = sizeFlag;
 }
