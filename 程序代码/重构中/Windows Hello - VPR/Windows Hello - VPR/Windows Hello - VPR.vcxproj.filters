@@ -60,9 +60,6 @@
     <ClCompile Include="Main_Source.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MediaControl\Common\CommonType.cpp">
-      <Filter>源文件\MediaControl\Common</Filter>
-    </ClCompile>
     <ClCompile Include="MediaControl\WAVFile\WavFileBase.cpp">
       <Filter>源文件\MediaControl\WAVFile</Filter>
     </ClCompile>
@@ -86,9 +83,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MediaControl\Common\CommonType.h">
-      <Filter>头文件\MediaControl\Common</Filter>
-    </ClInclude>
     <ClInclude Include="MediaControl\WAVFile\WavFileBase.h">
       <Filter>头文件\MediaControl\WAVFile</Filter>
     </ClInclude>

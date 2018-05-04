@@ -56,10 +56,11 @@ WavFile::WavFile(ifstream &fin)
 
 WavFile::~WavFile(void)
 {
-	if (factChunk != NULL) {
-		delete factChunk;
-		factChunk = NULL;
+	if (this->factChunk != NULL) {
+		delete this->factChunk;
+		this->factChunk = NULL;
 	}
+	this->isWAV = true;
 }
 
 void WavFile::readWAV(FILE *fp)
@@ -84,8 +85,6 @@ void WavFile::readWAV(FILE *fp)
 		fread(&this->factChunk->eChunk, sizeof(unsigned int), 1, fp);                 // 读取附加块
 	}
 
-	DataType::setSizeFlag(this->getSampleBytes());
-
 	fread(this->dataChunk.DATA, sizeof(char), 4, fp);                                 // 读取'DATA'
 	fread(&this->dataChunk.dataLength, sizeof(unsigned int), 1, fp);                  // 读取数据大小
 	double dataNumber = this->dataChunk.dataLength / this->getSampleBytes();
@@ -94,17 +93,16 @@ void WavFile::readWAV(FILE *fp)
 		this->isWAV = false;
 		return;
 	}
-	this->dataChunk.dataList = new DataType[(unsigned int)dataNumber];
-	unsigned int tempNumber = 0;
-	for (unsigned int i = 0; i < dataNumber; ++i) {
+	this->dataChunk.dataList = new double[(unsigned int)dataNumber];
+	memset(this->dataChunk.dataList, 0, sizeof(double) * (unsigned int)dataNumber);
+	for (unsigned int i = 0, tempNumber = 0; i < dataNumber; ++i) {
 		fread(&tempNumber, this->getSampleBytes(), 1, fp);                            // 读取数据
-		this->dataChunk.dataList[i].setValue(tempNumber);
+		this->dataChunk.dataList[i] = tempNumber;
 	}
 }
 
 void WavFile::readWAV(ifstream &fin)
 {
-	fin.read(this->waveChunk.RIFF, sizeof(char)* 4);
 	fin.read(this->waveChunk.RIFF, sizeof(char)* 4);                                  // 读取'RIFF'
 	fin.read(reinterpret_cast<char*>(this->waveChunk.fileLength), sizeof(unsigned int)* 1);                         // 读取文件的大小
 	fin.read(this->waveChunk.WAVE, sizeof(char)* 4);                                  // 读取'WAVE'
@@ -125,8 +123,6 @@ void WavFile::readWAV(ifstream &fin)
 		fin.read(reinterpret_cast<char*>(this->factChunk->eChunk), sizeof(unsigned int)* 1);                        // 读取附加块
 	}
 
-	DataType::setSizeFlag(this->getSampleBytes());
-
 	fin.read(this->dataChunk.DATA, sizeof(char)* 4);                                  // 读取'DATA'
 	fin.read(reinterpret_cast<char*>(this->dataChunk.dataLength), sizeof(unsigned int)* 1);                         // 读取数据大小
 	double dataNumber = this->dataChunk.dataLength / this->getSampleBytes();
@@ -135,11 +131,11 @@ void WavFile::readWAV(ifstream &fin)
 		this->isWAV = false;
 		return;
 	}
-	this->dataChunk.dataList = new DataType[(unsigned int)dataNumber];
-	unsigned int tempNumber = 0;
-	for (unsigned int i = 0; i < dataNumber; ++i) {
+	this->dataChunk.dataList = new double[(unsigned int)dataNumber];
+	memset(this->dataChunk.dataList, 0, sizeof(double) * (unsigned int)dataNumber);
+	for (unsigned int i = 0, tempNumber = 0; i < dataNumber; ++i) {
 		fin.read(reinterpret_cast<char*>(&tempNumber), this->getSampleBytes());
-		this->dataChunk.dataList[i].setValue(tempNumber);
+		this->dataChunk.dataList[i] = tempNumber;
 	}
 }
 
@@ -191,12 +187,12 @@ unsigned int WavFile::getDataNumber(void)
 	return (unsigned int)(this->dataChunk.dataLength / this->getSampleBytes());
 }
 
-DataType* WavFile::getData(void)
+double* WavFile::getData(void)
 {
 	return this->dataChunk.dataList;
 }
 
-int WavFile::getData(const unsigned int index)
+double WavFile::getData(const unsigned int index)
 {
 	if (index >= this->getDataNumber()) {
 		return 0;
@@ -207,7 +203,7 @@ int WavFile::getData(const unsigned int index)
 void WavFile::setData(const unsigned int index, int dataSample)
 {
 	if (index <= this->getDataNumber()) {
-		this->dataChunk.dataList[index].setValue(dataSample);
+		this->dataChunk.dataList[index] = dataSample;
 	}
 }
 
@@ -268,4 +264,34 @@ void WavFile::writeWAV(ofstream &fout)
 		tempNumber = this->dataChunk.dataList[i];
 		fout.write(reinterpret_cast<char*>(&tempNumber), this->getSampleBytes());
 	}
+}
+
+void WavFile::showData(void)
+{
+	cout << "--------------------Wav File Data--------------------" << endl;
+	cout << "ChannelNumber : " << this->getChannelNumber() << endl;
+	cout << "SampleFrequency : " << this->getSampleFrequency() << endl;
+	cout << "SampleBytes : " << this->getSampleBytes() << endl;
+	cout << "DataNumber : " << this->getDataNumber() << endl;
+
+	int maxValue = INT_MIN;
+	int minValue = INT_MAX;
+	for (unsigned int i = 0; i < this->getDataNumber(); ++i) {
+		cout << this->getData(i) << "\t";
+		if ((i + 1) % 10 == 0) {
+			cout << endl;
+		}
+
+		if (this->getData(i) > maxValue) {
+			maxValue = this->getData(i);
+		}
+
+		if (this->getData(i) < minValue) {
+			minValue = this->getData(i);
+		}
+
+	}
+	cout << "maxValue : " << maxValue << endl;
+	cout << "minValue : " << minValue << endl;
+	cout << "--------------------Wav File Data--------------------" << endl;
 }

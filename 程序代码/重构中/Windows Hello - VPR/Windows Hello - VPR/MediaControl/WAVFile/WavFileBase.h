@@ -1,7 +1,7 @@
 ﻿#pragma once
-#include <vector>
+
+#include <fstream>
 #include "../Common/MediaFile.h"
-#include "../Common/CommonType.h"
 
 typedef struct WaveChunk                                                              // RIFF块结构
 {
@@ -38,7 +38,7 @@ typedef struct DataChunk                                                        
 {
 	char DATA[4];
 	unsigned int dataLength;                                                          // 数据长度
-	DataType *dataList;                                                               // 数据列表
+	double *dataList;                                                                 // 数据列表
 	DataChunk();
 } DataChunk;
 
@@ -51,25 +51,28 @@ private:
 	FactChunk *factChunk;                                                             // 附加块
 	DataChunk dataChunk;                                                              // 数据块
 
+	WavFile(void);
+
 	void readWAV(FILE *fp);
 	void readWAV(ifstream &fin);
 public:
-	WavFile(void);
 	WavFile(FILE *fp);
 	WavFile(ifstream &fin);
 	~WavFile(void);
 
 	bool isWAVE(void);
+
 	virtual unsigned short getChannelNumber(void);                                    // 获取声道数
 	virtual unsigned int getSampleFrequency(void);                                    // 获取采样频率
 	virtual unsigned short getSampleBytes(void);                                      // 获取采样位数
 	virtual unsigned int getDataNumber(void);                                         // 获取数据数量
 
-	virtual DataType* getData(void);
-	virtual int getData(const unsigned int index);
-
+	virtual double* getData(void);
+	virtual double getData(const unsigned int index);
 	virtual void setData(const unsigned int index, int dataSample);
 
 	virtual void writeWAV(FILE *fp);
 	virtual void writeWAV(ofstream &fout);
+
+	virtual void showData(void);
 };
