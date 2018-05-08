@@ -35,32 +35,30 @@ DataChunk::DataChunk()
 	this->dataList = NULL;
 }
 
-WavFile::WavFile(void)
-{
-	this->isWAV = true;
-	this->factChunk = NULL;
-}
-
 WavFile::WavFile(FILE *fp)
 {
-	WavFile();
+	this->initObject();
 	this->readWAV(fp);
 }
 
 WavFile::WavFile(ifstream &fin)
 {
-	WavFile();
+	this->initObject();
 	this->readWAV(fin);
-
 }
 
 WavFile::~WavFile(void)
 {
 	if (this->factChunk != NULL) {
 		delete this->factChunk;
-		this->factChunk = NULL;
 	}
+	this->initObject();
+}
+
+void WavFile::initObject(void)
+{
 	this->isWAV = true;
+	this->factChunk = NULL;
 }
 
 void WavFile::readWAV(FILE *fp)
@@ -95,7 +93,8 @@ void WavFile::readWAV(FILE *fp)
 	}
 	this->dataChunk.dataList = new double[(unsigned int)dataNumber];
 	memset(this->dataChunk.dataList, 0, sizeof(double) * (unsigned int)dataNumber);
-	for (unsigned int i = 0, tempNumber = 0; i < dataNumber; ++i) {
+	unsigned int tempNumber = 0;
+	for (unsigned int i = 0; i < dataNumber; ++i) {
 		fread(&tempNumber, this->getSampleBytes(), 1, fp);                            // 读取数据
 		this->dataChunk.dataList[i] = tempNumber;
 	}
@@ -133,7 +132,8 @@ void WavFile::readWAV(ifstream &fin)
 	}
 	this->dataChunk.dataList = new double[(unsigned int)dataNumber];
 	memset(this->dataChunk.dataList, 0, sizeof(double) * (unsigned int)dataNumber);
-	for (unsigned int i = 0, tempNumber = 0; i < dataNumber; ++i) {
+	unsigned int tempNumber = 0;
+	for (unsigned int i = 0; i < dataNumber; ++i) {
 		fin.read(reinterpret_cast<char*>(&tempNumber), this->getSampleBytes());
 		this->dataChunk.dataList[i] = tempNumber;
 	}
@@ -154,7 +154,7 @@ bool WavFile::isWAVE(void)
 			this->isWAV = false;
 		}
 
-		if (this->factChunk) {
+		if (this->factChunk != NULL) {
 			if (!strstr(_strupr(this->factChunk->FACT), "FACT")) {
 				this->isWAV = false;
 			}
@@ -230,7 +230,8 @@ void WavFile::writeWAV(FILE *fp)
 
 	fwrite(this->dataChunk.DATA, sizeof(char), 4, fp);                                // 写入'DATA'
 	fwrite(&this->dataChunk.dataLength, sizeof(unsigned int), 1, fp);                 // 写入数据大小
-	for (unsigned int i = 0, tempNumber = 0; i < this->getDataNumber(); ++i) {
+	int tempNumber = 0;
+	for (unsigned int i = 0; i < this->getDataNumber(); ++i) {
 		tempNumber = this->dataChunk.dataList[i];
 		fwrite(&tempNumber, this->getSampleBytes(), 1, fp);                           // 写入数据
 	}
@@ -260,7 +261,8 @@ void WavFile::writeWAV(ofstream &fout)
 
 	fout.write(this->dataChunk.DATA, sizeof(char)* 4);                                // 写入'DATA'
 	fout.write(reinterpret_cast<char*>(this->dataChunk.dataLength), sizeof(unsigned int)* 1);                       // 写入数据大小
-	for (unsigned int i = 0, tempNumber = 0; i < this->getDataNumber(); ++i) {
+	int tempNumber = 0;
+	for (unsigned int i = 0; i < this->getDataNumber(); ++i) {
 		tempNumber = this->dataChunk.dataList[i];
 		fout.write(reinterpret_cast<char*>(&tempNumber), this->getSampleBytes());
 	}

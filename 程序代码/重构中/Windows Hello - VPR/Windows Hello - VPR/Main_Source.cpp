@@ -1,6 +1,5 @@
 ﻿#include <fstream>
 #include <iostream>
-#include "MediaControl/Common/MediaFile.h"
 #include "MediaControl/WAVFile/WavFileBase.h"
 #include "CharaParameterControl/CharaParameterControl.h"
 #include "PretreatmentControl/PretreatmentControlCommon.h"
@@ -12,22 +11,28 @@ int main()
 {
 	// Todo 初始化语音文件类 读取语音文件数据
 	FILE *fp;
-	if ((fp = fopen("微软默认.wav", "rb")) == NULL) {                                                                // 打开语音文件
+	if ((fp = fopen("sample.wav", "rb")) == NULL) {                                                                 // 打开语音文件
 		cout << "ERROR : File open failed !" << endl;
 		exit(-1);
 	}
 
-	MediaFile *wavFile = new WavFile(fp);                                                                           // 读取语音文件数据
+	WavFile *wavFile = new WavFile(fp);                                                                             // 读取语音文件数据
 	fclose(fp);
+	fp = NULL;
+
+	if (!wavFile->isWAVE()) {
+		cout << "ERROR : File is not a wave file !" << endl;
+	}
+	// wavFile->showData();
 
 	// Todo 预处理
 	PretreatmentControlCommon *pretreatmentControl = new PretreatmentControlCommon(wavFile);
 	pretreatmentControl->Endpoint_Detection();
 	for (unsigned long i = 0; i < pretreatmentControl->Get_voiceNumber(); ++i) {
-		pretreatmentControl->Pre_emphasis(pretreatmentControl->Get_dataVoicePoint(i), 
-			pretreatmentControl->Get_MediaFileData());                                                              // 对可用范围内的数据进行预加重
+		pretreatmentControl->Pre_emphasis(pretreatmentControl->Get_dataVoicePoint(i), wavFile->getData());          // 对可用范围内的数据进行预加重
 	}
 
+	pretreatmentControl->showData();
 	// Todo 初始化特征参数类 计算语音数据特征参数
 	double *dataSpace = NULL;
 
@@ -111,11 +116,11 @@ int main()
 	gmmWeight[3] = 187;
 	gmmWeight[4] = 177;
 
-	ifstream gmm_file_1("voiceLib\\男-wangzhe(我们需要帮助).txt");
-	ifstream gmm_file_2("voiceLib\\男-zhanglifei(我们需要帮助).txt");
-	ifstream gmm_file_3("voiceLib\\男-zhaozuoxiang(我们需要帮助).txt");
-	ifstream gmm_file_4("voiceLib\\女-liuchang(我们需要帮助).txt");
-	ifstream gmm_file_5("voiceLib\\女-zhaoquanyin(我们需要帮助).txt");
+	ifstream gmm_file_1("voiceLib\\wangzhe.txt");
+	ifstream gmm_file_2("voiceLib\\zhanglifei.txt");
+	ifstream gmm_file_3("voiceLib\\zhaozuoxiang.txt");
+	ifstream gmm_file_4("voiceLib\\liuchang.txt");
+	ifstream gmm_file_5("voiceLib\\zhaoquanyin.txt");
 	assert(gmm_file_1);
 	assert(gmm_file_2);
 	assert(gmm_file_3);
@@ -155,6 +160,13 @@ int main()
 		}
 		//cout << endl;
 	}
+
+
+	delete charaParameter;
+	delete pretreatmentControl;
+
+	charaParameter = NULL;
+	pretreatmentControl = NULL;
 
 	// Todo 对数据长度进行权值计算
 	/*

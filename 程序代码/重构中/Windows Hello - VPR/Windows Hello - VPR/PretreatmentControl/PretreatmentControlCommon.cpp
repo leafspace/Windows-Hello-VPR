@@ -20,7 +20,10 @@ PretreatmentControlCommon::PretreatmentControlCommon(MediaFile *mediaFile)
 	this->zcrLow = 0;
 
 	this->mediaDataList = NULL;
-	this->mediaDataList = new DataType[mediaFile->getDataNumber()];
+	this->mediaDataList = new double[this->mediaFile->getDataNumber()];
+	for (unsigned int i = 0; i < this->mediaFile->getDataNumber(); ++i) {
+		this->mediaDataList[i] = this->mediaFile->getData(i) / pow(2, (double)this->mediaFile->getSampleBytes() * 8);         // 控制数据在[0,1]之间
+	}
 
 	this->maxEnergy = 0;
 	this->minEnergy = 0;
@@ -49,7 +52,7 @@ double PretreatmentControlCommon::Hamming_window(const double data)             
 
 short PretreatmentControlCommon::Sign_Function(const double data)                     // 求短时过零率的辅助符号函数
 {
-	if (data >= 0) {
+	if (data <= 0.5) {
 		return 1;
 	}
 	else {
@@ -62,10 +65,10 @@ bool PretreatmentControlCommon::Frame_Energy(void)                              
 	this->maxEnergy = 0;                                                              // 最大短时帧能量置0
 	this->minEnergy = DBL_MAX;                                                        // 最小短时帧能量置1000000
 	double sum = 0;
-	for (unsigned long i = 0; i < this->mediaFile->getDataNumber() - PretreatmentControlCommon::N;
+	for (unsigned int i = 0; i < this->mediaFile->getDataNumber() - PretreatmentControlCommon::N;
 		i += PretreatmentControlCommon::FrameShift) {                                 // 这是所有短时帧能量数据的个数
-		for (unsigned long j = i; j < i + PretreatmentControlCommon::N; ++j) {        // 遍历窗中的每一个数据
-			sum += pow(this->mediaFile->getData(j) * Hamming_window(i + PretreatmentControlCommon::N - 1 - j), 2);  // 求每一个数据的能量
+		for (unsigned int j = i; j < i + PretreatmentControlCommon::N; ++j) {         // 遍历窗中的每一个数据
+			sum += pow(this->mediaDataList[j] * Hamming_window(i + PretreatmentControlCommon::N - 1 - j), 2);  // 求每一个数据的能量
 		}
 		if (sum > this->maxEnergy) {                                                  // 求取最大短时帧能量
 			this->maxEnergy = sum;
@@ -85,11 +88,11 @@ bool PretreatmentControlCommon::Frame_ZCR(void)                                 
 	this->maxZCR = 0;                                                                 // 最大短时过零率置0
 	this->minZCR = DBL_MIN;                                                           // 最小短时过零率置1000000
 	double sum = 0;
-	for (unsigned long i = 0; i < this->mediaFile->getDataNumber() - PretreatmentControlCommon::N;
+	for (unsigned int i = 0; i < this->mediaFile->getDataNumber() - PretreatmentControlCommon::N;
 		i += PretreatmentControlCommon::FrameShift) {                                 // 这是所有短时帧过零率数据的个数
-		for (unsigned long j = i; j < i + PretreatmentControlCommon::N; ++j) {        // 遍历窗中的每一个数据
-			sum += abs(Sign_Function(this->mediaFile->getData(j)) - Sign_Function(this->mediaFile->getData(j - 1))) // 过零率中的绝对值部分
-				*Hamming_window(i + PretreatmentControlCommon::N - 1 - j);
+		for (unsigned int j = i; j < i + PretreatmentControlCommon::N; ++j) {         // 遍历窗中的每一个数据
+			sum += abs(Sign_Function(this->mediaDataList[j]) - Sign_Function(this->mediaDataList[max(0, (int)j - 1)]))
+				*Hamming_window(i + PretreatmentControlCommon::N - 1 - j);            // 过零率中的绝对值部分
 		}
 		sum /= 2;
 		if (sum > this->maxZCR) {                                                     // 求取最大短时过零率
@@ -109,7 +112,41 @@ bool PretreatmentControlCommon::Frame_EnergyZcr(void)                           
 	return this->Frame_Energy() && this->Frame_ZCR();
 }
 
-DataType* PretreatmentControlCommon::Get_MediaFileData(void)                          // 获取当前处理过的语音数据
+void PretreatmentControlCommon::showData(void)
+{
+	cout << "--------------------Pretreatment Control Data--------------------" << endl;
+	cout << "Energy data :" << endl;
+	for (unsigned int i = 0; i < this->dataEnergy.size(); ++i) {
+		cout << this->dataEnergy[i] << "\t";
+		if ((i + 1) % 10 == 0) {
+			cout << endl;
+		}
+	}
+	cout << endl;
+
+	cout << "ZCR data :" << endl;
+	for (unsigned int i = 0; i < this->dataZCR.size(); ++i) {
+		cout << this->dataZCR[i] << "\t";
+		if ((i + 1) % 10 == 0) {
+			cout << endl;
+		}
+	}
+	cout << endl;
+
+	cout << "Max energy :" << this->maxEnergy << endl;
+	cout << "Min energy :" << this->minEnergy << endl;
+
+	cout << "Max ZCR :" << this->maxZCR << endl;
+	cout << "Min ZCR :" << this->minZCR << endl;
+
+	cout << "Voice Paragraph number :" << this->voiceNumber << endl;
+	for (unsigned long i = 0; i < this->voiceNumber; ++i) {
+		cout << "Begin : " << this->voiceParagraph[i].begin << " " << "End : " << this->voiceParagraph[i].end << endl;
+	}
+	cout << "--------------------Pretreatment Control Data--------------------" << endl;
+}
+
+double* PretreatmentControlCommon::Get_MediaFileData(void)                            // 获取当前处理过的语音数据
 {
 	return this->mediaDataList;
 }
@@ -213,21 +250,21 @@ VoiceParagraph PretreatmentControlCommon::Get_dataVoicePoint(const unsigned long
 	}
 }
 
-void PretreatmentControlCommon::Pre_emphasis(VoiceParagraph voiceParagraph, DataType *dataList)                     // 对一个段落内的数据进行预加重处理 
+void PretreatmentControlCommon::Pre_emphasis(VoiceParagraph voiceParagraph, const double *dataList)                 // 对一个段落内的数据进行预加重处理 
 {
-	for (unsigned long i = 0; i < voiceParagraph.voiceLength; ++i) {
-		unsigned long dataIndex = voiceParagraph.begin + i;
+	for (unsigned int i = 0; i < voiceParagraph.voiceLength; ++i) {
+		unsigned int dataIndex = voiceParagraph.begin + i;
 		if (dataIndex == 0 || dataIndex == this->mediaFile->getDataNumber()) {
 			continue;
 		}
 
 		double tempValue = PretreatmentControlCommon::preCoefficient * dataList[dataIndex - 1];
 		tempValue = dataList[dataIndex] - tempValue;
-		dataList[dataIndex] = (DataType)(int)(tempValue);                             // 加一阶数字滤波器
+		this->mediaDataList[dataIndex] = tempValue;                                   // 加一阶数字滤波器
 	}
 }
 
-bool PretreatmentControlCommon::Frame_Data(DataType *data, unsigned long index, double* dataSpace, const int dataSpaceSize)             // 获取端点检测后第index帧的分帧加窗操作
+bool PretreatmentControlCommon::Frame_Data(double *data, unsigned long index, double* dataSpace, const int dataSpaceSize)               // 获取端点检测后第index帧的分帧加窗操作
 {
 	if (dataSpaceSize < PretreatmentControlCommon::N) {                               // 预分配的空间不足一帧时
 		return false;
@@ -266,7 +303,7 @@ bool PretreatmentControlCommon::Frame_Data(DataType *data, unsigned long index, 
 	return true;
 }
 
-bool PretreatmentControlCommon::Frame_Data(DataType *data, const double dataSize, const unsigned long index, double* dataSpace, const int dataSpaceSize)    // 对部分数据进行分帧加窗操作
+bool PretreatmentControlCommon::Frame_Data(double *data, const double dataSize, const unsigned long index, double* dataSpace, const int dataSpaceSize)      // 对部分数据进行分帧加窗操作
 {
 	if (dataSpaceSize < PretreatmentControlCommon::N) {                               // 预分配的空间不足一帧时
 		return false;

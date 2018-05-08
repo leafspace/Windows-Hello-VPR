@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <vector>
-#include "../MediaControl/Common/CommonType.h"
+#include <algorithm>
 #include "../MediaControl/Common/CommonStruct.h"
 #include "../MediaControl/WAVFile/WavFileBase.h"
 
@@ -23,7 +23,7 @@ private:
 	double zcrHigh;                                                                   // 短时过零率高门限
 	double zcrLow;                                                                    // 短时过零率低门限
 
-	DataType* mediaDataList;
+	double* mediaDataList;
 	vector<double> dataEnergy;                                                        // 保存短时帧能量，个数为dataNunber-N
 	vector<double> dataZCR;                                                           // 保存短时过零率
 
@@ -49,7 +49,8 @@ public:
 	PretreatmentControlCommon(MediaFile *mediaFile);
 	~PretreatmentControlCommon(void);
 
-	DataType* Get_MediaFileData(void);                                                // 获取当前处理过的语音数据
+	void showData(void);
+	double* Get_MediaFileData(void);                                                  // 获取当前处理过的语音数据
 	vector<double> Get_DataEnergy(void);                                              // 获取短时帧能量的数据
 	vector<double> Get_DataZCR(void);                                                 // 获取短时过零率的数据
 	double Get_maxEnergy(void);                                                       // 获取最大短时帧能量
@@ -65,8 +66,8 @@ public:
 	unsigned long Get_frameNumber(const double dataSize);                             // 计算长度内的帧数
 	unsigned long Get_frameNumber(const VoiceParagraph voiceParagraph);               // 获取某个语音段落的帧数
 	VoiceParagraph Get_dataVoicePoint(const unsigned long Number);                    // 获取某个语音段落
-	void Pre_emphasis(VoiceParagraph voiceParagraph, DataType *dataList);             // 对一个段落内的数据进行预加重处理 （注：预加重处理可以安放在分帧前，也可安放在分帧后）
-	bool Frame_Data(DataType *data, unsigned long index, double* dataSpace, const int dataSpaceSize);               // 获取端点检测后第index帧的分帧加窗操作
-	bool Frame_Data(DataType *data, const double dataSize, const unsigned long index, double* dataSpace, const int dataSpaceSize);      // 对部分数据进行分帧加窗操作
+	void Pre_emphasis(VoiceParagraph voiceParagraph, const double *dataList);         // 对一个段落内的数据进行预加重处理 （注：预加重处理可以安放在分帧前，也可安放在分帧后）
+	bool Frame_Data(double *data, unsigned long index, double* dataSpace, const int dataSpaceSize);                 // 获取端点检测后第index帧的分帧加窗操作
+	bool Frame_Data(double *data, const double dataSize, const unsigned long index, double* dataSpace, const int dataSpaceSize);        // 对部分数据进行分帧加窗操作
 	bool Endpoint_Detection(void);                                                    // 端点检测函数
 };

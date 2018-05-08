@@ -3,6 +3,7 @@
 #include <fstream>
 #include "../Common/MediaFile.h"
 
+
 typedef struct WaveChunk                                                              // RIFF块结构
 {
 	char RIFF[4];
@@ -51,8 +52,7 @@ private:
 	FactChunk *factChunk;                                                             // 附加块
 	DataChunk dataChunk;                                                              // 数据块
 
-	WavFile(void);
-
+	void initObject(void);
 	void readWAV(FILE *fp);
 	void readWAV(ifstream &fin);
 public:
