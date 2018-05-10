@@ -114,7 +114,7 @@
 2.更新为加强版的录音头文件（支持多声道\多采样频率\多采样位数）<br/>
 3.保存端点检测后的语音数据<br/>
 4.加强log系统的输出内容<br/>
-5.加强异常补货的内容<br/>
+5.加强异常捕获的内容<br/>
 
 **效果图片（2018年3月）** <br/>
 ![ScreenHost](https://github.com/leafspace/Windows-Hello-VPR/blob/master/%E5%8F%91%E5%B8%83%E9%83%A8%E7%BD%B2/%E6%95%88%E6%9E%9C%E8%A7%86%E9%A2%91/ScreenHost.png "效果图片")  
