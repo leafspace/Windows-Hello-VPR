@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>pthreads-w32-2-9-1-release\Pre-built.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>pthreads-w32-2-9-1-release\Pre-built.2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>pthreads\include;$(IncludePath)</IncludePath>
+    <LibraryPath>pthreads\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -106,37 +106,36 @@
     <None Include="res\VoiceprintRecognition.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CChineseCode.h" />
-    <ClInclude Include="LOG\LogSystem.h" />
-    <ClInclude Include="LOG\MessageQueue.h" />
-    <ClInclude Include="LOG\ReadConfig.h" />
-    <ClInclude Include="LOG\SocketClient.h" />
+    <ClInclude Include="EncodeSolution\CChineseCode.h" />
+    <ClInclude Include="FlashSolution\Shockwaveflash.h" />
+    <ClInclude Include="LogSolution\LogSystem.h" />
+    <ClInclude Include="LogSolution\MessageQueue.h" />
+    <ClInclude Include="LogSolution\SocketClient.h" />
+    <ClInclude Include="ReadConfigSolution\ReadConfig.h" />
+    <ClInclude Include="RecordSolution\WaveRecorder.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Shockwaveflash.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Voiceprint Recognition.h" />
     <ClInclude Include="Voiceprint RecognitionDlg.h" />
-    <ClInclude Include="VPR\Model_GMM.h" />
-    <ClInclude Include="VPR\Model_KMeans.h" />
-    <ClInclude Include="VPR\WavData_CharaParameter.h" />
-    <ClInclude Include="VPR\WavFile_Initial.h" />
-    <ClInclude Include="VPR\WavFile_Struct.h" />
-    <ClInclude Include="WaveRecorder.h" />
+    <ClInclude Include="VPRSolution\Model_GMM.h" />
+    <ClInclude Include="VPRSolution\Model_KMeans.h" />
+    <ClInclude Include="VPRSolution\WavData_CharaParameter.h" />
+    <ClInclude Include="VPRSolution\WavFile_Initial.h" />
+    <ClInclude Include="VPRSolution\WavFile_Struct.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CChineseCode.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdAfx.h</PrecompiledHeaderFile>
+    <ClCompile Include="EncodeSolution\CChineseCode.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="LOG\LogSystem.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdAfx.h</PrecompiledHeaderFile>
+    <ClCompile Include="FlashSolution\Shockwaveflash.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="LOG\SocketClient.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdAfx.h</PrecompiledHeaderFile>
+    <ClCompile Include="LogSolution\LogSystem.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Shockwaveflash.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdAfx.h</PrecompiledHeaderFile>
-    </ClCompile>
+    <ClCompile Include="LogSolution\SocketClient.cpp" />
+    <ClCompile Include="RecordSolution\WaveRecorder.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -151,33 +150,23 @@
     <ClCompile Include="Voiceprint RecognitionDlg.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="VPR\Model_GMM.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    <ClCompile Include="VPRSolution\Model_GMM.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="VPR\Model_KMeans.cpp">
+    <ClCompile Include="VPRSolution\Model_KMeans.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="VPR\WavData_CharaParameter.cpp">
+    <ClCompile Include="VPRSolution\WavData_CharaParameter.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="VPR\WavData_SupportFunction.cpp">
+    <ClCompile Include="VPRSolution\WavData_SupportFunction.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="VPR\WavFile_Initial.cpp">
+    <ClCompile Include="VPRSolution\WavFile_Initial.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="VPR\WavFile_Struct.cpp">
+    <ClCompile Include="VPRSolution\WavFile_Struct.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../StdAfx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../StdAfx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="WaveRecorder.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

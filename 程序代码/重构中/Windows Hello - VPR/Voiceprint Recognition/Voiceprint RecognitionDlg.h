@@ -9,11 +9,11 @@
 #include <iostream>
 #include <pthread.h>
 #include "resource.h"
-#include "CChineseCode.h"
-#include "WaveRecorder.h"
-#include "LOG/LogSystem.h"
-#include "Shockwaveflash.h"
-#include "VPR/WavData_CharaParameter.h"
+#include "EncodeSolution/CChineseCode.h"
+#include "RecordSolution/WaveRecorder.h"
+#include "LogSolution/LogSystem.h"
+#include "FlashSolution/Shockwaveflash.h"
+#include "VPRSolution/WavData_CharaParameter.h"
 
 struct FILESTRUCT;
 

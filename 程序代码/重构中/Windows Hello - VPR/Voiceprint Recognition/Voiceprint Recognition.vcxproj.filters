@@ -13,17 +13,41 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\VPR">
-      <UniqueIdentifier>{2d2fe02a-4215-4ece-8865-dab3a837f761}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\VPR">
-      <UniqueIdentifier>{e3494377-200b-4198-9bf7-74006ac3610b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\LOG">
+    <Filter Include="头文件\LogSolution">
       <UniqueIdentifier>{57550ed7-23bb-4645-a906-c0da4b79010d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\LOG">
+    <Filter Include="头文件\VPRSolution">
+      <UniqueIdentifier>{2d2fe02a-4215-4ece-8865-dab3a837f761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\VPRSolution">
+      <UniqueIdentifier>{e3494377-200b-4198-9bf7-74006ac3610b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LogSolution">
       <UniqueIdentifier>{83688260-68fd-40f6-8a39-07f04d7f2a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\EncodeSolution">
+      <UniqueIdentifier>{0db7bdea-e75d-4529-8692-eef881b60cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\EncodeSolution">
+      <UniqueIdentifier>{0061318c-0820-43c3-847c-426944229ce5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\FlashSolution">
+      <UniqueIdentifier>{05af60ec-cfd2-4572-8388-658da136b69d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\FlashSolution">
+      <UniqueIdentifier>{ccf8ad1f-673b-4d6a-88ca-9abd424ca56c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\RecordSolution">
+      <UniqueIdentifier>{03cc241b-5df2-43ed-8c4f-2a893902b670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\RecordSolution">
+      <UniqueIdentifier>{e55fad4a-3fb4-4b11-a933-2cfe1ef5fb83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ReadConfigSolution">
+      <UniqueIdentifier>{2339c07e-c34f-4783-a7ce-2965b1f3ed5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ReadConfigSolution">
+      <UniqueIdentifier>{af3f38db-dc49-4f6d-960e-a020e08a7d71}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,47 +72,47 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Shockwaveflash.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="WaveRecorder.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CChineseCode.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="VPR\WavFile_Struct.h">
-      <Filter>头文件\VPR</Filter>
-    </ClInclude>
-    <ClInclude Include="VPR\WavFile_Initial.h">
-      <Filter>头文件\VPR</Filter>
-    </ClInclude>
-    <ClInclude Include="VPR\WavData_CharaParameter.h">
-      <Filter>头文件\VPR</Filter>
-    </ClInclude>
-    <ClInclude Include="VPR\Model_GMM.h">
-      <Filter>头文件\VPR</Filter>
-    </ClInclude>
     <ClInclude Include="Voiceprint RecognitionDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Voiceprint Recognition.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="VPR\Model_KMeans.h">
-      <Filter>头文件\VPR</Filter>
+    <ClInclude Include="LogSolution\LogSystem.h">
+      <Filter>头文件\LogSolution</Filter>
     </ClInclude>
-    <ClInclude Include="LOG\LogSystem.h">
-      <Filter>头文件\LOG</Filter>
+    <ClInclude Include="LogSolution\MessageQueue.h">
+      <Filter>头文件\LogSolution</Filter>
     </ClInclude>
-    <ClInclude Include="LOG\MessageQueue.h">
-      <Filter>头文件\LOG</Filter>
+    <ClInclude Include="LogSolution\SocketClient.h">
+      <Filter>头文件\LogSolution</Filter>
     </ClInclude>
-    <ClInclude Include="LOG\ReadConfig.h">
-      <Filter>头文件\LOG</Filter>
+    <ClInclude Include="EncodeSolution\CChineseCode.h">
+      <Filter>头文件\EncodeSolution</Filter>
     </ClInclude>
-    <ClInclude Include="LOG\SocketClient.h">
-      <Filter>头文件\LOG</Filter>
+    <ClInclude Include="FlashSolution\Shockwaveflash.h">
+      <Filter>头文件\FlashSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadConfigSolution\ReadConfig.h">
+      <Filter>头文件\ReadConfigSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordSolution\WaveRecorder.h">
+      <Filter>头文件\RecordSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="VPRSolution\Model_GMM.h">
+      <Filter>头文件\VPRSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="VPRSolution\Model_KMeans.h">
+      <Filter>头文件\VPRSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="VPRSolution\WavData_CharaParameter.h">
+      <Filter>头文件\VPRSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="VPRSolution\WavFile_Initial.h">
+      <Filter>头文件\VPRSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="VPRSolution\WavFile_Struct.h">
+      <Filter>头文件\VPRSolution</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -101,41 +125,41 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Shockwaveflash.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Voiceprint RecognitionDlg Response.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WaveRecorder.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="LogSolution\LogSystem.cpp">
+      <Filter>源文件\LogSolution</Filter>
     </ClCompile>
-    <ClCompile Include="CChineseCode.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="LogSolution\SocketClient.cpp">
+      <Filter>源文件\LogSolution</Filter>
     </ClCompile>
-    <ClCompile Include="VPR\Model_GMM.cpp">
-      <Filter>源文件\VPR</Filter>
+    <ClCompile Include="EncodeSolution\CChineseCode.cpp">
+      <Filter>源文件\EncodeSolution</Filter>
     </ClCompile>
-    <ClCompile Include="VPR\Model_KMeans.cpp">
-      <Filter>源文件\VPR</Filter>
+    <ClCompile Include="FlashSolution\Shockwaveflash.cpp">
+      <Filter>源文件\FlashSolution</Filter>
     </ClCompile>
-    <ClCompile Include="VPR\WavData_CharaParameter.cpp">
-      <Filter>源文件\VPR</Filter>
+    <ClCompile Include="RecordSolution\WaveRecorder.cpp">
+      <Filter>源文件\RecordSolution</Filter>
     </ClCompile>
-    <ClCompile Include="VPR\WavData_SupportFunction.cpp">
-      <Filter>源文件\VPR</Filter>
+    <ClCompile Include="VPRSolution\Model_GMM.cpp">
+      <Filter>源文件\VPRSolution</Filter>
     </ClCompile>
-    <ClCompile Include="VPR\WavFile_Initial.cpp">
-      <Filter>源文件\VPR</Filter>
+    <ClCompile Include="VPRSolution\Model_KMeans.cpp">
+      <Filter>源文件\VPRSolution</Filter>
     </ClCompile>
-    <ClCompile Include="VPR\WavFile_Struct.cpp">
-      <Filter>源文件\VPR</Filter>
+    <ClCompile Include="VPRSolution\WavData_CharaParameter.cpp">
+      <Filter>源文件\VPRSolution</Filter>
     </ClCompile>
-    <ClCompile Include="LOG\SocketClient.cpp">
-      <Filter>源文件\LOG</Filter>
+    <ClCompile Include="VPRSolution\WavData_SupportFunction.cpp">
+      <Filter>源文件\VPRSolution</Filter>
     </ClCompile>
-    <ClCompile Include="LOG\LogSystem.cpp">
-      <Filter>源文件\LOG</Filter>
+    <ClCompile Include="VPRSolution\WavFile_Initial.cpp">
+      <Filter>源文件\VPRSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="VPRSolution\WavFile_Struct.cpp">
+      <Filter>源文件\VPRSolution</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
