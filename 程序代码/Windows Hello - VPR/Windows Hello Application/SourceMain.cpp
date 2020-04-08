@@ -152,6 +152,12 @@ int main()
 	GMM **gmmLib = new GMM*[gmmNumber];
 	ifstream *gmmFiles = new ifstream[gmmNumber];
 	for (int i = 0; i < gmmNumber; ++i) {
+		// 跳过无用的info.list 文件，避免无效的值混入判断
+		if (strcmp("info.list", getFileName(files[i]).data()) == 0)
+		{
+			continue;
+		}
+
 		gmmLib[i] = new GMM(CharaParameter::MelDegreeNumber, GMM::SGMNumber);
 		gmmFiles[i].open(files[i]);
 		assert(gmmFiles[i]);
@@ -172,6 +178,13 @@ int main()
 	cout << "Frame number is " << charaParameter->Get_frameNumber() << endl;
 	for (int i = 0; i < gmmNumber; ++i) {
 		libProbability[i] = 0;
+
+		// 跳过无用的info.list 文件，避免无效的值混入判断
+		if (strcmp("info.list", getFileName(files[i]).data()) == 0)
+		{
+			continue;
+		}
+
 		for (unsigned long j = 0; j < charaParameter->Get_frameNumber(); ++j) {                                      //计算当前GMM下，目标特征参数集在GMM模型下的概率密度
 			double tempData = gmmLib[i]->GetProbability(charaParameter->Get_frameMelParameter(j));                   //获取GMM的数值
 			if (tempData > 0) {                                                                                      //取对数操作
@@ -186,10 +199,18 @@ int main()
 	char resultName[1024] = {}, resultData[1024] = {};
 	cout << "TIP : Probability data is ";
 	for (int i = 0; i < gmmNumber; ++i) {
-		cout << libProbability[i] << "\t";
+		// 跳过无用的info.list 文件，避免无效的值混入判断
+		if (strcmp("info.list", getFileName(files[i]).data()) == 0)
+		{
+			libProbability[i] = 0;
+			continue;
+		}
+
 		if (libProbability[i] > libProbability[countMax]) {
 			countMax = i;
 		}
+
+		cout << libProbability[i] << "\t";
 
 		if (i != gmmNumber - 1) {
 			strcat_s(resultName, getFileName(files[i]).data());
