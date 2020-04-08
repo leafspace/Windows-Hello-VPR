@@ -27,7 +27,6 @@ DWORD WINAPI messageThread(LPVOID lpThreadParameter)
 				localtime(&date)->tm_hour, localtime(&date)->tm_min,
 				localtime(&date)->tm_sec);                                   //格式化文件名
 			strcat(filePath, fileName);                                      //连接文件路径
-			delete fileName;
 			cout << filePath << endl;
 
 			char tempStr[256] = { 0 };
