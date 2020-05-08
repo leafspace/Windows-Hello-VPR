@@ -5,12 +5,12 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include "LogSystem.h"
-#include "Model_GMM.h"
-#include "Model_KMeans.h"
-#include "CChineseCode.h"
-#include "WaveRecorder.h"
-#include "WavData_CharaParameter.h"
+#include "LogSolution/LogSystem.h"
+#include "VPRSolution/Model_GMM.h"
+#include "VPRSolution/Model_KMeans.h"
+#include "EncodeSolution/CChineseCode.h"
+#include "RecordSolution/WaveRecorder.h"
+#include "VPRSolution/WavData_CharaParameter.h"
 
 string getFileName(string path);                                                                                     //将某个路径转换为某个文件名
 void writePassword(const char* password);

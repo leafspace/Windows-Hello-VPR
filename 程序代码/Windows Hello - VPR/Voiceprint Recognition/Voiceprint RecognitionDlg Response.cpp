@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
-#include "VPR/Model_GMM.h"
-#include "VPR/Model_KMeans.h"
+#include "VPRSolution/Model_GMM.h"
+#include "VPRSolution/Model_KMeans.h"
 #include "Voiceprint RecognitionDlg.h"
-#include "VPR/WavData_CharaParameter.h"
+#include "VPRSolution/WavData_CharaParameter.h"
 
 WaveRecorder waveRecorder;                                                   //全局录音对象
 char* fileName;                                                              //文件对比之用

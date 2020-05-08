@@ -13,87 +13,117 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\EncodeSolution">
+      <UniqueIdentifier>{b3a127ff-c284-4017-808d-4d34e80ccbda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\EncodeSolution">
+      <UniqueIdentifier>{b46d5bae-3481-41dc-bc9d-6395947b99f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\LogSolution">
+      <UniqueIdentifier>{d9eb95a5-b51a-4010-918a-4d888259971b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LogSolution">
+      <UniqueIdentifier>{7e1c5d83-13ae-452a-baf3-1c9181e36b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ReadConfigSolution">
+      <UniqueIdentifier>{4b4832c8-e481-4aea-af1c-1fd3cebf73b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ReadConfigSolution">
+      <UniqueIdentifier>{360621d0-dd38-4ecf-ba35-f643e6845d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\RecordSolution">
+      <UniqueIdentifier>{02638ee2-6c15-476f-8aa0-d614fcb39e9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\RecordSolution">
+      <UniqueIdentifier>{a1d0e35c-e1a3-4677-957c-f1d747383a40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\VPRSolution">
+      <UniqueIdentifier>{db60f6f8-6172-4cf9-980b-d6f1d8753123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\VPRSolution">
+      <UniqueIdentifier>{b1f33488-cbc5-40e3-b08f-d7814b6573a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Model_GMM.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Model_KMeans.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WavData_CharaParameter.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WavData_SupportFunction.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WavFile_Initial.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WavFile_Struct.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="SourceMain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WaveRecorder.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="EncodeSolution\CChineseCode.cpp">
+      <Filter>源文件\EncodeSolution</Filter>
     </ClCompile>
-    <ClCompile Include="CChineseCode.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="LogSolution\LogSystem.cpp">
+      <Filter>源文件\LogSolution</Filter>
     </ClCompile>
-    <ClCompile Include="LogSystem.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="LogSolution\MD5.cpp">
+      <Filter>源文件\LogSolution</Filter>
     </ClCompile>
-    <ClCompile Include="SocketClient.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="LogSolution\Socket_TCP_Packge.cpp">
+      <Filter>源文件\LogSolution</Filter>
     </ClCompile>
-    <ClCompile Include="Socket_TCP_Packge.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="LogSolution\SocketClient.cpp">
+      <Filter>源文件\LogSolution</Filter>
     </ClCompile>
-    <ClCompile Include="MD5.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="VPRSolution\Model_GMM.cpp">
+      <Filter>源文件\VPRSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="VPRSolution\Model_KMeans.cpp">
+      <Filter>源文件\VPRSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="VPRSolution\WavData_CharaParameter.cpp">
+      <Filter>源文件\VPRSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="VPRSolution\WavData_SupportFunction.cpp">
+      <Filter>源文件\VPRSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="VPRSolution\WavFile_Initial.cpp">
+      <Filter>源文件\VPRSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="VPRSolution\WavFile_Struct.cpp">
+      <Filter>源文件\VPRSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordSolution\WaveRecorder.cpp">
+      <Filter>源文件\RecordSolution</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Model_GMM.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="EncodeSolution\CChineseCode.h">
+      <Filter>头文件\EncodeSolution</Filter>
     </ClInclude>
-    <ClInclude Include="Model_KMeans.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="LogSolution\LogSystem.h">
+      <Filter>头文件\LogSolution</Filter>
     </ClInclude>
-    <ClInclude Include="WavData_CharaParameter.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="LogSolution\MD5.h">
+      <Filter>头文件\LogSolution</Filter>
     </ClInclude>
-    <ClInclude Include="WavFile_Initial.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="LogSolution\MessageQueue.h">
+      <Filter>头文件\LogSolution</Filter>
     </ClInclude>
-    <ClInclude Include="WavFile_Struct.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="LogSolution\Socket_TCP_Packge.h">
+      <Filter>头文件\LogSolution</Filter>
     </ClInclude>
-    <ClInclude Include="WaveRecorder.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="LogSolution\SocketClient.h">
+      <Filter>头文件\LogSolution</Filter>
     </ClInclude>
-    <ClInclude Include="CChineseCode.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="VPRSolution\Model_GMM.h">
+      <Filter>头文件\VPRSolution</Filter>
     </ClInclude>
-    <ClInclude Include="LogSystem.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="VPRSolution\Model_KMeans.h">
+      <Filter>头文件\VPRSolution</Filter>
     </ClInclude>
-    <ClInclude Include="MessageQueue.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="VPRSolution\WavData_CharaParameter.h">
+      <Filter>头文件\VPRSolution</Filter>
     </ClInclude>
-    <ClInclude Include="ReadConfig.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="VPRSolution\WavFile_Initial.h">
+      <Filter>头文件\VPRSolution</Filter>
     </ClInclude>
-    <ClInclude Include="SocketClient.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="VPRSolution\WavFile_Struct.h">
+      <Filter>头文件\VPRSolution</Filter>
     </ClInclude>
-    <ClInclude Include="Socket_TCP_Packge.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="RecordSolution\WaveRecorder.h">
+      <Filter>头文件\RecordSolution</Filter>
     </ClInclude>
-    <ClInclude Include="MD5.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="ReadConfigSolution\ReadConfig.h">
+      <Filter>头文件\ReadConfigSolution</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
