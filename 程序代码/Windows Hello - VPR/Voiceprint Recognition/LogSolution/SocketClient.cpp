@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿#include "../stdafx.h"
 #include "SocketClient.h"
 
 void SocketClient::setServerIP(string serverIP)

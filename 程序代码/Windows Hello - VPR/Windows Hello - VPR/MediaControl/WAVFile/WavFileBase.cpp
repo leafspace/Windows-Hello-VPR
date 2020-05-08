@@ -232,7 +232,7 @@ void WavFile::writeWAV(FILE *fp)
 	fwrite(&this->dataChunk.dataLength, sizeof(unsigned int), 1, fp);                 // 写入数据大小
 	int tempNumber = 0;
 	for (unsigned int i = 0; i < this->getDataNumber(); ++i) {
-		tempNumber = this->dataChunk.dataList[i];
+		tempNumber = (int) this->dataChunk.dataList[i];
 		fwrite(&tempNumber, this->getSampleBytes(), 1, fp);                           // 写入数据
 	}
 }
@@ -263,7 +263,7 @@ void WavFile::writeWAV(ofstream &fout)
 	fout.write(reinterpret_cast<char*>(this->dataChunk.dataLength), sizeof(unsigned int)* 1);                       // 写入数据大小
 	int tempNumber = 0;
 	for (unsigned int i = 0; i < this->getDataNumber(); ++i) {
-		tempNumber = this->dataChunk.dataList[i];
+		tempNumber = (int) this->dataChunk.dataList[i];
 		fout.write(reinterpret_cast<char*>(&tempNumber), this->getSampleBytes());
 	}
 }
@@ -285,11 +285,11 @@ void WavFile::showData(void)
 		}
 
 		if (this->getData(i) > maxValue) {
-			maxValue = this->getData(i);
+			maxValue = (int) this->getData(i);
 		}
 
 		if (this->getData(i) < minValue) {
-			minValue = this->getData(i);
+			minValue = (int) this->getData(i);
 		}
 
 	}

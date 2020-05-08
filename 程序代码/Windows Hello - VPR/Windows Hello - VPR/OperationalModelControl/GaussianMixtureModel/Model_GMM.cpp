@@ -15,6 +15,7 @@
 
 #include <math.h>
 #include <iostream>
+#include <algorithm>
 #include "Model_GMM.h"
 #include "Model_KMeans.h"
 

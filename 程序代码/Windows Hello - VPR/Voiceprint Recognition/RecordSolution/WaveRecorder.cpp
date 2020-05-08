@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿#include "../stdafx.h"
 #include "WaveRecorder.h"
 
 // 静态变量初始化
