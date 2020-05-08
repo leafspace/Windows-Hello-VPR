@@ -60,24 +60,18 @@ void CVoiceprintRecognitionDlg::CompoundFile(vector<FILESTRUCT>& fileLib, int fl
 		if (j == fileLib.size()) {
 			FILESTRUCT item;
 			item.fileName = getFileName(fileName).data();
+			item.peopleName = "未知";
+
+
 			if (flag == 0) {
 				if (::fileName != NULL && (strcmp(::fileName_t.data(), fileName.data()) == 0)) { //如果录音文件路径与当前这个未知的文件路径相同
 					CString str;
-					GetDlgItem(IDC_EDIT1)->GetWindowText(str);               //获取所属人名
+					GetDlgItem(IDC_EDIT_RECORD_PEOPLE)->GetWindowText(str);               //获取所属人名
 					string tempstr = CStringA(str);
-					if (tempstr.size() == 0) {                               //所属人名没写
-						item.peopleName = "未知";
-					}
-					else {
+					if (str.GetLength() != 0) {                               //所属人名没写
 						item.peopleName = tempstr;
 					}
 				}
-				else {
-					item.peopleName = "未知";
-				}
-			}
-			else if (flag == 1) {
-				item.peopleName = "未知";
 			}
 			newLib.push_back(item);
 		}
@@ -96,8 +90,8 @@ int CVoiceprintRecognitionDlg::GetItemSelect(int index)                      //�
 	int count = 0;
 	switch (index)
 	{
-	case 0: count = this->listCtrl_1.GetItemCount(); break;
-	case 1: count = this->listCtrl_2.GetItemCount(); break;
+	case 0: count = this->m_listCtrl_VoiceFile.GetItemCount(); break;
+	case 1: count = this->m_listCtrl_VoiceLib.GetItemCount(); break;
 	default: break;
 	}
 
@@ -105,12 +99,12 @@ int CVoiceprintRecognitionDlg::GetItemSelect(int index)                      //�
 		switch (index)
 		{
 		case 0:
-			if (this->listCtrl_1.GetItemState(i, LVIS_SELECTED) == LVIS_SELECTED) {
+			if (this->m_listCtrl_VoiceFile.GetItemState(i, LVIS_SELECTED) == LVIS_SELECTED) {
 				return i;
 			}
 			break;
 		case 1:
-			if (this->listCtrl_2.GetItemState(i, LVIS_SELECTED) == LVIS_SELECTED) {
+			if (this->m_listCtrl_VoiceLib.GetItemState(i, LVIS_SELECTED) == LVIS_SELECTED) {
 				return i;
 			}
 			break;
@@ -118,56 +112,6 @@ int CVoiceprintRecognitionDlg::GetItemSelect(int index)                      //�
 		}
 	}
 	return -1;
-}
-
-bool CVoiceprintRecognitionDlg::OnButton1_record(char* fileName)             //开启录音线程
-{
-	::fileName = fileName;
-	pthread_attr_t attr;                                                     //线程属性结构体，创建线程时加入的参数  
-	pthread_attr_init(&attr);                                                //初始化
-	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);             //是设置你想要指定线程属性参数
-	int ret = pthread_create(&thread_recordID, &attr, record, (void*)&fileName);
-	if (ret != 0) {
-		MessageBoxA(NULL, "ERROR : Can't create thread !", "ERROR", MB_ICONHAND);
-		return false;
-	}
-	return true;
-}
-
-bool CVoiceprintRecognitionDlg::OnButton1_cancel()                           //结束录音
-{
-	::waveRecorder.Stop();
-	::waveRecorder.Reset();
-	pthread_cancel(this->thread_recordID);
-	return true;
-}
-
-bool CVoiceprintRecognitionDlg::OnButton4_refresh()                          //录音文件刷新
-{
-	CString str_f, str_p;
-	listCtrl_1.DeleteAllItems();
-	for (int i = 0; i < (int) this->wavLib.size(); ++i) {
-		FILESTRUCT item = this->wavLib[i];
-		str_f = item.fileName.c_str();
-		str_p = item.peopleName.c_str();
-		listCtrl_1.InsertItem(i, str_f);                                     //设置列表文件名信息
-		listCtrl_1.SetItemText(i, 1, str_p);                                 //设置列表用户信息
-	}
-	return true;
-}
-
-bool CVoiceprintRecognitionDlg::OnButton5_refresh()                          //模型文件刷新
-{
-	CString str_f, str_p;
-	listCtrl_2.DeleteAllItems();
-	for (int i = 0; i < (int) this->voiceLib.size(); ++i) {
-		FILESTRUCT item = this->voiceLib[i];
-		str_f = item.fileName.c_str();
-		str_p = item.peopleName.c_str();
-		listCtrl_2.InsertItem(i, str_f);                                     //设置列表文件名信息
-		listCtrl_2.SetItemText(i, 1, str_p);;                                //设置列表用户信息
-	}
-	return true;
 }
 
 void* record(void* args)                                                     //录音线程
@@ -255,21 +199,21 @@ bool extractParameter(string wavfilePath)                                    //�
 	FILE *fp;
 	if ((fp = fopen(wavfilePath.data(), "rb")) == NULL) {                    //打开语音文件
 		//LogSystem send message
-		if (p_logSystem->linkState) {
-			p_logSystem->sendMessage("<Message>\n");
-			p_logSystem->sendMessage("ERROR : Voice file open failed ! \n");
+		if (g_pLogSystem->linkState) {
+			g_pLogSystem->sendMessage("<Message>\n");
+			g_pLogSystem->sendMessage("ERROR : Voice file open failed ! \n");
 		}
-		p_logSystem->writeMessage("ERROR : Voice file open failed ! \n");
+		g_pLogSystem->writeMessage("ERROR : Voice file open failed ! \n");
 		return false;
 	}
 
 	//Todo 初始化语音文件类 读取语音文件数据
 	//LogSystem send message
-	if (p_logSystem->linkState) {
-		p_logSystem->sendMessage("<Message>\n");
-		p_logSystem->sendMessage("Info : Read voice file data ! \n");
+	if (g_pLogSystem->linkState) {
+		g_pLogSystem->sendMessage("<Message>\n");
+		g_pLogSystem->sendMessage("Info : Read voice file data ! \n");
 	}
-	p_logSystem->writeMessage("Info : Read voice file data ! \n");
+	g_pLogSystem->writeMessage("Info : Read voice file data ! \n");
 
 	WavFile_Initial *wavFile = new WavFile_Initial(fp);                      //读取语音文件数据
 	fclose(fp);
@@ -279,11 +223,11 @@ bool extractParameter(string wavfilePath)                                    //�
 
 	//Todo 初始化特征参数类 计算语音数据特征参数
 	//LogSystem send message
-	if (p_logSystem->linkState) {
-		p_logSystem->sendMessage("<Message>\n");
-		p_logSystem->sendMessage("Info : Initial characteristic parameters are calculated ! \n");
+	if (g_pLogSystem->linkState) {
+		g_pLogSystem->sendMessage("<Message>\n");
+		g_pLogSystem->sendMessage("Info : Initial characteristic parameters are calculated ! \n");
 	}
-	p_logSystem->writeMessage("Info : Initial characteristic parameters are calculated ! \n");
+	g_pLogSystem->writeMessage("Info : Initial characteristic parameters are calculated ! \n");
 
 	double *dataSpace = NULL;
 
@@ -300,21 +244,21 @@ bool extractParameter(string wavfilePath)                                    //�
 
 	//Todo 计算MFCC参数
 	//LogSystem send message
-	if (p_logSystem->linkState) {
-		p_logSystem->sendMessage("<Message>\n");
-		p_logSystem->sendMessage("Info : Initial MFCC parameters are calculated ! \n");
+	if (g_pLogSystem->linkState) {
+		g_pLogSystem->sendMessage("<Message>\n");
+		g_pLogSystem->sendMessage("Info : Initial MFCC parameters are calculated ! \n");
 	}
-	p_logSystem->writeMessage("Info : Initial MFCC parameters are calculated ! \n");
+	g_pLogSystem->writeMessage("Info : Initial MFCC parameters are calculated ! \n");
 
 	charaParameter->MFCC_CharaParameter(sampleRate);                         //计算MFCC特征参数
 
 	//Todo 初始化Kmeans数据
 	//LogSystem send message
-	if (p_logSystem->linkState) {
-		p_logSystem->sendMessage("<Message>\n");
-		p_logSystem->sendMessage("Info : Initial K-means data ! \n");
+	if (g_pLogSystem->linkState) {
+		g_pLogSystem->sendMessage("<Message>\n");
+		g_pLogSystem->sendMessage("Info : Initial K-means data ! \n");
 	}
-	p_logSystem->writeMessage("Info : Initial K-means data ! \n");
+	g_pLogSystem->writeMessage("Info : Initial K-means data ! \n");
 
 	::mfccData = new double[charaParameter->Get_frameNumber() * CharaParameter::MelDegreeNumber];
 	for (unsigned long i = 0; i < charaParameter->Get_frameNumber(); ++i) {
@@ -469,13 +413,13 @@ int voiceprintRecognition(string rootPath, vector<FILESTRUCT> voiceLib)      //�
 	cout << endl;
 
 	//LogSystem send message
-	if (p_logSystem->linkState) {
-		p_logSystem->sendMessage("<Result>\n");
-		p_logSystem->sendMessage(resultName);
-		p_logSystem->sendMessage(resultData);
+	if (g_pLogSystem->linkState) {
+		g_pLogSystem->sendMessage("<Result>\n");
+		g_pLogSystem->sendMessage(resultName);
+		g_pLogSystem->sendMessage(resultData);
 	}
-	p_logSystem->writeMessage(resultName);
-	p_logSystem->writeMessage(resultData);
+	g_pLogSystem->writeMessage(resultName);
+	g_pLogSystem->writeMessage(resultData);
 
 	int countMax = 0;
 	for (int i = 1; i < (int)voiceLib.size(); ++i) {

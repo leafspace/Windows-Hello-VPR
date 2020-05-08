@@ -111,4 +111,4 @@ public:
 	}
 };
 
-extern LogSystem *p_logSystem;
+extern LogSystem *g_pLogSystem;

@@ -48,7 +48,7 @@ bool SocketClient::pingTest()                                                //p
 	inStream.getline(buffer, 512);
 	inStream.getline(buffer, 512);
 
-	if (strcmp(buffer, "请求超时。") == 0) {
+	if (strcmp(buffer, "请求超时。") >= 0) {
 		return false;
 	}
 	else {

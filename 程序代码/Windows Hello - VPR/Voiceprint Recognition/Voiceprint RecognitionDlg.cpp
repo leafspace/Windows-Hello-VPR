@@ -11,44 +11,30 @@
 #define new DEBUG_NEW
 #endif
 
-LogSystem *p_logSystem;                                                      //用于处理Log相关
+LogSystem *g_pLogSystem = NULL;                                                      //用于处理Log相关
 
-// 用于应用程序“关于”菜单项的 CAboutDlg 对话框
-
+//======================================================================================
 class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
-
-	// 对话框数据
 	enum { IDD = IDD_ABOUTBOX };
-
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
-
-// 实现
 protected:
 	DECLARE_MESSAGE_MAP()
 };
-
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
 {
 }
-
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 }
-
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
-
-// CVoiceprintRecognitionDlg 对话框
-
-
-
-
+//======================================================================================
 CVoiceprintRecognitionDlg::CVoiceprintRecognitionDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CVoiceprintRecognitionDlg::IDD, pParent)
 {
@@ -58,23 +44,22 @@ CVoiceprintRecognitionDlg::CVoiceprintRecognitionDlg(CWnd* pParent /*=NULL*/)
 void CVoiceprintRecognitionDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_SHOCKWAVEFLASH1, flashshow);
-	DDX_Control(pDX, IDC_LIST1, listCtrl_1);
-	DDX_Control(pDX, IDC_LIST2, listCtrl_2);
-	DDX_Control(pDX, IDC_BUTTON1, buttonCtrl_1);
+	DDX_Control(pDX, IDC_SHOCKWAVEFLASH, m_flashCtrl);
+	DDX_Control(pDX, IDC_LIST_VOICEFILE, m_listCtrl_VoiceFile);
+	DDX_Control(pDX, IDC_LIST_VOICELIB, m_listCtrl_VoiceLib);
 }
 
 BEGIN_MESSAGE_MAP(CVoiceprintRecognitionDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON1, &CVoiceprintRecognitionDlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON2, &CVoiceprintRecognitionDlg::OnBnClickedButton2)
-	ON_BN_CLICKED(IDC_BUTTON3, &CVoiceprintRecognitionDlg::OnBnClickedButton3)
-	ON_BN_CLICKED(IDC_BUTTON4, &CVoiceprintRecognitionDlg::OnBnClickedButton4)
-	ON_BN_CLICKED(IDC_BUTTON5, &CVoiceprintRecognitionDlg::OnBnClickedButton5)
-	ON_NOTIFY(NM_DBLCLK, IDC_LIST1, &CVoiceprintRecognitionDlg::OnNMDblclkList1)
-	ON_BN_CLICKED(IDC_BUTTON6, &CVoiceprintRecognitionDlg::OnBnClickedButton6)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST_VOICEFILE, &CVoiceprintRecognitionDlg::OnNMDblclkListVoiceFile)
+	ON_BN_CLICKED(IDC_BUTTON_RECORD, &CVoiceprintRecognitionDlg::OnBnClickedButtonRecord)
+	ON_BN_CLICKED(IDC_BUTTON_TRAINING, &CVoiceprintRecognitionDlg::OnBnClickedButtonTraining)
+	ON_BN_CLICKED(IDC_BUTTON_RECOGNITION, &CVoiceprintRecognitionDlg::OnBnClickedButtonRecognition)
+	ON_BN_CLICKED(IDC_BUTTON_REFRESH_VOICEFILE, &CVoiceprintRecognitionDlg::OnBnClickedButtonRefreshVoiceFile)
+	ON_BN_CLICKED(IDC_BUTTON_REFRESH_VOICELIB, &CVoiceprintRecognitionDlg::OnBnClickedButtonRefreshVoiceLib)
+	ON_BN_CLICKED(IDC_BUTTON_TRANING_DATA, &CVoiceprintRecognitionDlg::OnBnClickedButtonTraningData)
 END_MESSAGE_MAP()
 
 
@@ -85,7 +70,6 @@ BOOL CVoiceprintRecognitionDlg::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	// 将“关于...”菜单项添加到系统菜单中。
-
 	// IDM_ABOUTBOX 必须在系统命令范围内。
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
@@ -109,56 +93,30 @@ BOOL CVoiceprintRecognitionDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
+
 	// TODO: 在此添加额外的初始化代码
-	CRect rectCtrl;
-	GetDlgItem(IDC_SHOCKWAVEFLASH1)->GetWindowRect(&rectCtrl);
-	rectCtrl.left = 35;
-	rectCtrl.right = 217;
-	rectCtrl.top = 45;
-	rectCtrl.bottom = 200;
-	flashshow.MoveWindow(&rectCtrl, true);
-	TCHAR strCurDrt[500];
-	int nLen = ::GetCurrentDirectory(500, strCurDrt);
-	if (strCurDrt[nLen] != '\\') {
-		strCurDrt[nLen++] = '\\';
-		strCurDrt[nLen] = '\0';
-	}
-	CString strFileName = strCurDrt;
-	strFileName += "flash.swf";
-	this->flashshow.LoadMovie(0, strFileName);
-	this->flashshow.Play();
-	this->flashshow.Stop();
-	SetWindowPos(&this->flashshow, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-
-
-	CRect rect;
-	this->listCtrl_1.GetHeaderCtrl()->EnableWindow(false);                   //固定标题不被移动
-	listCtrl_1.GetClientRect(&rect);                                         //获取编程语言列表视图控件的位置和大小
-	listCtrl_1.SetExtendedStyle(listCtrl_1.GetExtendedStyle()
-		| LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);                          //为列表视图控件添加全行选中和栅格风格
-
-	listCtrl_1.InsertColumn(0, _T("文件名"), LVCFMT_CENTER, rect.Width() / 2, 0);
-	listCtrl_1.InsertColumn(1, _T("录音人"), LVCFMT_CENTER, rect.Width() / 2, 1);
-
-	this->listCtrl_2.GetHeaderCtrl()->EnableWindow(false);                   //固定标题不被移动
-	listCtrl_2.GetClientRect(&rect);                                         //获取编程语言列表视图控件的位置和大小
-	listCtrl_2.SetExtendedStyle(listCtrl_2.GetExtendedStyle()
-		| LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);                          //为列表视图控件添加全行选中和栅格风格
-
-	listCtrl_2.InsertColumn(0, _T("文件名"), LVCFMT_CENTER, rect.Width() / 2, 0);
-	listCtrl_2.InsertColumn(1, _T("所属人"), LVCFMT_CENTER, rect.Width() / 2, 1);
-
 	this->flagRecord = false;
-	this->OnBnClickedButton4();
-	this->OnBnClickedButton5();
 
-	p_logSystem = new LogSystem();                                           //初始化日志系统
-	p_logSystem->linkState = p_logSystem->initSocket();
-	p_logSystem->beginSystem();                                              //开启线程发送消息
+	this->OnLoadXActiveFlash();
+	this->OnLoadTableHead();
 
-	p_logSystem->sendMessage("<Type>\n");                                    //发送类型消息
-	p_logSystem->sendMessage("Windows Hello Client\n");
-	p_logSystem->writeMessage("==============================================\n");
+	this->OnBnClickedButtonRefreshVoiceFile();
+	this->OnBnClickedButtonRefreshVoiceLib();
+
+	if (g_pLogSystem != NULL)
+	{
+		delete g_pLogSystem;
+		g_pLogSystem = NULL;
+	}
+
+	g_pLogSystem = new LogSystem();                                           //初始化日志系统
+	g_pLogSystem->linkState = g_pLogSystem->initSocket();
+	g_pLogSystem->beginSystem();                                              //开启线程发送消息
+
+	g_pLogSystem->sendMessage("<Type>\n");                                    //发送类型消息
+	g_pLogSystem->sendMessage("Windows Hello Client\n");
+	g_pLogSystem->writeMessage("==============================================\n");
+
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -211,34 +169,33 @@ HCURSOR CVoiceprintRecognitionDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CVoiceprintRecognitionDlg::OnBnClickedButton1()
+void CVoiceprintRecognitionDlg::OnBnClickedButtonRecord()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	if (flagRecord) {
 		//LogSystem send message
-		if (p_logSystem->linkState) {
-			p_logSystem->sendMessage("<Message>\n");
-			p_logSystem->sendMessage("Info : Stop record ! \n");
+		if (g_pLogSystem->linkState) {
+			g_pLogSystem->sendMessage("<Message>\n");
+			g_pLogSystem->sendMessage("Info : Stop record ! \n");
 		}
-		p_logSystem->writeMessage("Info : Stop record ! \n");
+		g_pLogSystem->writeMessage("Info : Stop record ! \n");
 
-		this->OnButton1_cancel();
-		this->flashshow.Stop();
+		this->OnButton_cancel();
+		this->m_flashCtrl.Stop();
 		this->flagRecord = false;
-		this->OnBnClickedButton4();
-		this->OnBnClickedButton5();
-		SetDlgItemText(IDC_BUTTON1, (CString)"录音");
-		SetDlgItemText(IDC_EDIT1, (CString)"");
+		this->OnBnClickedButtonRefreshVoiceFile();
+		this->OnBnClickedButtonRefreshVoiceLib();
+		SetDlgItemText(IDC_BUTTON_RECORD, _T("录音"));
+		SetDlgItemText(IDC_EDIT_RECORD_PEOPLE, _T(""));
 	}
 	else {
 		//LogSystem send message
-		if (p_logSystem->linkState) {
-			p_logSystem->sendMessage("<Message>\n");
-			p_logSystem->sendMessage("Info : Begin record ! \n");
+		if (g_pLogSystem->linkState) {
+			g_pLogSystem->sendMessage("<Message>\n");
+			g_pLogSystem->sendMessage("Info : Begin record ! \n");
 		}
-		p_logSystem->writeMessage("Info : Begin record ! \n");
+		g_pLogSystem->writeMessage("Info : Begin record ! \n");
 
-		bool success = false;
 		//弹出窗口并显示
 		CFileDialog opendlg(FALSE, _T("*.wav"), _T("*.wav"), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("所有文件(*.wav*;)|*.wav*||"), NULL);   //打开文件选择框
 		if (opendlg.DoModal() == IDOK)
@@ -268,28 +225,38 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton1()
 
 			::fileName_t = fileNameTemp;
 
-			success = this->OnButton1_record(fileNameTemp);                  //赋文件名给线程操作函数
+			bool bSuccess = this->OnButton_record(fileNameTemp);                  //赋文件名给线程操作函数
 			delete fileNameChar;
 			//delete fileNameTemp;                                           //交给初始化完录音后清空
+
+			if (bSuccess) {
+				SetDlgItemText(IDC_BUTTON_RECORD, _T("停止"));
+				this->m_flashCtrl.Play();
+				this->flagRecord = true;
+			}
+			else
+			{
+				g_pLogSystem->writeMessage("ERROR : Can't record ! \n");
+			}
 		}
-		if (success) {
-			SetDlgItemText(IDC_BUTTON1, (CString)"停止");
-			this->flashshow.Play();
-			this->flagRecord = true;
+		else
+		{
+			g_pLogSystem->writeMessage("Info : End record ! \n");
+			g_pLogSystem->writeMessage("Info : Use not choose output file name ! \n");
 		}
 	}
 }
 
 
-void CVoiceprintRecognitionDlg::OnBnClickedButton2()
+void CVoiceprintRecognitionDlg::OnBnClickedButtonTraining()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	//LogSystem send message
-	if (p_logSystem->linkState) {
-		p_logSystem->sendMessage("<Message>\n");
-		p_logSystem->sendMessage("Info : Begin traning user voice ! \n");
+	if (g_pLogSystem->linkState) {
+		g_pLogSystem->sendMessage("<Message>\n");
+		g_pLogSystem->sendMessage("Info : Begin traning user voice ! \n");
 	}
-	p_logSystem->writeMessage("Info : Begin traning user voice ! \n");
+	g_pLogSystem->writeMessage("Info : Begin traning user voice ! \n");
 
 	int selectIndex = this->GetItemSelect(0);
 	FILESTRUCT selectItem = this->wavLib[selectIndex];
@@ -298,11 +265,11 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 		strcmp(selectItem.peopleName.data(), "unknow") == 0) {
 		MessageBoxA(NULL, "未知的用户语音无法训练进入训练库", "错误", MB_ICONHAND);
 		//LogSystem send message
-		if (p_logSystem->linkState) {
-			p_logSystem->sendMessage("<Message>\n");
-			p_logSystem->sendMessage("ERROR : Unknow person voice can't into the libraly ! \n");
+		if (g_pLogSystem->linkState) {
+			g_pLogSystem->sendMessage("<Message>\n");
+			g_pLogSystem->sendMessage("ERROR : Unknow person voice can't into the libraly ! \n");
 		}
-		p_logSystem->writeMessage("ERROR : Unknow person voice can't into the libraly ! \n");
+		g_pLogSystem->writeMessage("ERROR : Unknow person voice can't into the libraly ! \n");
 		return;
 	}
 
@@ -347,11 +314,11 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton2()
 	}
 	out.close();
 
-	this->OnBnClickedButton5();
+	this->OnBnClickedButtonRefreshVoiceLib();
 }
 
 
-void CVoiceprintRecognitionDlg::OnBnClickedButton3()
+void CVoiceprintRecognitionDlg::OnBnClickedButtonRecognition()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	char szModuleFilePath[MAX_PATH];
@@ -371,7 +338,7 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 	strcpy_s(gmmfilePath, filePath);
 	strcat_s(gmmfilePath, "voiceLib\\\\");
 
-	this->OnBnClickedButton2();                                              //先训练目标数据
+	this->OnBnClickedButtonTraining();                                              //先训练目标数据
 
 	int selectIndex = this->GetItemSelect(0);
 	FILESTRUCT selectItem = this->wavLib[selectIndex];
@@ -382,11 +349,11 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 	}
 
 	//LogSystem send message
-	if (p_logSystem->linkState) {
-		p_logSystem->sendMessage("<Message>\n");
-		p_logSystem->sendMessage("Info : Begin recognition ! \n");
+	if (g_pLogSystem->linkState) {
+		g_pLogSystem->sendMessage("<Message>\n");
+		g_pLogSystem->sendMessage("Info : Begin recognition ! \n");
 	}
-	p_logSystem->writeMessage("Info : Begin recognition ! \n");
+	g_pLogSystem->writeMessage("Info : Begin recognition ! \n");
 
 	int countMax = voiceprintRecognition(gmmfilePath, this->voiceLib);
 
@@ -396,79 +363,59 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton3()
 
 	strcat_s(VPR_result, "\n");
 	//LogSystem send message
-	if (p_logSystem->linkState) {
-		p_logSystem->sendMessage("<Message>\n");
-		p_logSystem->sendMessage(VPR_result);
+	if (g_pLogSystem->linkState) {
+		g_pLogSystem->sendMessage("<Message>\n");
+		g_pLogSystem->sendMessage(VPR_result);
 	}
-	p_logSystem->writeMessage(VPR_result);
+	g_pLogSystem->writeMessage(VPR_result);
 }
 
 
-void CVoiceprintRecognitionDlg::OnBnClickedButton4()
+void CVoiceprintRecognitionDlg::OnBnClickedButtonRefreshVoiceFile()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	this->CompoundFile(this->wavLib, 0);
-	this->OnButton4_refresh();
+	
+
+	CString str_f, str_p;
+	m_listCtrl_VoiceFile.DeleteAllItems();
+	for (int i = 0; i < (int)this->wavLib.size(); ++i) {
+		FILESTRUCT item = this->wavLib[i];
+		str_f = item.fileName.c_str();
+		str_p = item.peopleName.c_str();
+		m_listCtrl_VoiceFile.InsertItem(i, str_f);                                     //设置列表文件名信息
+		m_listCtrl_VoiceFile.SetItemText(i, 1, str_p);                                 //设置列表用户信息
+	}
+
 }
 
 
-void CVoiceprintRecognitionDlg::OnBnClickedButton5()
+void CVoiceprintRecognitionDlg::OnBnClickedButtonRefreshVoiceLib()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	this->CompoundFile(this->voiceLib, 1);
-	this->OnButton5_refresh();
-}
-
-
-
-void CVoiceprintRecognitionDlg::OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-	// TODO: 在此添加控件通知处理程序代码
-	int selectIndex = this->GetItemSelect(0);
-	if (selectIndex != -1) {
-		FILESTRUCT selectItem = this->wavLib[selectIndex];
-		char szModuleFilePath[MAX_PATH];
-		int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
-		szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
-
-		int index = 0;
-		char filePath[MAX_PATH];
-		for (int i = 0; i < (int)strlen(szModuleFilePath); ++i) {               //补全//
-			filePath[index++] = szModuleFilePath[i];
-			if (szModuleFilePath[i] == '\\') {
-				filePath[index++] = '\\';
-			}
-		}
-		filePath[index++] = 0;
-		char gmmfilePath[MAX_PATH];
-		strcpy_s(gmmfilePath, filePath);
-		strcat_s(gmmfilePath, "wavLib\\\\");
-		strcat_s(gmmfilePath, selectItem.fileName.data());
-		::playpath = gmmfilePath;
-
-		pthread_attr_t attr;                                                     //线程属性结构体，创建线程时加入的参数  
-		pthread_attr_init(&attr);                                                //初始化
-		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);             //是设置你想要指定线程属性参数
-		int ret = pthread_create(&thread_playerID, &attr, player, (void*)&fileName);
-		if (ret != 0) {
-			MessageBoxA(NULL, "ERROR : Can't create thread !", "ERROR", MB_ICONHAND);
-		}
+	
+	CString str_f, str_p;
+	m_listCtrl_VoiceLib.DeleteAllItems();
+	for (int i = 0; i < (int)this->voiceLib.size(); ++i) {
+		FILESTRUCT item = this->voiceLib[i];
+		str_f = item.fileName.c_str();
+		str_p = item.peopleName.c_str();
+		m_listCtrl_VoiceLib.InsertItem(i, str_f);                                     //设置列表文件名信息
+		m_listCtrl_VoiceLib.SetItemText(i, 1, str_p);;                                //设置列表用户信息
 	}
-
-	*pResult = 0;
 }
 
 
-void CVoiceprintRecognitionDlg::OnBnClickedButton6()
+void CVoiceprintRecognitionDlg::OnBnClickedButtonTraningData()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	//LogSystem send message
-	if (p_logSystem->linkState) {
-		p_logSystem->sendMessage("<Message>\n");
-		p_logSystem->sendMessage("Info : Begin traning probalily voice ! \n");
+	if (g_pLogSystem->linkState) {
+		g_pLogSystem->sendMessage("<Message>\n");
+		g_pLogSystem->sendMessage("Info : Begin traning probalily voice ! \n");
 	}
-	p_logSystem->writeMessage("Info : Begin traning probalily voice ! \n");
+	g_pLogSystem->writeMessage("Info : Begin traning probalily voice ! \n");
 
 	int selectIndex = this->GetItemSelect(0);
 	FILESTRUCT selectItem = this->wavLib[selectIndex];
@@ -502,4 +449,106 @@ void CVoiceprintRecognitionDlg::OnBnClickedButton6()
 	trainingWAV(wavfilePath);
 
 	MessageBoxA(NULL, "TIP : Traning probalily data OK !", "TIP", MB_ICONASTERISK);
+}
+
+
+void CVoiceprintRecognitionDlg::OnNMDblclkListVoiceFile(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+
+	// TODO: 在此添加控件通知处理程序代码
+	int selectIndex = this->GetItemSelect(0);
+	if (selectIndex != -1) {
+		FILESTRUCT selectItem = this->wavLib[selectIndex];
+		char szModuleFilePath[MAX_PATH];
+		int n = GetModuleFileNameA(0, szModuleFilePath, MAX_PATH);               //获得当前执行文件的路径
+		szModuleFilePath[strrchr(szModuleFilePath, '\\') - szModuleFilePath + 1] = 0;      //将最后一个"\\"后的字符置为0
+
+		int index = 0;
+		char filePath[MAX_PATH];
+		for (int i = 0; i < (int)strlen(szModuleFilePath); ++i) {               //补全//
+			filePath[index++] = szModuleFilePath[i];
+			if (szModuleFilePath[i] == '\\') {
+				filePath[index++] = '\\';
+			}
+		}
+		filePath[index++] = 0;
+		char wavfilePath[MAX_PATH];
+		strcpy_s(wavfilePath, filePath);
+		strcat_s(wavfilePath, "wavLib\\\\");
+		strcat_s(wavfilePath, selectItem.fileName.data());
+		::playpath = wavfilePath;
+
+		pthread_attr_t attr;                                                     //线程属性结构体，创建线程时加入的参数  
+		pthread_attr_init(&attr);                                                //初始化
+		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);             //是设置你想要指定线程属性参数
+		int ret = pthread_create(&thread_playerID, &attr, player, (void*)&fileName);
+		if (ret != 0) {
+			MessageBoxA(NULL, "ERROR : Can't Paly Sound !", "ERROR", MB_ICONHAND);
+		}
+	}
+
+	*pResult = 0;
+}
+
+void CVoiceprintRecognitionDlg::OnLoadXActiveFlash(void)
+{
+	CRect rectCtrl(32, 45, 217, 200);
+	m_flashCtrl.MoveWindow(&rectCtrl, true);
+	
+	TCHAR strCurDrt[500] = { 0 };
+	int nLen = ::GetCurrentDirectory(500, strCurDrt);
+	if (strCurDrt[nLen] != '\\') {
+		strCurDrt[nLen++] = '\\';
+		strCurDrt[nLen++] = 0;
+	}
+
+	CString strFileName = strCurDrt;
+	strFileName += "flash.swf";
+	this->m_flashCtrl.LoadMovie(0, strFileName);
+	this->m_flashCtrl.Play();
+	SetWindowPos(&this->m_flashCtrl, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+}
+
+void CVoiceprintRecognitionDlg::OnLoadTableHead(void)
+{
+	CRect rect;
+	this->m_listCtrl_VoiceFile.GetHeaderCtrl()->EnableWindow(false);                   //固定标题不被移动
+	m_listCtrl_VoiceFile.GetClientRect(&rect);                                         //获取编程语言列表视图控件的位置和大小
+	m_listCtrl_VoiceFile.SetExtendedStyle(m_listCtrl_VoiceFile.GetExtendedStyle()
+		| LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);                          //为列表视图控件添加全行选中和栅格风格
+
+	m_listCtrl_VoiceFile.InsertColumn(0, _T("文件名"), LVCFMT_CENTER, rect.Width() / 2, 0);
+	m_listCtrl_VoiceFile.InsertColumn(1, _T("录音人"), LVCFMT_CENTER, rect.Width() / 2, 1);
+
+	this->m_listCtrl_VoiceLib.GetHeaderCtrl()->EnableWindow(false);                   //固定标题不被移动
+	m_listCtrl_VoiceLib.GetClientRect(&rect);                                         //获取编程语言列表视图控件的位置和大小
+	m_listCtrl_VoiceLib.SetExtendedStyle(m_listCtrl_VoiceLib.GetExtendedStyle()
+		| LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);                          //为列表视图控件添加全行选中和栅格风格
+
+	m_listCtrl_VoiceLib.InsertColumn(0, _T("文件名"), LVCFMT_CENTER, rect.Width() / 2, 0);
+	m_listCtrl_VoiceLib.InsertColumn(1, _T("所属人"), LVCFMT_CENTER, rect.Width() / 2, 1);
+}
+
+
+bool CVoiceprintRecognitionDlg::OnButton_record(char* fileName)             //开启录音线程
+{
+	::fileName = fileName;
+	pthread_attr_t attr;                                                     //线程属性结构体，创建线程时加入的参数  
+	pthread_attr_init(&attr);                                                //初始化
+	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);             //是设置你想要指定线程属性参数
+	int ret = pthread_create(&thread_recordID, &attr, record, (void*)&fileName);
+	if (ret != 0) {
+		MessageBoxA(NULL, "ERROR : Can't create thread !", "ERROR", MB_ICONHAND);
+		return false;
+	}
+	return true;
+}
+
+bool CVoiceprintRecognitionDlg::OnButton_cancel()                           //结束录音
+{
+	::waveRecorder.Stop();
+	::waveRecorder.Reset();
+	pthread_cancel(this->thread_recordID);
+	return true;
 }

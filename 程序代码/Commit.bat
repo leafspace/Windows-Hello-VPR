@@ -3,6 +3,9 @@ del /a /f /s /q  "*.vs" "*.VC.db" "*.aps" "*.ilk" "*.exp" "*.log" "*.obj" "*.pch
 rd /s /q ".\Windows Hello - VPR\.vs"
 rd /s /q ".\Windows Hello - VPR\ipch"
 
+rd /s /q ".\Windows Hello - VPR\Voiceprint Recognition\logs"
+rd /s /q ".\Windows Hello - VPR\Voiceprint Recognition\temp"
+
 rd /s /q ".\Windows Hello - VPR\Voiceprint Recognition\Debug"
 rd /s /q ".\Windows Hello - VPR\Voiceprint Recognition\Release"
 

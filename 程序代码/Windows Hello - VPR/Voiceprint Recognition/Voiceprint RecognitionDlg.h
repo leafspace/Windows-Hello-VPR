@@ -15,66 +15,6 @@
 #include "FlashSolution/Shockwaveflash.h"
 #include "VPRSolution/WavData_CharaParameter.h"
 
-struct FILESTRUCT;
-
-// CVoiceprintRecognitionDlg 对话框
-class CVoiceprintRecognitionDlg : public CDialogEx
-{
-	// 构造
-public:
-	CVoiceprintRecognitionDlg(CWnd* pParent = NULL);	// 标准构造函数
-
-// 对话框数据
-	enum { IDD = IDD_VOICEPRINTRECOGNITION_DIALOG };
-
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
-
-
-// 实现
-protected:
-	HICON m_hIcon;
-
-	// 生成的消息映射函数
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
-	afx_msg void OnPaint();
-	afx_msg HCURSOR OnQueryDragIcon();
-	DECLARE_MESSAGE_MAP()
-
-private:
-	CShockwaveflash flashshow;
-	CListCtrl listCtrl_1;
-	CListCtrl listCtrl_2;
-	CButton buttonCtrl_1;
-
-	pthread_t thread_recordID;                                               //录音线程ID
-	pthread_t thread_playerID;                                               //播放线程ID
-
-	vector<FILESTRUCT> voiceLib;
-	vector<FILESTRUCT> wavLib;
-
-	bool flagRecord;                                                         //用于标识当前状态，如果flag=true则表示当前处于录音状态 flag=false则表示当前属于空白状态
-
-	void CompoundFile(vector<FILESTRUCT>& fileLib, int flag);                //用于将txt信息与当前文件夹下内容相结合
-	int GetItemSelect(int index);                                            //获取某个listControl当前选中项的行号
-
-	bool OnButton1_record(char* fileName);                                   //开启录音线程
-	bool OnButton1_cancel();                                                 //结束录音
-
-	bool OnButton4_refresh();                                                //录音文件刷新
-	bool OnButton5_refresh();                                                //模型文件刷新
-
-public:
-	afx_msg void OnBnClickedButton1();                                       //录音
-	afx_msg void OnBnClickedButton2();                                       //训练
-	afx_msg void OnBnClickedButton3();                                       //识别
-	afx_msg void OnBnClickedButton4();                                       //刷新
-	afx_msg void OnBnClickedButton5();                                       //刷新
-	afx_msg void OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedButton6();
-};
-
 typedef struct FILESTRUCT
 {
 	string fileName;
@@ -85,6 +25,53 @@ typedef struct FILESTRUCT
 		this->peopleName = peopleName;
 	}
 }FILESTRUCT;
+
+class CVoiceprintRecognitionDlg : public CDialogEx
+{
+public:
+	CVoiceprintRecognitionDlg(CWnd* pParent = NULL);
+	enum { IDD = IDD_VOICEPRINTRECOGNITION_DIALOG };
+protected:
+	HICON m_hIcon;
+
+	// 生成的消息映射函数
+	virtual BOOL OnInitDialog();
+	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+	afx_msg void OnPaint();
+	afx_msg HCURSOR OnQueryDragIcon();
+	virtual void DoDataExchange(CDataExchange* pDX);
+	DECLARE_MESSAGE_MAP()
+
+	afx_msg void OnBnClickedButtonRecord();                                       //录音
+	afx_msg void OnBnClickedButtonTraining();                                       //训练
+	afx_msg void OnBnClickedButtonRecognition();                                       //识别
+	afx_msg void OnBnClickedButtonRefreshVoiceFile();                                       //刷新
+	afx_msg void OnBnClickedButtonRefreshVoiceLib();                                       //刷新
+	afx_msg void OnBnClickedButtonTraningData();
+	afx_msg void OnNMDblclkListVoiceFile(NMHDR* pNMHDR, LRESULT* pResult);
+
+private:
+	CShockwaveflash m_flashCtrl;
+	CListCtrl m_listCtrl_VoiceFile;
+	CListCtrl m_listCtrl_VoiceLib;
+
+	pthread_t thread_recordID;                                               //录音线程ID
+	pthread_t thread_playerID;                                               //播放线程ID
+
+	vector<FILESTRUCT> voiceLib;
+	vector<FILESTRUCT> wavLib;
+
+	bool flagRecord = false;                                                         //用于标识当前状态，如果flag=true则表示当前处于录音状态 flag=false则表示当前属于空白状态
+
+	void CompoundFile(vector<FILESTRUCT>& fileLib, int flag);                //用于将txt信息与当前文件夹下内容相结合
+	int GetItemSelect(int index);                                            //获取某个listControl当前选中项的行号
+
+public:
+	void OnLoadXActiveFlash(void);											 //加载Flash动画
+	void OnLoadTableHead(void);
+	bool OnButton_record(char* fileName);                                   //开启录音线程
+	bool OnButton_cancel();                                                 //结束录音
+};
 
 extern WaveRecorder waveRecorder;                                            //全局录音对象
 extern char* fileName;                                                       //文件对比之用
