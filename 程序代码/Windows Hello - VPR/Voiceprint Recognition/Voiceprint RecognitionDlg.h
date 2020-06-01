@@ -42,11 +42,11 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	DECLARE_MESSAGE_MAP()
 
-	afx_msg void OnBnClickedButtonRecord();                                       //录音
-	afx_msg void OnBnClickedButtonTraining();                                       //训练
-	afx_msg void OnBnClickedButtonRecognition();                                       //识别
-	afx_msg void OnBnClickedButtonRefreshVoiceFile();                                       //刷新
-	afx_msg void OnBnClickedButtonRefreshVoiceLib();                                       //刷新
+	afx_msg void OnBnClickedButtonRecord();                                  //录音
+	afx_msg void OnBnClickedButtonTraining();                                //训练
+	afx_msg void OnBnClickedButtonRecognition();                             //识别
+	afx_msg void OnBnClickedButtonRefreshVoiceFile();                        //刷新
+	afx_msg void OnBnClickedButtonRefreshVoiceLib();                         //刷新
 	afx_msg void OnBnClickedButtonTraningData();
 	afx_msg void OnNMDblclkListVoiceFile(NMHDR* pNMHDR, LRESULT* pResult);
 
@@ -61,7 +61,7 @@ private:
 	vector<FILESTRUCT> voiceLib;
 	vector<FILESTRUCT> wavLib;
 
-	bool flagRecord = false;                                                         //用于标识当前状态，如果flag=true则表示当前处于录音状态 flag=false则表示当前属于空白状态
+	bool flagRecord = false;                                                 //用于标识当前状态，如果flag=true则表示当前处于录音状态 flag=false则表示当前属于空白状态
 
 	void CompoundFile(vector<FILESTRUCT>& fileLib, int flag);                //用于将txt信息与当前文件夹下内容相结合
 	int GetItemSelect(int index);                                            //获取某个listControl当前选中项的行号
@@ -69,8 +69,8 @@ private:
 public:
 	void OnLoadXActiveFlash(void);											 //加载Flash动画
 	void OnLoadTableHead(void);
-	bool OnButton_record(char* fileName);                                   //开启录音线程
-	bool OnButton_cancel();                                                 //结束录音
+	bool OnButton_record(char* fileName);                                    //开启录音线程
+	bool OnButton_cancel();                                                  //结束录音
 };
 
 extern WaveRecorder waveRecorder;                                            //全局录音对象
